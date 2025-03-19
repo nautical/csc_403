@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="mythril-and-slither-overview-detection-capabilities-and-use-cases">Mythril and Slither: Overview, Detection Capabilities, and Use Cases</h3>
+<p>Mythril and Slither are two widely-used tools in the Ethereum security ecosystem, designed to identify vulnerabilities and risks in smart contracts. They provide different approaches to static and dynamic analysis, each having strengths in particular areas of contract auditing.</p>
+<hr>
+<h3 id="mythril-overview"><strong>Mythril Overview</strong></h3>
+<p>Mythril is a security analysis tool specifically built for detecting vulnerabilities in Ethereum smart contracts. It operates by executing symbolic execution, SMT (Satisfiability Modulo Theories) solving, and taint analysis. Mythril can identify a wide variety of common Solidity vulnerabilities, with customizable modules allowing for detailed and flexible analysis.</p>
+<h4 id="types-of-issues-mythril-detects"><strong>Types of Issues Mythril Detects:</strong></h4>
+<p>Each module specializes in identifying specific vulnerabilities in smart contracts:</p>
+<ol>
+<li>
+<p><strong>Delegate Call To Untrusted Contract</strong>: Detects cases where contracts use delegate calls to untrusted contracts, which can result in loss of control.</p>
+</li>
+<li>
+<p><strong>Dependence on Predictable Variables</strong>: Identifies reliance on easily predictable variables (e.g., block.timestamp or blockhash).</p>
+</li>
+<li>
+<p><strong>Ether Thief</strong>: Detects situations where the contract can send Ether to arbitrary accounts.</p>
+</li>
+<li>
+<p><strong>Exceptions</strong>: Identifies incorrect handling of exceptions, which can break contract logic.</p>
+</li>
+<li>
+<p><strong>External Calls</strong>: Detects unsafe external contract calls, which could lead to reentrancy or other attacks.</p>
+</li>
+<li>
+<p><strong>Integer</strong>: Finds integer overflow and underflow issues, potentially leading to erroneous calculations or contract behavior.</p>
+</li>
+<li>
+<p><strong>Multiple Sends</strong>: Detects contracts that send Ether to multiple accounts, potentially exposing them to denial of service (DoS) risks.</p>
+</li>
+<li>
+<p><strong>Suicide</strong>: Finds vulnerabilities where unauthorized users can trigger the self-destruct function.</p>
+</li>
+<li>
+<p><strong>State Change External Calls</strong>: Detects situations where external calls are made after state changes, leading to reentrancy vulnerabilities.</p>
+</li>
+<li>
+<p><strong>Unchecked Retval</strong>: Identifies cases where return values of critical functions are not checked, leading to logic errors.</p>
+</li>
+<li>
+<p><strong>User-Supplied Assertion</strong>: Detects contracts using user-supplied data in assertions, which can be manipulated to crash the contract.</p>
+</li>
+<li>
+<p><strong>Arbitrary Storage Write</strong>: Finds vulnerabilities where unauthorized users can write to arbitrary storage locations.</p>
+</li>
+<li>
+<p><strong>Arbitrary Jump</strong>: Detects when arbitrary jumps are possible, leading to unpredictable behavior.</p>
+</li>
+</ol>
+<h4 id="example-situation-for-mythril"><strong>Example Situation for Mythril</strong>:</h4>
+<p>A developer wants to check for <strong>integer overflow</strong> vulnerabilities in their smart contract that deals with token transfers. Mythril’s Integer module can detect this issue through symbolic execution and ensure that safe math is implemented properly.</p>
+<hr>
+<h3 id="slither-overview"><strong>Slither Overview</strong></h3>
+<p>Slither is a static analysis tool for Solidity that provides a faster, more lightweight alternative to symbolic execution tools. It offers high confidence results on various Solidity patterns, identifying vulnerabilities that can affect the contract’s functionality, security, and efficiency.</p>
+<h4 id="types-of-issues-slither-detects"><strong>Types of Issues Slither Detects</strong>:</h4>
+<p>Slither has a broader range of detectors organized into categories by <strong>impact</strong> and <strong>confidence</strong>. Below are some detectors and what they reveal:</p>
+
+<table>
+<thead>
+<tr>
+<th><strong>Num</strong></th>
+<th><strong>Detector</strong></th>
+<th><strong>What It Detects</strong></th>
+<th><strong>Impact</strong></th>
+<th><strong>Confidence</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>abiencoderv2-array</strong></td>
+<td>Storage ABIEncoderV2 array</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>arbitrary-send-erc20</strong></td>
+<td>Detects arbitrary <code>transferFrom</code> ERC20 calls</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>suicidal</strong></td>
+<td>Functions that allow anyone to self-destruct the contract</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>uninitialized-state</strong></td>
+<td>Uninitialized state variables, which can lead to undefined behavior</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>reentrancy-eth</strong></td>
+<td>Reentrancy vulnerabilities that lead to Ether theft</td>
+<td>High</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>29</td>
+<td><strong>weak-prng</strong></td>
+<td>Weak pseudorandom number generation, which can be exploited</td>
+<td>High</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>48</td>
+<td><strong>tx-origin</strong></td>
+<td>Dangerous usage of <code>tx.origin</code>, making contracts vulnerable to phishing attacks</td>
+<td>Medium</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>51</td>
+<td><strong>uninitialized-local</strong></td>
+<td>Uninitialized local variables that may lead to unexpected behavior</td>
+<td>Medium</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>89</td>
+<td><strong>cache-array-length</strong></td>
+<td>Detects inefficient loops that use <code>array.length</code> repeatedly in loop conditions</td>
+<td>Optimization</td>
+<td>High</td>
+</tr>
+<tr>
+<td>92</td>
+<td><strong>immutable-states</strong></td>
+<td>Identifies state variables that could be declared <code>immutable</code> to save gas</td>
+<td>Optimization</td>
+<td>High</td>
+</tr>
+</tbody>
+</table><h4 id="example-situation-for-slither"><strong>Example Situation for Slither</strong>:</h4>
+<p>A developer is concerned about <strong>reentrancy vulnerabilities</strong> in their Ethereum contract, particularly in functions that handle Ether transfers. Using Slither’s <code>reentrancy-eth</code> detector, they can efficiently identify unsafe patterns such as external calls made before internal state changes, which are prime targets for reentrancy attacks.</p>
+<hr>
+<h3 id="comparison-when-to-use-mythril-vs.-slither"><strong>Comparison: When to Use Mythril vs. Slither</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th><strong>Tool</strong></th>
+<th><strong>Best for</strong></th>
+<th><strong>Strengths</strong></th>
+<th><strong>Weaknesses</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mythril</strong></td>
+<td>- Complex analysis where symbolic execution is needed<br> - Verifying contract behavior under specific conditions</td>
+<td>- Symbolic execution allows for detailed coverage of potential contract states<br> - Can detect deep vulnerabilities like <strong>integer overflow</strong>, <strong>unchecked retval</strong>, etc.</td>
+<td>- Slower due to the depth of analysis<br> - May generate false positives due to over-analysis</td>
+</tr>
+<tr>
+<td><strong>Slither</strong></td>
+<td>- Quick detection of common Solidity anti-patterns<br> - Optimizing contract for gas efficiency</td>
+<td>- Very fast, works on static code<br> - Focused on Solidity-specific issues<br> - High accuracy with confidence indicators</td>
+<td>- Lacks deep symbolic analysis<br> - Doesn’t explore possible execution states</td>
+</tr>
+</tbody>
+</table><h3 id="example-of-a-custom-slither-module">Example of a Custom Slither Module</h3>
+<p>Creating a custom Slither module (also called a <strong>detector</strong>) allows you to extend Slither’s analysis capabilities and identify specific patterns or vulnerabilities in your smart contracts. In this example, we will create a custom Slither detector that identifies <strong>contracts using low-level <code>call()</code> without checking the return value</strong>—a common mistake that could lead to security vulnerabilities, as the failure of the call might go unnoticed.</p>
+<p>Here is a step-by-step guide to creating a custom Slither module.</p>
+<hr>
+<h4 id="step-1-set-up-the-environment"><strong>Step 1: Set Up the Environment</strong></h4>
+<p>First, make sure you have Slither installed. You can install it using <code>pip</code>:</p>
+<pre class=" language-bash"><code class="prism  language-bash">pip <span class="token function">install</span> slither-analyzer
+</code></pre>
+<p>Next, create a directory structure for your custom module. For this example, let’s call the file <code>custom_call_check.py</code>.</p>
+<h4 id="step-2-write-the-custom-detector"><strong>Step 2: Write the Custom Detector</strong></h4>
+<p>In the file <code>custom_call_check.py</code>, define a new class that extends Slither’s <code>Detector</code> class. Slither provides various hooks and helpers to interact with Solidity contracts and functions.</p>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">from</span> slither<span class="token punctuation">.</span>core<span class="token punctuation">.</span>detectors<span class="token punctuation">.</span>abstract_detector <span class="token keyword">import</span> AbstractDetector<span class="token punctuation">,</span> DetectorClassification
+<span class="token keyword">from</span> slither<span class="token punctuation">.</span>slithir<span class="token punctuation">.</span>operations <span class="token keyword">import</span> LowLevelCall
+
+<span class="token keyword">class</span> <span class="token class-name">CustomCallCheck</span><span class="token punctuation">(</span>AbstractDetector<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    This detector identifies the use of low-level `call()` without checking the return value.
+    """</span>
+
+    ARGUMENT <span class="token operator">=</span> <span class="token string">'call-without-check'</span>
+    HELP <span class="token operator">=</span> <span class="token string">'Detect low-level call without checking the return value'</span>
+    IMPACT <span class="token operator">=</span> DetectorClassification<span class="token punctuation">.</span>HIGH
+    CONFIDENCE <span class="token operator">=</span> DetectorClassification<span class="token punctuation">.</span>HIGH
+
+    <span class="token keyword">def</span> <span class="token function">_detect</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        issues <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+        <span class="token comment"># Iterate through each contract</span>
+        <span class="token keyword">for</span> contract <span class="token keyword">in</span> self<span class="token punctuation">.</span>compilation_unit<span class="token punctuation">.</span>contracts<span class="token punctuation">:</span>
+            <span class="token comment"># Iterate through each function in the contract</span>
+            <span class="token keyword">for</span> function <span class="token keyword">in</span> contract<span class="token punctuation">.</span>functions_and_modifiers<span class="token punctuation">:</span>
+                <span class="token comment"># Iterate through the intermediate representation (IR) instructions of the function</span>
+                <span class="token keyword">for</span> ir <span class="token keyword">in</span> function<span class="token punctuation">.</span>slithir_operations<span class="token punctuation">:</span>
+                    <span class="token comment"># We are interested in low-level calls</span>
+                    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>ir<span class="token punctuation">,</span> LowLevelCall<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                        <span class="token comment"># Check if the return value of the call is ignored (i.e., unused)</span>
+                        <span class="token keyword">if</span> <span class="token operator">not</span> ir<span class="token punctuation">.</span>result<span class="token punctuation">:</span>
+                            <span class="token comment"># Create a unique issue for each detected instance</span>
+                            issue_info <span class="token operator">=</span> <span class="token punctuation">[</span>
+                                f<span class="token string">"Function {function.name} in contract {contract.name} "</span>
+                                f<span class="token string">"uses low-level call() without checking the return value."</span>
+                            <span class="token punctuation">]</span>
+                            issues<span class="token punctuation">.</span>append<span class="token punctuation">(</span>self<span class="token punctuation">.</span>generate_result<span class="token punctuation">(</span>issue_info<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> issues
+</code></pre>
+<h4 id="explanation"><strong>Explanation:</strong></h4>
+<ul>
+<li>
+<p><strong>Imports</strong>: We import Slither’s core <code>AbstractDetector</code> and necessary classes for analysis. <code>LowLevelCall</code> is a SlithIR (Slither Intermediate Representation) operation that corresponds to low-level Solidity calls like <code>address.call()</code>.</p>
+</li>
+<li>
+<p><strong>Detector Class</strong>: We define a new class <code>CustomCallCheck</code> that extends <code>AbstractDetector</code>. This class holds the logic to detect our vulnerability of interest.</p>
+</li>
+<li>
+<p><strong>Detection Logic</strong>:</p>
+<ul>
+<li>We iterate through each contract, function, and intermediate representation operation (IR) of the function.</li>
+<li>The goal is to find instances of the <code>LowLevelCall</code> operation and check whether the return value (<code>ir.result</code>) is ignored (not checked).</li>
+<li>If a return value isn’t used, an issue is generated.</li>
+</ul>
+</li>
+<li>
+<p><strong>Attributes</strong>:</p>
+<ul>
+<li><code>ARGUMENT</code>: This is the argument you’ll use to invoke this custom detector from the command line.</li>
+<li><code>IMPACT</code> and <code>CONFIDENCE</code>: These classifications describe how severe the issue is and how confident the detector is in identifying real problems.</li>
+</ul>
+</li>
+</ul>
+<h4 id="step-3-running-the-custom-module"><strong>Step 3: Running the Custom Module</strong></h4>
+<p>To run this custom detector, you would first save the <code>custom_call_check.py</code> file in the proper directory under Slither’s <code>detectors/</code> directory or provide it as a custom argument in your setup.</p>
+<p>You can now invoke the custom detector like this:</p>
+<pre class=" language-bash"><code class="prism  language-bash">slither <span class="token keyword">.</span> --detect call-without-check
+</code></pre>
+<p>This will run the Slither analysis and include your custom detector, scanning all contracts in the current directory (<code>.</code>) for low-level calls that do not check the return value.</p>
+<h4 id="example-solidity-contract-for-testing"><strong>Example Solidity Contract (for testing)</strong></h4>
+<p>Let’s test this detector with a simple vulnerable Solidity contract:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Vulnerable {
+    function sendEther(address payable recipient) public {
+        // Low-level call without checking the return value
+        recipient.call{value: 1 ether}("");
+    }
+}
+</code></pre>
+<p>In this contract, the <code>call()</code> function is used to transfer Ether, but the return value is not checked. This can lead to unhandled failures, and the custom detector should flag it as a potential issue.</p>
+<h4 id="step-4-output"><strong>Step 4: Output</strong></h4>
+<p>After running the custom detector, you should see output similar to the following:</p>
+<pre class=" language-plaintext"><code class="prism  language-plaintext">INFO:Slither:Vulnerable uses low-level call() without checking the return value
+  Function sendEther in contract Vulnerable uses low-level call() without checking the return value.
+</code></pre>
+<p>This confirms that the custom detector works as expected, identifying contracts that fail to check return values from low-level calls.</p>
+<hr>
+<h3 id="conclusion"><strong>Conclusion</strong></h3>
+<p>Both Mythril and Slither serve as crucial tools in Ethereum smart contract development, helping developers identify and mitigate security vulnerabilities. Depending on the need—deep symbolic execution or fast, static code analysis—one tool may be more appropriate than the other.</p>
+<ul>
+<li><strong>Use Mythril</strong> when you need deep symbolic execution and are concerned about complex vulnerabilities like <strong>integer overflows</strong> or <strong>unchecked retval</strong>.</li>
+<li><strong>Use Slither</strong> for fast, high-confidence results on Solidity-specific issues like <strong>reentrancy</strong>, <strong>uninitialized variables</strong>, and <strong>gas optimization</strong>.</li>
+</ul>
+<p>By combining the strengths of both tools, developers can create more secure and efficient smart contracts on Ethereum.</p>
+</div>
+</body>
+
+</html>

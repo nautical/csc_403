@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><hr>
+<h3 id="solidity-gas-optimization-techniques"><strong>Solidity Gas Optimization Techniques</strong></h3>
+<hr>
+<h4 id="storage-optimization"><strong>1. Storage Optimization</strong></h4>
+<ul>
+<li><strong>Key Insight</strong>: Storing data on-chain is expensive. Use efficient techniques to reduce storage costs.</li>
+<li><strong>Cost Breakdown</strong>:
+<ul>
+<li>Storing a new variable: <strong>20,000 gas</strong></li>
+<li>Rewriting an existing variable: <strong>5,000 gas</strong></li>
+<li>Reading from storage: <strong>200 gas</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">contract GasOptimization {
+    // Storage variable declaration (no initialization cost)
+    uint256 public storedData;
+
+    // Efficient data management
+    function updateData(uint256 newValue) external {
+        uint256 memoryData = newValue; // Use memory for calculations
+        storedData = memoryData; // Update storage once
+    }
+}
+</code></pre>
+<p><strong>Techniques</strong>:</p>
+<ul>
+<li><strong>Minimize on-chain data</strong>: Store only essential information on-chain.</li>
+<li><strong>Efficient data management</strong>: Calculate values in memory before writing to storage.</li>
+<li><strong>Variable Packing</strong>: Pack smaller data types into a single storage slot.</li>
+</ul>
+<p><strong>Code Example - Variable Packing</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">struct PackedData {
+    uint8 data1;
+    uint8 data2;
+}
+PackedData public packedData;
+</code></pre>
+<hr>
+<h4 id="gas-refund-mechanisms"><strong>2. Gas Refund Mechanisms</strong></h4>
+<ul>
+<li><strong>Freeing Storage Slots</strong>: Zeroing out unused storage slots can refund <strong>15,000 gas</strong>.</li>
+<li><strong>Self Destruct</strong>: Use <code>selfdestruct</code> to refund <strong>24,000 gas</strong> by removing the contract.</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+
+contract GasRefundExample {
+    uint256 public value1;
+    uint256 public value2;
+
+    function updateValuesAndFreeStorageSlot(uint256 _newValue1, uint256 _newValue2) external {
+        value1 = _newValue1;
+        value2 = _newValue2;
+        assembly {
+            sstore(value1.slot, 0)
+            sstore(value2.slot, 0)
+        }
+    }
+
+    function destroyContract() external {
+        selfdestruct(payable(msg.sender));
+    }
+}
+</code></pre>
+<hr>
+<h4 id="data-types-and-packing"><strong>3. Data Types and Packing</strong></h4>
+<ul>
+<li><strong>Use <code>bytes32</code> when possible</strong>: More gas-efficient for storing fixed-size data.</li>
+<li><strong>Avoid packing in memory or function calls</strong>: No gas savings here, as the EVM operates on 32-byte words.</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">contract VariablePacking {
+    bytes32 public fixedSizeData;
+
+    // Using bytes32 is cheaper than string
+    function setData(bytes32 _data) external {
+        fixedSizeData = _data;
+    }
+}
+</code></pre>
+<hr>
+<h4 id="inheritance-vs-composition"><strong>4. Inheritance vs Composition</strong></h4>
+<ul>
+<li><strong>Use Inheritance</strong>: More gas-efficient as variables from parent contracts are packed efficiently.</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">contract Parent {
+    uint256 public parentVar;
+
+    constructor(uint256 _parentVar) {
+        parentVar = _parentVar;
+    }
+}
+
+contract Child is Parent {
+    uint256 public childVar;
+
+    constructor(uint256 _parentVar, uint256 _childVar) Parent(_parentVar) {
+        childVar = _childVar;
+    }
+}
+</code></pre>
+<hr>
+<h4 id="memory-vs-storage"><strong>5. Memory vs Storage</strong></h4>
+<ul>
+<li><strong>Use storage pointers</strong> to avoid expensive copying between memory and storage.</li>
+<li><strong>Memory costs are complicated</strong>: Memory allocation grows quadratically, so manage it wisely.</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">function sumValues(uint256[] memory values) external pure returns (uint256) {
+    uint256 sum;
+    for (uint256 i = 0; i &lt; values.length; i++) {
+        sum += values[i];
+    }
+    return sum;
+}
+</code></pre>
+<hr>
+<h4 id="mappings-vs-arrays"><strong>6. Mappings vs Arrays</strong></h4>
+<ul>
+<li><strong>Use Mappings</strong>: More gas-efficient for large datasets.</li>
+<li><strong>Use Arrays</strong>: Better for small datasets or when iteration is necessary.</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">mapping(address =&gt; uint256) public balances;
+
+function updateBalance(address user, uint256 amount) external {
+    balances[user] = amount;
+}
+</code></pre>
+<hr>
+<h4 id="variable-optimization"><strong>7. Variable Optimization</strong></h4>
+<ul>
+<li><strong>Avoid public variables</strong>: Use <code>private</code> to save gas.</li>
+<li><strong>Use events for data logging</strong> instead of storing data directly in the contract.</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">contract EfficientVariables {
+    uint256 private myPrivateVar;
+
+    event ValueUpdated(uint256 newValue);
+
+    function updatePrivateVar(uint256 newValue) external {
+        myPrivateVar = newValue;
+        emit ValueUpdated(newValue);
+    }
+}
+</code></pre>
+<hr>
+<h4 id="function-optimization"><strong>8. Function Optimization</strong></h4>
+<ul>
+<li><strong>Use external functions</strong>: More gas-efficient than public functions.</li>
+<li><strong>Optimize frequently-called functions</strong> by placing them earlier in the contract.</li>
+</ul>
+<p><strong>Code Example</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">contract FunctionOptimization {
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function getDataExternal() external view returns (uint256) {
+        return 42;
+    }
+
+    function frequentlyCalledFunction() external pure returns (string memory) {
+        return "Hello!";
+    }
+}
+</code></pre>
+<hr>
+<h3 id="conclusion"><strong>Conclusion</strong></h3>
+<p>By incorporating gas optimization techniques like minimizing storage use, careful handling of memory, leveraging inheritance, and proper data type selection, Solidity developers can significantly reduce gas costs and improve contract efficiency.</p>
+<hr>
+</div>
+</body>
+
+</html>
