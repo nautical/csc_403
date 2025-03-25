@@ -1,0 +1,694 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="formal-verification-and-auditing-of-smart-contracts">Formal Verification and Auditing of Smart Contracts</h3>
+<hr>
+<h4 id="introduction-to-smart-contracts">1. Introduction to Smart Contracts</h4>
+<ul>
+<li><strong>Definition</strong>: Smart contracts are self-executing contracts with the terms of the agreement directly written into code. They run on blockchain technology, enabling trustless transactions.</li>
+<li><strong>Key Features</strong>:
+<ul>
+<li><strong>Decentralization</strong>: Operate without a central authority.</li>
+<li><strong>Immutability</strong>: Once deployed, the contract code cannot be altered.</li>
+<li><strong>Transparency</strong>: All transactions are visible on the blockchain.</li>
+</ul>
+</li>
+</ul>
+<h4 id="use-cases">Use Cases</h4>
+<ul>
+<li>Financial applications (DeFi)</li>
+<li>Supply chain management</li>
+<li>Identity verification</li>
+<li>Voting systems</li>
+</ul>
+<hr>
+<h4 id="importance-of-security-in-smart-contracts">2. Importance of Security in Smart Contracts</h4>
+<ul>
+<li><strong>Value Handling</strong>: Smart contracts often handle significant amounts of cryptocurrency, making them targets for attacks.</li>
+<li><strong>Real-World Consequences</strong>: Vulnerabilities can lead to loss of funds, exploitation, and damage to trust in blockchain technology.</li>
+<li><strong>Examples of Attacks</strong>:
+<ul>
+<li>The DAO hack (2016): $60 million lost due to reentrancy vulnerabilities.</li>
+<li>Parity wallet incident (2017): $30 million frozen due to contract bugs.</li>
+</ul>
+</li>
+</ul>
+<h4 id="need-for-formal-verification">Need for Formal Verification</h4>
+<p>To enhance the security of smart contracts, formal verification techniques are essential to ensure that contracts behave as intended under all circumstances.</p>
+<hr>
+<h4 id="what-is-formal-verification">3. What is Formal Verification?</h4>
+<h3 id="definition">Definition</h3>
+<ul>
+<li><strong>Formal Verification</strong>: The process of proving the correctness of a system relative to a formal specification using mathematical methods.</li>
+<li><strong>Objective</strong>: To ensure that the implementation meets specified requirements and behaves as expected.</li>
+</ul>
+<h4 id="comparison-with-traditional-testing">Comparison with Traditional Testing</h4>
+<ul>
+<li><strong>Traditional Testing</strong>:
+<ul>
+<li>Involves running test cases.</li>
+<li>Cannot guarantee completeness; some cases may be missed.</li>
+</ul>
+</li>
+<li><strong>Formal Verification</strong>:
+<ul>
+<li>Provides mathematical proof of correctness.</li>
+<li>Ensures all possible states are accounted for.</li>
+</ul>
+</li>
+</ul>
+<h4 id="benefits">Benefits</h4>
+<ul>
+<li><strong>Increased Security</strong>: Identifies vulnerabilities that may not be apparent through testing.</li>
+<li><strong>Certainty</strong>: Provides definitive guarantees about contract behavior.</li>
+</ul>
+<hr>
+<h4 id="understanding-formal-models">4. Understanding Formal Models</h4>
+<h4 id="what-is-a-formal-model">What is a Formal Model?</h4>
+<ul>
+<li><strong>Definition</strong>: A mathematical abstraction that describes the behavior of a computational process.</li>
+<li><strong>Purpose</strong>: To provide a framework for analyzing the execution and correctness of programs.</li>
+</ul>
+<h4 id="types-of-formal-models">Types of Formal Models</h4>
+<ol>
+<li>
+<p><strong>High-Level Models</strong>:</p>
+<ul>
+<li>Focus on the overall behavior of the smart contract.</li>
+<li>Use finite state machines (FSM) to represent state transitions.</li>
+<li><strong>Example</strong>: Modeling a voting contract as an FSM with states for “Voting Open,” “Voting Closed,” and “Results Announced.”</li>
+</ul>
+</li>
+<li>
+<p><strong>Low-Level Models</strong>:</p>
+<ul>
+<li>Provide detailed analysis of the contract’s execution.</li>
+<li>Use control flow graphs (CFG) and program traces.</li>
+<li><strong>Example</strong>: Analyzing how each function call changes the state of a smart contract, identifying potential vulnerabilities.</li>
+</ul>
+</li>
+</ol>
+<h4 id="benefits-of-formal-models">Benefits of Formal Models</h4>
+<ul>
+<li>Enable clearer reasoning about contract behavior.</li>
+<li>Allow for abstraction and separation of concerns in complex contracts.</li>
+</ul>
+<hr>
+<h4 id="what-is-a-formal-specification">5. What is a Formal Specification?</h4>
+<h4 id="definition-1">Definition</h4>
+<ul>
+<li><strong>Formal Specification</strong>: A precise description of the properties that a system (or smart contract) must satisfy.</li>
+<li><strong>Components</strong>:
+<ul>
+<li><strong>Invariants</strong>: Conditions that must always hold true.</li>
+<li><strong>Preconditions</strong>: Conditions that must be true before executing a function.</li>
+<li><strong>Postconditions</strong>: Conditions that must be true after executing a function.</li>
+</ul>
+</li>
+</ul>
+<h4 id="importance">Importance</h4>
+<ul>
+<li>Specifies what the smart contract is supposed to do, providing a benchmark against which the contract can be verified.</li>
+<li>Ensures that the implementation meets the specified requirements throughout its execution.</li>
+</ul>
+<h4 id="example-of-formal-specification">Example of Formal Specification</h4>
+<ul>
+<li>In a token transfer function:
+<ul>
+<li><strong>Precondition</strong>: The sender has enough tokens.</li>
+<li><strong>Postcondition</strong>: The sender’s balance decreases, and the receiver’s balance increases.</li>
+</ul>
+</li>
+<li><strong>Diagram</strong>:</li>
+</ul>
+<pre class=" language-mermaid"><svg id="mermaid-svg-IcKsf8WeVuaDah1K" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="256.1499938964844" style="max-width: 2101.11669921875px;" viewBox="0 0 2101.11669921875 256.1499938964844"><style>#mermaid-svg-IcKsf8WeVuaDah1K{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-IcKsf8WeVuaDah1K .error-icon{fill:#552222;}#mermaid-svg-IcKsf8WeVuaDah1K .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-IcKsf8WeVuaDah1K .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-IcKsf8WeVuaDah1K .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-IcKsf8WeVuaDah1K .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-IcKsf8WeVuaDah1K .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-IcKsf8WeVuaDah1K .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-IcKsf8WeVuaDah1K .marker{fill:#666;stroke:#666;}#mermaid-svg-IcKsf8WeVuaDah1K .marker.cross{stroke:#666;}#mermaid-svg-IcKsf8WeVuaDah1K svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-IcKsf8WeVuaDah1K .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#000000;}#mermaid-svg-IcKsf8WeVuaDah1K .cluster-label text{fill:#333;}#mermaid-svg-IcKsf8WeVuaDah1K .cluster-label span{color:#333;}#mermaid-svg-IcKsf8WeVuaDah1K .label text,#mermaid-svg-IcKsf8WeVuaDah1K span{fill:#000000;color:#000000;}#mermaid-svg-IcKsf8WeVuaDah1K .node rect,#mermaid-svg-IcKsf8WeVuaDah1K .node circle,#mermaid-svg-IcKsf8WeVuaDah1K .node ellipse,#mermaid-svg-IcKsf8WeVuaDah1K .node polygon,#mermaid-svg-IcKsf8WeVuaDah1K .node path{fill:#eee;stroke:#999;stroke-width:1px;}#mermaid-svg-IcKsf8WeVuaDah1K .node .label{text-align:center;}#mermaid-svg-IcKsf8WeVuaDah1K .node.clickable{cursor:pointer;}#mermaid-svg-IcKsf8WeVuaDah1K .arrowheadPath{fill:#333333;}#mermaid-svg-IcKsf8WeVuaDah1K .edgePath .path{stroke:#666;stroke-width:1.5px;}#mermaid-svg-IcKsf8WeVuaDah1K .flowchart-link{stroke:#666;fill:none;}#mermaid-svg-IcKsf8WeVuaDah1K .edgeLabel{background-color:white;text-align:center;}#mermaid-svg-IcKsf8WeVuaDah1K .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-svg-IcKsf8WeVuaDah1K .cluster rect{fill:hsl(210,66.6666666667%,95%);stroke:#26a;stroke-width:1px;}#mermaid-svg-IcKsf8WeVuaDah1K .cluster text{fill:#333;}#mermaid-svg-IcKsf8WeVuaDah1K .cluster span{color:#333;}#mermaid-svg-IcKsf8WeVuaDah1K div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(-160,0%,93.3333333333%);border:1px solid #26a;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg-IcKsf8WeVuaDah1K:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-IcKsf8WeVuaDah1K flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-A LE-B" style="opacity: 1;" id="L-A-B"><path class="path" d="M1150.1125030517578,37.5051159361943L575.6666717529297,79.71665954589844L575.6666717529297,104.71665954589844" marker-end="url(https://stackedit.io/app#arrowhead50)" style="fill:none"></path><defs><marker id="arrowhead50" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-A LE-C" style="opacity: 1;" id="L-A-C"><path class="path" d="M1317.4125061035156,40.803235425209074L1662.0541687011719,79.71665954589844L1662.0541687011719,104.71665954589844" marker-end="url(https://stackedit.io/app#arrowhead51)" style="fill:none"></path><defs><marker id="arrowhead51" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-B LE-D" style="opacity: 1;" id="L-B-D"><path class="path" d="M451.6750030517578,142.66653268958362L164.74166870117188,176.43331909179688L164.74166870117188,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead52)" style="fill:none"></path><defs><marker id="arrowhead52" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-B LE-E" style="opacity: 1;" id="L-B-E"><path class="path" d="M575.6666717529297,151.43331909179688L575.6666717529297,176.43331909179688L575.6666717529297,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead53)" style="fill:none"></path><defs><marker id="arrowhead53" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-B LE-F" style="opacity: 1;" id="L-B-F"><path class="path" d="M699.6583404541016,142.14329724893972L1001.875,176.43331909179688L1001.875,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead54)" style="fill:none"></path><defs><marker id="arrowhead54" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-C LE-G" style="opacity: 1;" id="L-C-G"><path class="path" d="M1551.0527842256663,151.43331909179688L1432.25,176.43331909179688L1432.25,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead55)" style="fill:none"></path><defs><marker id="arrowhead55" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-C LE-H" style="opacity: 1;" id="L-C-H"><path class="path" d="M1773.0555531766774,151.43331909179688L1891.8583374023438,176.43331909179688L1891.8583374023438,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead56)" style="fill:none"></path><defs><marker id="arrowhead56" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-A-B" class="edgeLabel L-LS-A' L-LE-B"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-A-C" class="edgeLabel L-LS-A' L-LE-C"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-B-D" class="edgeLabel L-LS-B' L-LE-D"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-B-E" class="edgeLabel L-LS-B' L-LE-E"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-B-F" class="edgeLabel L-LS-B' L-LE-F"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-C-G" class="edgeLabel L-LS-C' L-LE-G"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-C-H" class="edgeLabel L-LS-C' L-LE-H"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" style="opacity: 1;" id="flowchart-A-210" transform="translate(1233.7625045776367,31.35832977294922)"><rect rx="0" ry="0" x="-83.6500015258789" y="-23.35832977294922" width="167.3000030517578" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-73.6500015258789,-13.358329772949219)"><foreignObject width="147.3000030517578" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Formal Specification</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-B-211" transform="translate(575.6666717529297,128.07498931884766)"><rect rx="0" ry="0" x="-123.99166870117188" y="-23.35832977294922" width="247.98333740234375" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-113.99166870117188,-13.358329772949219)"><foreignObject width="227.98333740234375" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">1. Language-Level Specification</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-C-213" transform="translate(1662.0541687011719,128.07498931884766)"><rect rx="0" ry="0" x="-123.4749984741211" y="-23.35832977294922" width="246.9499969482422" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-113.4749984741211,-13.358329772949219)"><foreignObject width="226.9499969482422" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">2. Bytecode-Level Specification</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-D-215" transform="translate(164.74166870117188,224.7916488647461)"><rect rx="0" ry="0" x="-156.74166870117188" y="-23.35832977294922" width="313.48333740234375" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-146.74166870117188,-13.358329772949219)"><foreignObject width="293.48333740234375" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">High-level Business Logic of the Contract</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-E-217" transform="translate(575.6666717529297,224.7916488647461)"><rect rx="0" ry="0" x="-204.18333435058594" y="-23.35832977294922" width="408.3666687011719" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-194.18333435058594,-13.358329772949219)"><foreignObject width="388.3666687011719" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Derived from Informal Specifications like Whitepapers</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-F-219" transform="translate(1001.875,224.7916488647461)"><rect rx="0" ry="0" x="-172.02499389648438" y="-23.35832977294922" width="344.04998779296875" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-162.02499389648438,-13.358329772949219)"><foreignObject width="324.04998779296875" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Ensures Code Meets Functional Requirements</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-G-221" transform="translate(1432.25,224.7916488647461)"><rect rx="0" ry="0" x="-208.35000610351562" y="-23.35832977294922" width="416.70001220703125" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-198.35000610351562,-13.358329772949219)"><foreignObject width="396.70001220703125" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Behavior of the Compiled Contract in a Virtual Machine</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-H-223" transform="translate(1891.8583374023438,224.7916488647461)"><rect rx="0" ry="0" x="-201.25833129882812" y="-23.35832977294922" width="402.51666259765625" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-191.25833129882812,-13.358329772949219)"><foreignObject width="382.51666259765625" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Ensures Compiled Bytecode Matches High-Level Logic</div></foreignObject></g></g></g></g></g></g></svg></pre>
+<hr>
+<h4 id="types-of-formal-specifications">6. Types of Formal Specifications</h4>
+<h4 id="high-level-specifications">1. High-Level Specifications</h4>
+<ul>
+<li><strong>Model-Oriented Specifications</strong>: Describe the overall behavior of the contract using FSMs.</li>
+<li><strong>Temporal Logic</strong>: Used to express properties over time, such as:
+<ul>
+<li><strong>Safety</strong>: “Nothing bad ever happens.”</li>
+<li><strong>Liveness</strong>: “Something good eventually happens.”</li>
+</ul>
+</li>
+</ul>
+<h4 id="example-of-safety-property">Example of Safety Property</h4>
+<ul>
+<li>“A user’s balance should never fall below zero.”</li>
+</ul>
+<h4 id="low-level-specifications">2. Low-Level Specifications</h4>
+<ul>
+<li><strong>Property-Oriented Specifications</strong>: Analyze the internal workings of the contract.</li>
+<li><strong>Hoare Logic</strong>: A formal system for reasoning about the correctness of computer programs.</li>
+</ul>
+<h4 id="hoare-triple-example">Hoare Triple Example</h4>
+<ul>
+<li><strong>Hoare Triple</strong>: {P} c {Q}
+<ul>
+<li>Where <code>P</code> is the precondition, <code>c</code> is the command, and <code>Q</code> is the postcondition.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="techniques-for-formal-verification">7. Techniques for Formal Verification</h4>
+<h4 id="model-checking">1. Model Checking</h4>
+<ul>
+<li><strong>Definition</strong>: An automated technique for verifying finite-state systems against specifications.</li>
+<li><strong>Process</strong>:
+<ul>
+<li>Create an abstract mathematical model of the smart contract.</li>
+<li>Use algorithms to explore all possible states.</li>
+</ul>
+</li>
+</ul>
+<h4 id="pros-and-cons">Pros and Cons</h4>
+<ul>
+<li><strong>Pros</strong>: Exhaustively checks all states for violations.</li>
+<li><strong>Cons</strong>: State explosion problem; can be infeasible for large systems.</li>
+</ul>
+<h4 id="theorem-proving">2. Theorem Proving</h4>
+<ul>
+<li><strong>Definition</strong>: A method of proving the correctness of contracts using mathematical logic.</li>
+<li><strong>Process</strong>:
+<ul>
+<li>Translate the contract’s properties into logical statements.</li>
+<li>Use a theorem prover to establish logical equivalence.</li>
+</ul>
+</li>
+</ul>
+<h4 id="pros-and-cons-1">Pros and Cons</h4>
+<ul>
+<li><strong>Pros</strong>: Can handle infinite-state systems.</li>
+<li><strong>Cons</strong>: Often requires human intervention, making it more complex and time-consuming.</li>
+</ul>
+<h4 id="symbolic-execution">3. Symbolic Execution</h4>
+<ul>
+<li><strong>Definition</strong>: Analyzes smart contracts by executing them with symbolic inputs.</li>
+<li><strong>Process</strong>:
+<ul>
+<li>Generate path predicates and check for satisfiability using SMT solvers.</li>
+</ul>
+</li>
+</ul>
+<h4 id="benefits-1">Benefits</h4>
+<ul>
+<li>Efficiently identifies vulnerabilities and generates concrete input values to reproduce errors.</li>
+<li>Provides a degree of mathematical proof of correctness.</li>
+</ul>
+<hr>
+<h4 id="using-formal-verification-tools">8. Using Formal Verification Tools</h4>
+<h3 id="popular-tools">Popular Tools</h3>
+<ol>
+<li>
+<p><strong>K Framework</strong>:</p>
+<ul>
+<li>A framework for defining programming languages and verifying their properties.</li>
+<li>Allows for executable specifications and formal analysis of smart contracts.</li>
+</ul>
+</li>
+<li>
+<p><strong>Dafny</strong>:</p>
+<ul>
+<li>A programming language designed for verifying functional correctness.</li>
+<li>Includes built-in support for assertions and contracts, making it easy to specify properties.</li>
+</ul>
+</li>
+</ol>
+<h4 id="case-studies">Case Studies</h4>
+<ul>
+<li><strong>Example</strong>: Using K Framework to specify and verify a token contract, ensuring that transfer functions meet safety and liveness requirements.</li>
+</ul>
+<hr>
+<h4 id="slide-9-summary-pros-and-cons-of-formal-verification"><strong>Slide 9: Summary Pros and Cons of Formal Verification</strong></h4>
+<p>Formal verification is a mathematical approach used to prove or disprove the correctness of a system with respect to a certain formal specification or property. It has several advantages and challenges, especially in the context of software development, particularly in critical areas such as smart contracts, aerospace, healthcare systems, and other high-assurance fields.</p>
+<h4 id="pros-of-formal-verification"><strong>Pros of Formal Verification</strong></h4>
+<ol>
+<li>
+<p><strong>Mathematical Certainty</strong>:</p>
+<ul>
+<li><strong>Benefit</strong>: Formal verification provides mathematical guarantees that a system adheres strictly to its specifications. Unlike traditional testing, which can only cover a finite number of cases, formal verification checks all possible inputs and states.</li>
+<li><strong>Use Case</strong>: In systems where safety, security, and correctness are paramount (e.g., cryptography, aerospace, medical devices), this mathematical rigor ensures that no critical flaws remain undetected.</li>
+</ul>
+</li>
+<li>
+<p><strong>Detection of Edge Cases</strong>:</p>
+<ul>
+<li><strong>Benefit</strong>: Traditional testing may miss certain edge cases, particularly those that are rare or difficult to simulate. Formal verification analyzes all potential cases, including corner cases, to ensure the system behaves as expected under all possible conditions.</li>
+<li><strong>Use Case</strong>: In decentralized finance (DeFi), smart contracts handling large sums of money or sensitive operations can be vulnerable to rare but catastrophic bugs. Formal verification ensures that no obscure scenario could lead to a security breach.</li>
+</ul>
+</li>
+<li>
+<p><strong>Improved Security and Reliability</strong>:</p>
+<ul>
+<li><strong>Benefit</strong>: In systems where security is critical, formal verification can ensure that the system is free from vulnerabilities like buffer overflows, underflows, or logical inconsistencies.</li>
+<li><strong>Use Case</strong>: Industries such as defense, finance, and blockchain applications benefit significantly from this approach, where security flaws can have severe consequences.</li>
+</ul>
+</li>
+<li>
+<p><strong>Prevention of Costly Errors</strong>:</p>
+<ul>
+<li><strong>Benefit</strong>: Bugs in critical systems can lead to substantial financial loss, data breaches, or even life-threatening situations. Formal verification can prevent these by identifying errors early in the development process, thereby reducing the need for costly patches or fixes later on.</li>
+<li><strong>Use Case</strong>: Airbus uses formal methods to ensure the safety and reliability of its aircraft control systems, reducing the chance of fatal failures.</li>
+</ul>
+</li>
+<li>
+<p><strong>Increased Trustworthiness and Compliance</strong>:</p>
+<ul>
+<li><strong>Benefit</strong>: Formal verification can be used to meet regulatory standards and provide higher assurance of safety and correctness. This is crucial in regulated industries where software failure can lead to non-compliance with laws and standards.</li>
+<li><strong>Use Case</strong>: Medical software for life-support systems must meet stringent regulatory requirements, and formal verification can help ensure compliance with these.</li>
+</ul>
+</li>
+<li>
+<p><strong>Proof of Compliance with Complex Properties</strong>:</p>
+<ul>
+<li><strong>Benefit</strong>: Some properties, such as privacy, fairness, or non-repudiation in digital systems, can be challenging to validate using traditional methods. Formal verification allows developers to prove that the system respects these complex properties.</li>
+<li><strong>Use Case</strong>: Cryptographic systems, where proving zero-knowledge properties or other advanced cryptographic guarantees is crucial, benefit from formal verification.</li>
+</ul>
+</li>
+</ol>
+<h4 id="cons-of-formal-verification"><strong>Cons of Formal Verification</strong></h4>
+<ol>
+<li>
+<p><strong>Complexity and Scalability</strong>:</p>
+<ul>
+<li><strong>Challenge</strong>: Formal verification can be extremely complex and resource-intensive, especially for large systems with millions of lines of code. It may require abstracting or simplifying certain parts of the system to make verification feasible.</li>
+<li><strong>Limitation</strong>: Large-scale systems (like operating systems or large enterprise software) may be difficult to verify completely due to the high computational requirements and time involved.</li>
+</ul>
+</li>
+<li>
+<p><strong>High Cost and Time-Consuming</strong>:</p>
+<ul>
+<li><strong>Challenge</strong>: Developing formal specifications and carrying out formal verification can be more time-consuming and expensive than traditional testing. It requires specialized knowledge, tools, and a thorough understanding of formal logic and mathematics.</li>
+<li><strong>Limitation</strong>: Many businesses cannot afford to employ formal verification throughout their entire software lifecycle, as it may slow down time-to-market and increase development costs.</li>
+</ul>
+</li>
+<li>
+<p><strong>Limited Availability of Expertise</strong>:</p>
+<ul>
+<li><strong>Challenge</strong>: Formal verification requires a highly specialized skill set that not all developers or engineers possess. This creates a barrier to entry, as finding experts in this field can be challenging and costly.</li>
+<li><strong>Limitation</strong>: Smaller companies or startups may find it difficult to integrate formal methods into their development process due to the scarcity of experts and the need for specialized tools.</li>
+</ul>
+</li>
+<li>
+<p><strong>Abstraction and Oversimplification</strong>:</p>
+<ul>
+<li><strong>Challenge</strong>: In some cases, the formal models used to verify a system may be oversimplified to make verification feasible. This could lead to situations where the formal model does not accurately represent the real system.</li>
+<li><strong>Limitation</strong>: Systems with heavy reliance on external dependencies or real-time environments may require abstractions that miss critical real-world issues.</li>
+</ul>
+</li>
+<li>
+<p><strong>Not a Guarantee of Overall Correctness</strong>:</p>
+<ul>
+<li><strong>Challenge</strong>: Formal verification can only prove the correctness of a system with respect to the specifications provided. If the specification itself is flawed or incomplete, formal verification will not catch these issues.</li>
+<li><strong>Limitation</strong>: The entire verification process depends on the quality of the specification. Poorly defined specifications can lead to incorrect conclusions about the system’s behavior.</li>
+</ul>
+</li>
+<li>
+<p><strong>Limited Tool Support</strong>:</p>
+<ul>
+<li><strong>Challenge</strong>: While tools for formal verification exist (e.g., Coq, Isabelle, TLA+, and Z3), they can be difficult to use and may not integrate seamlessly with modern development environments. Moreover, different tools are better suited for specific kinds of verification, making the choice of tools critical.</li>
+<li><strong>Limitation</strong>: Developers often face challenges integrating formal verification tools into their existing workflows, which may discourage its adoption.</li>
+</ul>
+</li>
+<li>
+<p><strong>Applicability to Specific Domains</strong>:</p>
+<ul>
+<li><strong>Challenge</strong>: Not all software systems require formal verification. For many low-risk, less critical applications, the benefits may not justify the time and expense. In these cases, traditional testing approaches might be sufficient.</li>
+<li><strong>Limitation</strong>: In areas like web or mobile app development, where the consequences of failure are not catastrophic, the overhead of formal verification may outweigh the potential gains.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="slide-10-formal-verification-vs-other-methods"><strong>Slide 10: Formal Verification vs Other Methods</strong></h4>
+<ul>
+<li>
+<p><strong>Unit Testing</strong>:</p>
+<ul>
+<li>Faster, but doesn’t cover edge cases.</li>
+<li>Prone to human error.</li>
+</ul>
+</li>
+<li>
+<p><strong>Manual Audits</strong>:</p>
+<ul>
+<li>Useful for deployed contracts.</li>
+<li>Can miss subtle logic errors.</li>
+</ul>
+</li>
+<li>
+<p><strong>Bug Bounties</strong>:</p>
+<ul>
+<li>Involves the community.</li>
+<li>Limited by the skill and time of participants.</li>
+</ul>
+</li>
+<li>
+<p><strong>Static Analysis</strong>:</p>
+<ul>
+<li>Scans for known vulnerabilities.</li>
+<li>Doesn’t check the contract logic thoroughly.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-11-introduction-to-k-framework"><strong>Slide 11: Introduction to K Framework</strong></h4>
+<ul>
+<li>
+<p><strong>What is K Framework?</strong></p>
+<ul>
+<li>A formal language framework for defining and analyzing programming languages.</li>
+<li>Used to define both syntax and semantics of smart contracts.</li>
+</ul>
+</li>
+<li>
+<p><strong>Why use K Framework?</strong></p>
+<ul>
+<li>Supports multiple languages: C, Java, Solidity, etc.</li>
+<li>Provides mathematically rigorous methods for verifying contracts.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-12-k-framework-components"><strong>Slide 12: K Framework Components</strong></h4>
+<ul>
+<li><strong>1. Syntax</strong>: Defines language elements like keywords and data types.</li>
+<li><strong>2. Configuration</strong>: Defines the state (e.g., account balances in smart contracts).</li>
+<li><strong>3. Transition Rules</strong>: Define the operations that occur when a function is called.</li>
+</ul>
+<hr>
+<h4 id="slide-13-kevm-k-ethereum-virtual-machine"><strong>Slide 13: KEVM (K-Ethereum Virtual Machine)</strong></h4>
+<ul>
+<li>
+<p><strong>KEVM</strong>:</p>
+<ul>
+<li>A specification for the Ethereum Virtual Machine written in K.</li>
+<li>Verifies smart contracts at the bytecode level.</li>
+</ul>
+</li>
+<li>
+<p><strong>Benefits of KEVM</strong>:</p>
+<ul>
+<li>Detects potential vulnerabilities before deployment.</li>
+<li>Provides machine-executable, human-readable, formal EVM semantics.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-14-solidity-smart-contract-example"><strong>Slide 14: Solidity Smart Contract Example</strong></h4>
+<ul>
+<li>
+<p><strong>Sample Solidity Code</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">pragma solidity 0.4.25;
+contract ICO {
+    mapping (address =&gt; uint256) private _balances;
+    uint256 private _totalSupply;
+    uint256 private _hardCap = 200 * (10 ** 18);
+    uint256 private _rate = 2;
+      
+    function balanceOf(address owner) public view returns (uint256) {
+        return _balances[owner];
+    }
+      
+    function buy() public payable {
+        require(msg.value != 0);
+        require(_hardCap &gt;= _totalSupply + msg.value * _rate);
+        _balances[msg.sender] += msg.value * _rate;
+        _totalSupply += msg.value * _rate;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>This smart contract represents a simple ICO.</li>
+<li>Includes buy function to receive Ether and distribute tokens.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-15-high-level-specification-in-k"><strong>Slide 15: High-Level Specification in K</strong></h4>
+<ul>
+<li>
+<p><strong>High-Level Specification in K Framework</strong>:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">module ICO
+    syntax AExp ::= "buy()" | "balanceOf(Address)"
+    configuration &lt;ico&gt; ... &lt;/ico&gt;
+    rule &lt;k&gt; buy() =&gt; . &lt;/k&gt; ... requires Total + Value * 2 &lt;= HardCap
+endmodule
+</code></pre>
+</li>
+<li>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>Defines the behavior of <code>buy()</code> and <code>balanceOf()</code>.</li>
+<li>Checks for overflow and ensures tokens are distributed correctly.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-16-bytecode-level-specification-example"><strong>Slide 16: Bytecode-Level Specification Example</strong></h4>
+<ul>
+<li>
+<p><strong>EVM-Level Specification</strong>:</p>
+<pre class=" language-c"><code class="prism  language-c"><span class="token punctuation">[</span>buy<span class="token punctuation">]</span>
+k<span class="token punctuation">:</span> #execute <span class="token operator">=</span><span class="token operator">&gt;</span> #halt
+storage<span class="token punctuation">:</span>
+    <span class="token macro property">#hashedLocation({COMPILER}, {_BALANCES}, CALLER_ID) |-&gt; BAL_FROM + MSGVALUE * 2</span>
+requires<span class="token punctuation">:</span>
+    MSGVALUE <span class="token operator">&gt;</span> <span class="token number">0</span>
+    _SUPPLY <span class="token operator">+</span> MSGVALUE <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">&lt;=</span> _HARDCAP
+</code></pre>
+</li>
+<li>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>Specifies the interaction with the EVM, focusing on state changes in storage.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-17-conducting-smart-contract-audits"><strong>Slide 17: Conducting Smart Contract Audits</strong></h4>
+<ul>
+<li>
+<p><strong>Steps in Manual Review</strong>:</p>
+<ol>
+<li>Review contract code and business logic.</li>
+<li>Identify known vulnerabilities (e.g., reentrancy).</li>
+<li>Analyze gas usage and optimization opportunities.</li>
+</ol>
+</li>
+<li>
+<p><strong>Automated Tools</strong>:</p>
+<ul>
+<li><strong>Mythril</strong>: A static analysis tool for detecting vulnerabilities.</li>
+<li><strong>Slither</strong>: Analyzes Solidity code for security risks.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-18-writing-comprehensive-audit-reports"><strong>Slide 18: Writing Comprehensive Audit Reports</strong></h4>
+<ul>
+<li>
+<p><strong>Report Components</strong>:</p>
+<ol>
+<li>Executive Summary: Overview of the findings.</li>
+<li>Detailed Vulnerability Description: List vulnerabilities with severity.</li>
+<li>Mitigation Recommendations: Suggest fixes for each issue.</li>
+<li>Test Results: Include unit tests and any proofs from formal verification.</li>
+</ol>
+</li>
+<li>
+<p><strong>Tools</strong>: Integration with CI/CD for continuous monitoring and audit reporting.</p>
+</li>
+</ul>
+<hr>
+<h4 id="slide-19-third-party-auditing-services"><strong>Slide 19: Third-Party Auditing Services</strong></h4>
+<ul>
+<li>
+<p><strong>Popular Auditing Services</strong>:</p>
+<ol>
+<li><strong>CertiK</strong>: Specializes in formal verification for blockchain projects.</li>
+<li><strong>Trail of Bits</strong>: Provides comprehensive security assessments.</li>
+<li><strong>OpenZeppelin</strong>: Smart contract library with auditing services.</li>
+</ol>
+</li>
+<li>
+<p><strong>Certifications</strong>:</p>
+<ul>
+<li>Smart contract auditing certifications, such as CertiK Shield and Quantstamp Badge, indicate contract safety and reliability.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-20-case-study-formal-verification"><strong>Slide 20: Case Study: Formal Verification</strong></h4>
+<p>Let’s walk through a practical example of how formal verification can be applied to an ICO smart contract. We will use a simplified Solidity contract, and then proceed through the steps of defining the formal specification, running verification with KEVM, and detecting a potential error in the contract.</p>
+<h3 id="smart-contract-code-example-simple-ico-in-solidity"><strong>Smart Contract Code Example: Simple ICO in Solidity</strong></h3>
+<p>Here’s a basic ICO smart contract in Solidity:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleICO {
+    address public owner;
+    uint256 public hardCap;
+    uint256 public amountRaised;
+    mapping(address =&gt; uint256) public balances;
+
+    constructor(uint256 _hardCap) {
+        owner = msg.sender;
+        hardCap = _hardCap;
+        amountRaised = 0;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not authorized");
+        _;
+    }
+
+    function contribute() public payable {
+        require(msg.value &gt; 0, "Contribution must be greater than 0");
+        require(amountRaised + msg.value &lt;= hardCap, "Hard cap reached");
+
+        balances[msg.sender] += msg.value;
+        amountRaised += msg.value;
+    }
+
+    function withdrawFunds() public onlyOwner {
+        require(amountRaised &gt;= hardCap, "Hard cap not reached");
+        payable(owner).transfer(amountRaised);
+    }
+
+    function refund() public {
+        require(amountRaised &lt; hardCap, "Refunds not allowed after hard cap");
+        uint256 contributed = balances[msg.sender];
+        require(contributed &gt; 0, "No contributions to refund");
+
+        balances[msg.sender] = 0;
+        payable(msg.sender).transfer(contributed);
+    }
+}
+</code></pre>
+<h3 id="steps-in-formal-verification"><strong>Steps in Formal Verification</strong></h3>
+<h4 id="define-the-specification-high-level-and-bytecode"><strong>1. Define the Specification: High-Level and Bytecode</strong></h4>
+<p>The formal specification consists of both <strong>high-level functional requirements</strong> and <strong>low-level bytecode properties</strong>.</p>
+<h5 id="high-level-specification"><strong>High-Level Specification</strong>:</h5>
+<p>The key functional requirements for this ICO contract are:</p>
+<ul>
+<li><strong>Contribution Rule</strong>: Users can contribute ETH, but the total amount raised must not exceed the hard cap.</li>
+<li><strong>Withdraw Rule</strong>: The owner can withdraw funds only after the hard cap has been reached.</li>
+<li><strong>Refund Rule</strong>: If the hard cap has not been reached, users can request a refund of their contribution.</li>
+</ul>
+<h5 id="example-requirements"><strong>Example Requirements</strong>:</h5>
+<ul>
+<li>Contributions must not exceed the <code>hardCap</code>:<pre class=" language-plaintext"><code class="prism  language-plaintext">require(amountRaised + msg.value &lt;= hardCap)
+</code></pre>
+</li>
+<li>Only the owner can withdraw the funds:<pre class=" language-plaintext"><code class="prism  language-plaintext">require(msg.sender == owner)
+</code></pre>
+</li>
+<li>Refunds are allowed only if the total amount raised is less than the hard cap:<pre class=" language-plaintext"><code class="prism  language-plaintext">require(amountRaised &lt; hardCap)
+</code></pre>
+</li>
+</ul>
+<h5 id="bytecode-level-specification"><strong>Bytecode-Level Specification</strong>:</h5>
+<p>At the bytecode level, we ensure that:</p>
+<ul>
+<li><strong>Overflow/Underflow checks</strong>: Prevent arithmetic overflows in <code>amountRaised + msg.value</code>.</li>
+<li><strong>Access control checks</strong>: Ensure that only the owner can call the <code>withdrawFunds()</code> function.</li>
+<li><strong>Gas usage properties</strong>: Ensure that all functions behave within a certain gas limit to avoid reentrancy issues.</li>
+</ul>
+<h4 id="use-kevm-to-run-verification"><strong>2. Use KEVM to Run Verification</strong></h4>
+<p>Using the K Framework and KEVM, we can formally verify that the contract adheres to its specification. Here’s the process:</p>
+<ol>
+<li><strong>Translate the Contract to KEVM</strong>: Convert the compiled bytecode of the Solidity contract into KEVM’s formal model.</li>
+<li><strong>Apply Specifications</strong>: Encode the formal specification into KEVM. This will include the functional requirements (e.g., no overflow, correct access control) and low-level bytecode checks.</li>
+<li><strong>Run the Verification</strong>: Execute the KEVM engine to check whether the contract satisfies the formal specifications.</li>
+</ol>
+<p>For example, the following properties could be encoded:</p>
+<ul>
+<li><strong>Overflow prevention</strong>:<pre class=" language-k"><code class="prism  language-k">rule &lt;k&gt; #underflow_check =&gt; . ... &lt;/k&gt; when  amountRaised + contribution &gt;= hardCap 
+</code></pre>
+</li>
+<li><strong>Access control</strong>:<pre class=" language-k"><code class="prism  language-k">rule &lt;k&gt; owner_check =&gt; require( msg.sender == owner) &lt;/k&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="error-handling-detecting-bugs-like-overflow"><strong>3. Error Handling: Detecting Bugs Like Overflow</strong></h4>
+<p>Now, let’s simulate a bug in the code and see how formal verification would catch it.</p>
+<h5 id="example-error-changing-require_hardcap--amountraised-to-require_hardcap--amountraised-in-withdrawfunds"><strong>Example Error</strong>: Changing <code>require(_hardCap &gt;= amountRaised)</code> to <code>require(_hardCap &lt;= amountRaised)</code> in <code>withdrawFunds()</code></h5>
+<p>Imagine we accidentally modify the condition in the <code>withdrawFunds()</code> function, introducing a subtle bug:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">function withdrawFunds() public onlyOwner {
+    // Bug: incorrect condition
+    require(amountRaised &lt;= hardCap, "Hard cap not reached");
+    payable(owner).transfer(amountRaised);
+}
+</code></pre>
+<p>This error allows the owner to withdraw funds <strong>before</strong> the hard cap is reached, violating the original contract logic.</p>
+<h5 id="kevm-verification-process"><strong>KEVM Verification Process</strong>:</h5>
+<p>When we run the formal verification with this bug in place, KEVM detects that the property of the <code>withdrawFunds</code> function (which requires the hard cap to be reached before withdrawing) is violated. The bytecode no longer conforms to the formal specification because the condition <code>require(amountRaised &gt;= hardCap)</code> is incorrectly modified.</p>
+<ul>
+<li>
+<p><strong>KEVM will flag the following</strong>:</p>
+<ul>
+<li><strong>Specification Violated</strong>: The withdrawal logic is supposed to prevent funds from being withdrawn until the hard cap is reached. However, with the bug, the contract allows withdrawal when the raised amount is less than the hard cap.</li>
+<li><strong>Detected Misbehavior</strong>: KEVM detects this deviation by checking the original formal specification of the contract. The property stating that <code>withdrawFunds</code> can only be executed when the amount raised is greater than or equal to the hard cap fails.</li>
+</ul>
+</li>
+<li>
+<p><strong>Formal Warning</strong>: The proof fails, and KEVM provides a warning that the modified condition violates the business logic.</p>
+</li>
+</ul>
+<h5 id="other-possible-bugs-detected"><strong>Other Possible Bugs Detected</strong>:</h5>
+<ul>
+<li>
+<p><strong>Overflow Bug in <code>contribute()</code></strong>: If there’s no protection against overflow in <code>amountRaised + msg.value</code>, an attacker could trigger a wraparound, resulting in an incorrect <code>amountRaised</code> value. KEVM checks for this and ensures that the contract handles overflow errors correctly.</p>
+<p>Example:</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">// Without proper overflow checks, this could lead to an error.
+require(amountRaised + msg.value &lt;= hardCap, "Hard cap reached");
+</code></pre>
+</li>
+<li>
+<p><strong>Access Control Errors</strong>: If the <code>onlyOwner</code> modifier were accidentally removed from <code>withdrawFunds()</code>, KEVM would detect that unauthorized users can call the withdrawal function, which violates the specification that only the contract owner should have this ability.</p>
+</li>
+</ul>
+<h3 id="conclusion-benefits-of-formal-verification-in-smart-contracts"><strong>Conclusion: Benefits of Formal Verification in Smart Contracts</strong></h3>
+<p>By applying formal verification to this simple ICO contract, we ensure that:</p>
+<ul>
+<li><strong>Functional correctness</strong>: The contract behaves as intended, particularly around critical operations like contributing, withdrawing, and refunding.</li>
+<li><strong>Security</strong>: Bugs like overflow, underflow, and access control violations are detected early, before the contract is deployed.</li>
+<li><strong>Reliability</strong>: Formal verification guarantees that the contract will behave correctly under all possible conditions, reducing the risk of financial loss or exploitation.</li>
+</ul>
+<hr>
+<h4 id="slide-21-conclusion"><strong>Slide 21: Conclusion</strong></h4>
+<ul>
+<li>
+<p><strong>Key Takeaways</strong>:</p>
+<ul>
+<li>Formal verification provides a rigorous, mathematical method to ensure smart contract correctness.</li>
+<li>It complements traditional auditing techniques like static analysis and manual review.</li>
+<li>Tools like K Framework and KEVM allow developers to verify contract correctness before deployment.</li>
+</ul>
+</li>
+<li>
+<p><strong>Final Thought</strong>:</p>
+<ul>
+<li>As the smart contract ecosystem grows, the need for robust, verified contracts will continue to increase, making formal verification a critical skill.</li>
+</ul>
+</li>
+</ul>
+<hr>
+</div>
+</body>
+
+</html>

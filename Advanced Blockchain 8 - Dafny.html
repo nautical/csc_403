@@ -1,0 +1,638 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="dafny-examples">Dafny Examples</h3>
+<h4 id="method-abs">Method: <code>abs</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method abs(x: int) returns (y: int)
+
+ensures true
+
+{
+
+if x &lt; 0 {
+
+y := -x;
+
+} else {
+
+y := x;
+
+}
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method abs(x: int) returns (y: int)</code></strong>:</li>
+</ol>
+<ul>
+<li>
+<p><strong><code>method</code></strong>: This keyword indicates the definition of a method. In Dafny, methods are used to define procedures that can take parameters, execute code, and return values.</p>
+</li>
+<li>
+<p><strong><code>abs</code></strong>: The name of the method, which computes the absolute value of the input <code>x</code>.</p>
+</li>
+<li>
+<p><strong><code>(x: int)</code></strong>: A parameter <code>x</code> of type <code>int</code> (integer) that the method will accept.</p>
+</li>
+<li>
+<p><strong><code>returns (y: int)</code></strong>: Indicates that the method will return a value named <code>y</code>, which is also of type <code>int</code>.</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong><code>ensures true</code></strong>:</li>
+</ol>
+<ul>
+<li><strong><code>ensures</code></strong>: This keyword specifies a postcondition that must hold true when the method completes. Here, <code>true</code> indicates that there are no specific conditions that need to be met upon method completion.</li>
+</ul>
+<ol start="3">
+<li><strong><code>if x &lt; 0 {</code></strong>:</li>
+</ol>
+<ul>
+<li>This line starts a conditional statement that checks if <code>x</code> is less than 0.</li>
+</ul>
+<ol start="4">
+<li><strong><code>y := -x;</code></strong>:</li>
+</ol>
+<ul>
+<li><strong><code>y := -x;</code></strong>: This line assigns the negation of <code>x</code> to <code>y</code> if <code>x</code> is negative, effectively computing the absolute value.</li>
+</ul>
+<ol start="5">
+<li><strong><code>else {</code></strong>:</li>
+</ol>
+<ul>
+<li>This marks the beginning of the alternative branch if <code>x</code> is not negative.</li>
+</ul>
+<ol start="6">
+<li><strong><code>y := x;</code></strong>:</li>
+</ol>
+<ul>
+<li>If <code>x</code> is not negative, <code>y</code> is assigned the value of <code>x</code>, meaning the absolute value of a non-negative number is the number itself.</li>
+</ul>
+<h4 id="method-foo">Method: <code>foo</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method foo(x: int)
+
+requires x &gt;= 0
+
+{
+
+var y := abs(x);
+
+// assert( y == x);
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method foo(x: int)</code></strong>:</li>
+</ol>
+<ul>
+<li>Another method definition. This one is named <code>foo</code> and takes one parameter <code>x</code> of type <code>int</code>.</li>
+</ul>
+<ol start="2">
+<li><strong><code>requires x &gt;= 0</code></strong>:</li>
+</ol>
+<ul>
+<li><strong><code>requires</code></strong>: This keyword introduces a precondition that must be satisfied before the method can be executed. In this case, <code>x</code> must be greater than or equal to 0.</li>
+</ul>
+<ol start="3">
+<li><strong><code>var y := abs(x);</code></strong>:</li>
+</ol>
+<ul>
+<li>This line declares a variable <code>y</code> and assigns it the result of calling the <code>abs</code> method with <code>x</code> as the argument.</li>
+</ul>
+<ol start="4">
+<li><strong><code>// assert( y == x);</code></strong>:</li>
+</ol>
+<ul>
+<li>This commented line suggests that there should be an assertion to check if <code>y</code> equals <code>x</code>. Since <code>x</code> is guaranteed to be non-negative, this assertion would hold true if the <code>abs</code> method is functioning correctly.</li>
+</ul>
+<h4 id="method-max">Method: <code>max</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method max(x: int, y: int) returns (m: int)
+
+requires true;
+
+ensures true;
+
+{
+
+var r : int;
+
+if x &gt; y {
+
+r := 0;
+
+} else {
+
+r := 1;
+
+}
+
+m := r;
+
+// return r;
+
+// return m;
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method max(x: int, y: int) returns (m: int)</code></strong>:</li>
+</ol>
+<ul>
+<li>This defines a method named <code>max</code> that takes two integers <code>x</code> and <code>y</code> and returns an integer <code>m</code>.</li>
+</ul>
+<ol start="2">
+<li><strong><code>requires true;</code></strong>:</li>
+</ol>
+<ul>
+<li>A precondition that is always satisfied (i.e., no restrictions on input values).</li>
+</ul>
+<ol start="3">
+<li><strong><code>ensures true;</code></strong>:</li>
+</ol>
+<ul>
+<li>A postcondition that is always satisfied (no specific conditions required after execution).</li>
+</ul>
+<ol start="4">
+<li><strong><code>var r : int;</code></strong>:</li>
+</ol>
+<ul>
+<li>Declares a variable <code>r</code> of type <code>int</code>.</li>
+</ul>
+<ol start="5">
+<li><strong><code>if x &gt; y {</code></strong>:</li>
+</ol>
+<ul>
+<li>Starts a conditional statement to check if <code>x</code> is greater than <code>y</code>.</li>
+</ul>
+<ol start="6">
+<li><strong><code>r := 0;</code></strong>:</li>
+</ol>
+<ul>
+<li>If <code>x</code> is greater than <code>y</code>, assigns 0 to <code>r</code>.</li>
+</ul>
+<ol start="7">
+<li><strong><code>else { r := 1; }</code></strong>:</li>
+</ol>
+<ul>
+<li>If <code>x</code> is not greater than <code>y</code>, assigns 1 to <code>r</code>.</li>
+</ul>
+<ol start="8">
+<li><strong><code>m := r;</code></strong>:</li>
+</ol>
+<ul>
+<li>Assigns the value of <code>r</code> to the return variable <code>m</code>. Note: This is incorrect logic for finding the maximum; it should instead return <code>x</code> or <code>y</code>.</li>
+</ul>
+<h4 id="method-ex1">Method: <code>ex1</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method ex1(n: int)
+
+requires true
+
+ensures true
+
+{
+
+var i := 0;
+
+while i &lt; n
+
+invariant true
+
+// decreases *
+
+{
+
+i := i + 1;
+
+}
+
+// assert i == n;
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method ex1(n: int)</code></strong>:</li>
+</ol>
+<ul>
+<li>Defines a method named <code>ex1</code> that takes an integer <code>n</code>.</li>
+</ul>
+<ol start="2">
+<li><strong><code>requires true</code></strong>:</li>
+</ol>
+<ul>
+<li>No specific preconditions; the method can be called with any integer.</li>
+</ul>
+<ol start="3">
+<li><strong><code>ensures true</code></strong>:</li>
+</ol>
+<ul>
+<li>No specific postconditions; the method will always complete successfully.</li>
+</ul>
+<ol start="4">
+<li><strong><code>var i := 0;</code></strong>:</li>
+</ol>
+<ul>
+<li>Initializes a variable <code>i</code> to 0.</li>
+</ul>
+<ol start="5">
+<li><strong><code>while i &lt; n</code></strong>:</li>
+</ol>
+<ul>
+<li>Begins a while loop that continues as long as <code>i</code> is less than <code>n</code>.</li>
+</ul>
+<ol start="6">
+<li><strong><code>invariant true</code></strong>:</li>
+</ol>
+<ul>
+<li><strong><code>invariant</code></strong>: A condition that must hold true before and after each iteration of the loop. Here, it is always <code>true</code>, which means it doesn’t provide any useful information.</li>
+</ul>
+<ol start="7">
+<li><strong><code>// decreases *</code></strong>:</li>
+</ol>
+<ul>
+<li><strong><code>decreases</code></strong>: A clause that indicates a measure that decreases with each iteration of the loop, ensuring termination. In this case, it is left blank, which is incorrect for proving termination.</li>
+</ul>
+<ol start="8">
+<li><strong><code>i := i + 1;</code></strong>:</li>
+</ol>
+<ul>
+<li>Increments <code>i</code> by 1 on each iteration.</li>
+</ul>
+<ol start="9">
+<li><strong><code>// assert i == n;</code></strong>:</li>
+</ol>
+<ul>
+<li>A commented assertion to verify that after the loop, <code>i</code> should equal <code>n</code>.</li>
+</ul>
+<h4 id="method-foo2">Method: <code>foo2</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method foo2()
+
+ensures false
+
+decreases *
+
+{
+
+while true
+
+decreases *
+
+{
+
+}
+
+assert false;
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method foo2()</code></strong>:</li>
+</ol>
+<ul>
+<li>Defines a method <code>foo2</code> that takes no parameters.</li>
+</ul>
+<ol start="2">
+<li><strong><code>ensures false</code></strong>:</li>
+</ol>
+<ul>
+<li>Specifies a postcondition that can never be satisfied, indicating that this method will not terminate normally.</li>
+</ul>
+<ol start="3">
+<li><strong><code>decreases *</code></strong>:</li>
+</ol>
+<ul>
+<li>Indicates an unspecified measure that is supposed to decrease, which does not apply because the method cannot complete normally.</li>
+</ul>
+<ol start="4">
+<li><strong><code>while true</code></strong>:</li>
+</ol>
+<ul>
+<li>An infinite loop that will never terminate under normal circumstances.</li>
+</ul>
+<ol start="5">
+<li><strong><code>assert false;</code></strong>:</li>
+</ol>
+<ul>
+<li>This assertion states that false should hold at this point, which is always incorrect, indicating that the method cannot reach this point without failing.</li>
+</ul>
+<h4 id="method-find">Method: <code>find</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method find(a: seq&lt;int&gt;, key: int) returns (index: int)
+
+requires true
+
+ensures true
+
+{
+
+index := 0;
+
+while index &lt; |a|
+
+invariant true
+
+{
+
+if a[index] == key {
+
+return 0;
+
+}
+
+index := index + 2;
+
+}
+
+index := -10;
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method find(a: seq&lt;int&gt;, key: int) returns (index: int)</code></strong>:</li>
+</ol>
+<ul>
+<li>Defines a method <code>find</code> that takes a sequence of integers <code>a</code> and an integer <code>key</code>, returning an integer <code>index</code>.</li>
+</ul>
+<ol start="2">
+<li><strong><code>requires true</code></strong>:</li>
+</ol>
+<ul>
+<li>No preconditions for this method.</li>
+</ul>
+<ol start="3">
+<li><strong><code>ensures true</code></strong>:</li>
+</ol>
+<ul>
+<li>No specific postconditions for this method.</li>
+</ul>
+<ol start="4">
+<li><strong><code>index := 0;</code></strong>:</li>
+</ol>
+<ul>
+<li>Initializes the variable <code>index</code> to 0.</li>
+</ul>
+<ol start="5">
+<li><strong><code>while index &lt; |a|</code></strong>:</li>
+</ol>
+<ul>
+<li>Begins a while loop that continues as long as <code>index</code> is less than the length of sequence <code>a</code>.</li>
+</ul>
+<ol start="6">
+<li><strong><code>invariant true</code></strong>:</li>
+</ol>
+<ul>
+<li>A loop invariant that is always true but does not provide meaningful information.</li>
+</ul>
+<ol start="7">
+<li><strong><code>if a[index] == key { return 0; }</code></strong>:</li>
+</ol>
+<ul>
+<li>If the element at the current <code>index</code> in <code>a</code> equals <code>key</code>, the method returns 0, which is incorrect as it should return the index of the key.</li>
+</ul>
+<ol start="8">
+<li><strong><code>index := index + 2;</code></strong>:</li>
+</ol>
+<ul>
+<li>Increments <code>index</code> by 2, skipping every other element.</li>
+</ul>
+<ol start="9">
+<li><strong><code>index := -10;</code></strong>:</li>
+</ol>
+<ul>
+<li>After the loop ends, sets <code>index</code> to -10, which is not a meaningful result for the search.</li>
+</ul>
+<h4 id="method-ispalindrome">Method: <code>isPalindrome</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method isPalindrome(a: seq&lt;char&gt;) returns (b
+
+  
+
+: bool)
+
+{
+
+return true;
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method isPalindrome(a: seq&lt;char&gt;) returns (b: bool)</code></strong>:</li>
+</ol>
+<ul>
+<li>Defines a method <code>isPalindrome</code> that takes a sequence of characters <code>a</code> and returns a boolean <code>b</code>.</li>
+</ul>
+<ol start="2">
+<li><strong><code>return true;</code></strong>:</li>
+</ol>
+<ul>
+<li>The method currently always returns <code>true</code>, without any logic to check for a palindrome.</li>
+</ul>
+<h4 id="predicate-sorted">Predicate: <code>sorted</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+predicate sorted(a: seq&lt;int&gt;)
+
+{
+
+forall j, k::0 &lt;= j &lt; k &lt; |a| ==&gt; a[j] &lt;= a[k]
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>predicate sorted(a: seq&lt;int&gt;)</code></strong>:</li>
+</ol>
+<ul>
+<li>Defines a predicate named <code>sorted</code> that checks if a sequence of integers <code>a</code> is sorted in ascending order.</li>
+</ul>
+<ol start="2">
+<li><strong><code>forall j, k::0 &lt;= j &lt; k &lt; |a| ==&gt; a[j] &lt;= a[k]</code></strong>:</li>
+</ol>
+<ul>
+<li>This quantifier states that for all indices <code>j</code> and <code>k</code> within the valid range of the sequence, if <code>j</code> is less than <code>k</code>, then the value at <code>j</code> must be less than or equal to the value at <code>k</code>.</li>
+</ul>
+<h4 id="method-unique">Method: <code>unique</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method unique(a: seq&lt;int&gt;) returns (b: seq&lt;int&gt;)
+
+requires sorted(a)
+
+ensures true
+
+{
+
+return a;
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method unique(a: seq&lt;int&gt;) returns (b: seq&lt;int&gt;)</code></strong>:</li>
+</ol>
+<ul>
+<li>Defines a method <code>unique</code> that takes a sorted sequence of integers <code>a</code> and returns a sequence <code>b</code>.</li>
+</ul>
+<ol start="2">
+<li><strong><code>requires sorted(a)</code></strong>:</li>
+</ol>
+<ul>
+<li>Specifies a precondition that the input sequence must be sorted.</li>
+</ul>
+<ol start="3">
+<li><strong><code>ensures true</code></strong>:</li>
+</ol>
+<ul>
+<li>No specific postconditions are required.</li>
+</ul>
+<ol start="4">
+<li><strong><code>return a;</code></strong>:</li>
+</ol>
+<ul>
+<li>Currently, this method simply returns the input sequence <code>a</code> without removing duplicates.</li>
+</ul>
+<h4 id="method-main">Method: <code>Main</code></h4>
+<pre class=" language-dafny"><code class="prism  language-dafny">
+method Main() {
+
+var r := find([], 1);
+
+print r, "\n";
+
+  
+
+r := find([0,3,5,7], 5);
+
+print r, "\n";
+
+  
+
+var s1 := ['a'];
+
+var r1 := isPalindrome(s1);
+
+print "is [", s1, "]", " a isPalindrome? ", r1, " \n";
+
+  
+
+s1 := [];
+
+r1 := isPalindrome(s1);
+
+print "is [", s1, "]", " a isPalindrome? ", r1, " \n";
+
+  
+
+s1 := ['a', 'b'];
+
+r1 := isPalindrome(s1);
+
+print "is [", s1, "]", " a isPalindrome? ", r1, " \n";
+
+  
+
+s1 := ['a', 'b', 'a'];
+
+r1 := isPalindrome(s1);
+
+print "is [", s1, "]", " a isPalindrome? ", r1, " \n";
+
+  
+
+var i := [0,1,3,3,5,5,7];
+
+var s := unique(i);
+
+print "unique applied to ", i, " is ", s, "\n";
+
+}
+
+</code></pre>
+<ol>
+<li><strong><code>method Main() {</code></strong>:</li>
+</ol>
+<ul>
+<li>Defines the entry point for the program.</li>
+</ul>
+<ol start="2">
+<li><strong><code>var r := find([], 1);</code></strong>:</li>
+</ol>
+<ul>
+<li>Calls the <code>find</code> method with an empty sequence and prints the result.</li>
+</ul>
+<ol start="3">
+<li><strong><code>print r, "\n";</code></strong>:</li>
+</ol>
+<ul>
+<li>Prints the result of the <code>find</code> method followed by a newline.</li>
+</ul>
+<ol start="4">
+<li><strong>Repeated Calls to <code>isPalindrome</code></strong>:</li>
+</ol>
+<ul>
+<li>Several calls are made to the <code>isPalindrome</code> method with different character sequences, printing the results each time.</li>
+</ul>
+<ol start="5">
+<li><strong><code>var i := [0,1,3,3,5,5,7];</code></strong>:</li>
+</ol>
+<ul>
+<li>Initializes a sequence of integers <code>i</code> with some duplicates.</li>
+</ul>
+<ol start="6">
+<li><strong><code>var s := unique(i);</code></strong>:</li>
+</ol>
+<ul>
+<li>Calls the <code>unique</code> method to remove duplicates from the sequence.</li>
+</ul>
+<ol start="7">
+<li><strong><code>print "unique applied to ", i, " is ", s, "\n";</code></strong>:</li>
+</ol>
+<ul>
+<li>Prints the result of applying the <code>unique</code> method to the sequence <code>i</code>.</li>
+</ul>
+<h3 id="summary-of-terms">Summary of Terms</h3>
+<ul>
+<li>
+<p><strong>Method</strong>: A named sequence of instructions that can take inputs and return outputs.</p>
+</li>
+<li>
+<p><strong>Ensures</strong>: Specifies the conditions that must hold true after the method execution.</p>
+</li>
+<li>
+<p><strong>Requires</strong>: Specifies the conditions that must be true before executing the method.</p>
+</li>
+<li>
+<p><strong>Invariant</strong>: A condition that holds true before and after each iteration of a loop.</p>
+</li>
+<li>
+<p><strong>Decreases</strong>: A clause used to ensure that a loop will eventually terminate by indicating a measure that decreases with each iteration.</p>
+</li>
+<li>
+<p><strong>Predicate</strong>: A function that returns a boolean value, typically used to specify properties of data.</p>
+</li>
+<li>
+<p><strong>Return</strong>: The output of a method, indicated by the <code>returns</code> keyword.</p>
+</li>
+</ul>
+</div>
+</body>
+
+</html>

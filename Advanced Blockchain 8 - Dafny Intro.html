@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="dafny---installation-and-formal-verification-of-smart-contracts"><strong>Dafny - Installation and Formal Verification of Smart Contracts</strong></h3>
+<hr>
+<h4 id="slide-1-what-is-dafny">Slide 1: <strong>What is Dafny?</strong></h4>
+<ul>
+<li><strong>Definition:</strong> Dafny is a programming language with built-in specification constructs that facilitate formal verification.</li>
+<li><strong>Key Features:</strong>
+<ul>
+<li>Automatically verifies the correctness of programs based on pre- and post-conditions.</li>
+<li>Integrates seamlessly with formal methods to ensure programs meet their specification.</li>
+<li>Ideal for proving properties of smart contracts like correctness, safety, and fairness.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-2-why-use-dafny-for-smart-contracts">Slide 2: <strong>Why Use Dafny for Smart Contracts?</strong></h4>
+<ul>
+<li>
+<p><strong>Why Formal Verification is Critical:</strong></p>
+<ul>
+<li>Smart contracts, once deployed, cannot be easily altered, so verifying correctness beforehand is essential.</li>
+<li>Formal verification ensures that smart contracts meet their specification under all possible inputs and scenarios.</li>
+</ul>
+</li>
+<li>
+<p><strong>Advantages of Dafny:</strong></p>
+<ul>
+<li>Combines specification and programming into one language.</li>
+<li>Enables developers to define preconditions, postconditions, and invariants, ensuring that smart contracts behave as expected.</li>
+<li>Automatically checks logical correctness at compile time.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-3-installing-dafny">Slide 3: <strong>Installing Dafny</strong></h4>
+<ol>
+<li>
+<p><strong>Pre-requisites:</strong></p>
+<ul>
+<li>.NET 6 SDK (for Windows, Linux, macOS).</li>
+<li>Optionally, Visual Studio Code with Dafny extension for ease of development.</li>
+</ul>
+</li>
+<li>
+<p><strong>Installation Steps:</strong></p>
+<ol>
+<li>
+<p><strong>Install .NET 6 SDK:</strong></p>
+<ul>
+<li>For Linux/Ubuntu:<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">sudo</span> apt <span class="token function">install</span> -y dotnet-sdk-6.0
+</code></pre>
+</li>
+<li>For macOS:<pre class=" language-bash"><code class="prism  language-bash">brew <span class="token function">install</span> --cask dotnet-sdk
+</code></pre>
+</li>
+<li>For Windows:<br>
+Download from: <a href="https://dotnet.microsoft.com/download">https://dotnet.microsoft.com/download</a></li>
+</ul>
+</li>
+<li>
+<p><strong>Install Dafny via .NET:</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash">dotnet tool <span class="token function">install</span> -g dafny
+</code></pre>
+</li>
+<li>
+<p><strong>Verify Installation:</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash">dafny --version
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Optional: Install Dafny Extension in Visual Studio Code:</strong></p>
+<ul>
+<li>Open Visual Studio Code.</li>
+<li>Go to Extensions (Ctrl+Shift+X) and search for “Dafny”.</li>
+<li>Install the extension for integrated Dafny support.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="slide-4-dafny-basics">Slide 4: <strong>Dafny Basics</strong></h4>
+<ul>
+<li>
+<p><strong>Dafny Program Structure:</strong></p>
+<ul>
+<li><strong>Methods:</strong> Define the functionality (like smart contract functions).</li>
+<li><strong>Preconditions:</strong> Specify the conditions that must be true before the method runs (e.g., user balance must be sufficient).</li>
+<li><strong>Postconditions:</strong> State what must hold true after the method execution (e.g., balances are updated correctly).</li>
+<li><strong>Invariants:</strong> Define properties that remain unchanged during the method’s execution.</li>
+</ul>
+</li>
+<li>
+<p><strong>Formal Verification:</strong></p>
+<ul>
+<li>Dafny will attempt to prove the correctness of the method based on the preconditions and postconditions.</li>
+<li>If any logical errors are found, Dafny will report them.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-5-formal-verification-using-dafny">Slide 5: <strong>Formal Verification Using Dafny</strong></h4>
+<ul>
+<li>
+<p><strong>Key Concepts:</strong></p>
+<ol>
+<li><strong>Method Contracts:</strong>
+<ul>
+<li>Preconditions: Ensure that inputs meet required conditions.</li>
+<li>Postconditions: Ensure that outputs and state changes meet expectations.</li>
+</ul>
+</li>
+<li><strong>Loop Invariants:</strong> Ensure that certain properties hold true within loops.</li>
+<li><strong>Assertions:</strong> Allow you to specify properties that must be true at certain points in the code.</li>
+</ol>
+</li>
+<li>
+<p><strong>Verification Workflow:</strong></p>
+<ol>
+<li>Write the smart contract in Dafny.</li>
+<li>Define preconditions, postconditions, and invariants.</li>
+<li>Use Dafny to verify the correctness of the contract.</li>
+<li>Dafny generates a formal proof or provides counterexamples if verification fails.</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h4 id="slide-6-example-smart-contract-simple-token-transfer">Slide 6: <strong>Example Smart Contract: Simple Token Transfer</strong></h4>
+<ul>
+<li>
+<p><strong>Problem Statement:</strong></p>
+<ul>
+<li>A simple smart contract that transfers tokens between two accounts.</li>
+</ul>
+</li>
+<li>
+<p><strong>Basic Dafny Method:</strong></p>
+<pre class=" language-dafny"><code class="prism  language-dafny">method Transfer(sender: int, receiver: int, amount: int)
+    requires sender != receiver
+    requires amount &gt; 0
+    requires balance[sender] &gt;= amount
+    modifies balance
+    ensures balance[sender] == old(balance[sender]) - amount
+    ensures balance[receiver] == old(balance[receiver]) + amount
+{
+    balance[sender] := balance[sender] - amount;
+    balance[receiver] := balance[receiver] + amount;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><strong>Preconditions:</strong> Ensure the sender and receiver are different, and the sender has sufficient balance to transfer tokens.</li>
+<li><strong>Postconditions:</strong> Ensure the sender’s balance decreases by the transfer amount and the receiver’s balance increases accordingly.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-7-formalizing-the-smart-contract-in-dafny">Slide 7: <strong>Formalizing the Smart Contract in Dafny</strong></h4>
+<ul>
+<li>
+<p><strong>Defining Preconditions and Postconditions:</strong></p>
+<ul>
+<li>Preconditions guarantee that only valid inputs are allowed.</li>
+<li>Postconditions guarantee that the method will behave correctly, ensuring that balances are updated properly after the transfer.</li>
+</ul>
+</li>
+<li>
+<p><strong>Defining Invariants (optional):</strong></p>
+<pre class=" language-dafny"><code class="prism  language-dafny">method Transfer(sender: int, receiver: int, amount: int)
+    requires sender != receiver
+    requires amount &gt; 0
+    requires balance[sender] &gt;= amount
+    modifies balance
+    ensures balance[sender] == old(balance[sender]) - amount
+    ensures balance[receiver] == old(balance[receiver]) + amount
+    ensures forall i :: 0 &lt;= i &lt; balance.Length ==&gt; balance[i] &gt;= 0
+{
+    balance[sender] := balance[sender] - amount;
+    balance[receiver] := balance[receiver] + amount;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><strong>Invariant:</strong> Ensure that all balances remain non-negative after the transaction.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-8-running-formal-verification-in-dafny">Slide 8: <strong>Running Formal Verification in Dafny</strong></h4>
+<ol>
+<li>
+<p><strong>Verify the Contract:</strong></p>
+<ul>
+<li>In Visual Studio Code or from the terminal, run the verification command:<pre class=" language-bash"><code class="prism  language-bash">dafny contract.dfy
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Check Verification Output:</strong></p>
+<ul>
+<li>Dafny will either confirm that the contract satisfies all preconditions, postconditions, and invariants, or provide a counterexample if verification fails.</li>
+</ul>
+</li>
+<li>
+<p><strong>Interpret Dafny’s Output:</strong></p>
+<ul>
+<li>If any assertions or conditions are violated, Dafny will point out the specific line and provide details about the issue.</li>
+</ul>
+</li>
+</ol>
+<hr>
+</div>
+</body>
+
+</html>
