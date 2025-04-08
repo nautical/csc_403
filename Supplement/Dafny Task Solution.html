@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="answer-dafny-erc-20-transfer-implementation"><strong>Answer: Dafny ERC-20 <code>Transfer</code> Implementation</strong></h3>
+<pre class=" language-dafny"><code class="prism  language-dafny">class  Token {
+
+// Map storing account balances where key is account ID and value is balance
+
+var balances: map&lt;int, int&gt;
+
+  
+
+/* Requirements:
+
+* 1. Transfers amount tokens from the caller's account to recipient.
+
+* 2. Reverts if the caller's balance is insufficient.
+
+* 3. Reverts if recipient is the zero address.
+
+*/
+
+method  Transfer(sender: int, recipient: int, amount: int)
+
+// Verify amount is non-negative
+
+requires amount &gt;= 0
+
+// Requirement 2: Verify sender exists and has sufficient balance
+
+requires sender in balances
+
+requires balances[sender] &gt;= amount
+
+// Requirement 3: Prevent transfers to zero address
+
+requires recipient != 0
+
+modifies  this
+
+// Ensure balances of uninvolved accounts remain unchanged
+
+ensures  forall a :: a in  old(balances) &amp;&amp; a != sender &amp;&amp; a != recipient ==&gt;
+
+a in balances &amp;&amp; balances[a] == old(balances[a])
+
+{
+
+// Requirement 1: Update balances in a single atomic operation:
+
+// 1. Deduct amount from sender
+
+// 2. Add amount to recipient (create account if doesn't exist)
+
+balances := balances[sender := balances[sender] - amount]
+
+[recipient := if recipient in balances
+
+then balances[recipient] + amount
+
+else amount];
+
+}
+
+}
+
+</code></pre>
+<hr>
+</div>
+</body>
+
+</html>
