@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>Your task is to translate a typical ERC-20 <code>transfer</code> function into Dafny with proper <strong>preconditions, postconditions, and modifies clauses</strong> to ensure its correctness.</p>
+<p>Below is the simplified specification of the <code>transfer</code> function from the ERC-20 token standard:</p>
+<hr>
+<h3 id="erc-20-transfer-specification">ERC-20 <code>transfer</code> Specification</h3>
+<p><strong>Function:</strong> <code>transfer(address recipient, uint256 amount)</code></p>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>
+<p>Transfers <code>amount</code> tokens from the caller’s account to <code>recipient</code>.</p>
+</li>
+<li>
+<p>Reverts if the caller’s balance is insufficient.</p>
+</li>
+<li>
+<p>Reverts if <code>recipient</code> is the zero address.</p>
+</li>
+<li>
+<p>Emits a <code>Transfer</code> event (can be ignored for this task).</p>
+</li>
+</ul>
+<p><strong>Assumptions:</strong></p>
+<ul>
+<li>
+<p>Balances are stored in a map: <code>balances: map&lt;address, uint&gt;</code>.</p>
+</li>
+<li>
+<p>You may assume <code>msg.sender</code> is passed in explicitly as <code>sender</code>.</p>
+</li>
+</ul>
+<hr>
+<h3 id="your-task">Your Task</h3>
+<p>Write a Dafny method that models this <code>transfer</code> behavior.</p>
+<p>Implement the following in Dafny:</p>
+<ol>
+<li>
+<p>A method <code>Transfer(sender: int, recipient: int, amount: int)</code></p>
+</li>
+<li>
+<p>Use Dafny’s <code>requires</code>, <code>modifies</code>, and <code>ensures</code> to:</p>
+<ul>
+<li>
+<p>Reject invalid transfers.</p>
+</li>
+<li>
+<p>Correctly update balances.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Use <code>map&lt;int, int&gt;</code> to represent account balances.</p>
+</li>
+<li>
+<p>Assume the token does <strong>not</strong> track total supply in this problem.</p>
+</li>
+</ol>
+<hr>
+<h3 id="example-method-signature">Example Method Signature</h3>
+<pre class=" language-dafny"><code class="prism  language-dafny">class Token {
+  var balances: map&lt;int, int&gt;
+
+  method Transfer(sender: int, recipient: int, amount: int)
+    // your spec and code here
+}
+
+</code></pre>
+<hr>
+</div>
+</body>
+
+</html>

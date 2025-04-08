@@ -1,0 +1,749 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="presentation-basics-of-functional-k">Presentation: Basics of Functional K</h3>
+<hr>
+<h4 id="slide-1-introduction-to-k-and-its-basics"><strong>Slide 1: Introduction to K and Its Basics</strong></h4>
+<ul>
+<li><strong>Purpose of this lesson</strong>: Understanding the fundamentals of K programming with productions and rules.</li>
+<li><strong>Key concepts</strong>:
+<ul>
+<li><strong>K File Structure</strong>: Made up of <em>requires</em>, <em>modules</em>, and <em>sentences</em>.</li>
+<li><strong>Module</strong>: Container for sentences in K.</li>
+</ul>
+</li>
+<li>In this lesson, we’ll create a basic K program, compile it, and explore how productions and rules work.</li>
+</ul>
+<hr>
+<h4 id="slide-2-the-first-k-program"><strong>Slide 2: The First K Program</strong></h4>
+<ul>
+<li>Example program:<pre class=" language-k"><code class="prism  language-k">module LESSON-02-A
+  syntax Color ::= Yellow() | Blue()
+  syntax Fruit ::= Banana() | Blueberry()
+  syntax Color ::= colorOf(Fruit) [function]
+
+  rule colorOf(Banana()) =&gt; Yellow()
+  rule colorOf(Blueberry()) =&gt; Blue()
+endmodule
+</code></pre>
+</li>
+<li><strong>Compilation</strong>:
+<ul>
+<li>Save the file and compile with: <code>kompile lesson-02-a.k</code></li>
+<li><strong>Kompile</strong> generates an interpreter for the input program.</li>
+</ul>
+</li>
+<li><strong>Evaluation</strong>:
+<ul>
+<li>Save another file called <code>banana.color</code> with:<pre class=" language-k"><code class="prism  language-k">colorOf(Banana())
+</code></pre>
+</li>
+<li>Run with: <code>krun banana.color</code></li>
+<li>Output:<pre class=" language-k"><code class="prism  language-k">&lt;k&gt; Yellow() ~&gt; . &lt;/k&gt;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-3-running-k-programs"><strong>Slide 3: Running K Programs</strong></h4>
+<ul>
+<li>You can also run K programs directly:<pre class=" language-bash"><code class="prism  language-bash">krun -cPGM<span class="token operator">=</span><span class="token string">'colorOf(Banana())'</span>
+</code></pre>
+</li>
+<li><strong>Key takeaway</strong>: Programs can be written in files or directly executed in the command line with <code>krun</code>.</li>
+</ul>
+<hr>
+<h4 id="slide-4-productions-constructors-and-functions"><strong>Slide 4: Productions, Constructors, and Functions</strong></h4>
+<ul>
+<li><strong>Productions</strong>: Define how data is structured and processed.</li>
+<li><strong>Syntax</strong>:
+<ul>
+<li>Introduced with the keyword <code>syntax</code>, followed by a <strong>sort</strong>, and the operator <code>::=</code>.</li>
+<li>Productions define possible values or operations for a sort.</li>
+</ul>
+</li>
+<li><strong>Constructors</strong>:
+<ul>
+<li>Examples: <code>Yellow()</code>, <code>Blue()</code>, <code>Banana()</code>, and <code>Blueberry()</code>.</li>
+<li>They resemble constructors for algebraic data types.</li>
+<li>No arguments here, but constructors can take arguments.</li>
+</ul>
+</li>
+<li><strong>Functions</strong>:
+<ul>
+<li>Distinguished by the attribute <code>[function]</code>.</li>
+<li>Example: <code>colorOf(Fruit)</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-5-alternative-k-definitions"><strong>Slide 5: Alternative K Definitions</strong></h4>
+<ul>
+<li>
+<p>You can define equivalent programs in multiple ways:</p>
+<ol>
+<li>
+<pre class=" language-k"><code class="prism  language-k">syntax Color ::= Yellow()
+syntax Color ::= Blue()
+syntax Fruit ::= Banana()
+syntax Fruit ::= Blueberry()
+syntax Color ::= colorOf(Fruit) [function]
+</code></pre>
+</li>
+<li>
+<pre class=" language-k"><code class="prism  language-k">syntax Color ::= Yellow() | Blue() | colorOf(Fruit) [function]
+syntax Fruit ::= Banana() | Blueberry()
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>All variations produce the same output when compiled and executed.</p>
+</li>
+</ul>
+<hr>
+<h4 id="slide-6-rules-matching-and-variables"><strong>Slide 6: Rules, Matching, and Variables</strong></h4>
+<ul>
+<li><strong>Rules</strong>: Define behavior in K.
+<ul>
+<li>A rule has a left-hand side (LHS) and right-hand side (RHS) separated by <code>=&gt;</code>.</li>
+<li>Example:<pre class=" language-k"><code class="prism  language-k">rule colorOf(Banana()) =&gt; Yellow()
+</code></pre>
+</li>
+</ul>
+</li>
+<li><strong>Variables</strong>:
+<ul>
+<li>Variables are denoted by uppercase identifiers, like <code>F</code>.</li>
+<li>Variables match patterns, and the value is substituted.</li>
+<li>Example:<pre class=" language-k"><code class="prism  language-k">syntax Container ::= Jar(Fruit)
+rule contentsOfJar(Jar(F)) =&gt; F
+</code></pre>
+<ul>
+<li><code>F</code> matches <code>Apple()</code> or <code>Pear()</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-7-extended-exercise-1"><strong>Slide 7: Extended Exercise 1</strong></h4>
+<ul>
+<li><strong>Objective</strong>: Extend the program to handle new fruits.
+<ul>
+<li><strong>New fruits</strong>: Blackberries and kiwis.<pre class=" language-k"><code class="prism  language-k">syntax Fruit ::= Blackberry() | Kiwi()
+rule colorOf(Blackberry()) =&gt; Black()
+rule colorOf(Kiwi()) =&gt; Green()
+</code></pre>
+</li>
+</ul>
+</li>
+<li><strong>Steps</strong>:
+<ul>
+<li>Add these rules to <code>lesson-02-a.k</code>.</li>
+<li>Compile and test with <code>krun</code> to check if the fruits are correctly handled by the <code>colorOf</code> function.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-8-extended-exercise-2"><strong>Slide 8: Extended Exercise 2</strong></h4>
+<ul>
+<li><strong>Objective</strong>: Create a new K definition for an outfit.</li>
+<li><strong>Definition</strong>:
+<ul>
+<li><strong>Outfit</strong>: A multi-argument constructor with a hat, shirt, pants, and shoes.<pre class=" language-k"><code class="prism  language-k">syntax Outfit ::= outfit(Hat, Shirt, Pants, Shoes)
+syntax Color ::= Black() | White()
+syntax Boolean ::= true() | false()
+syntax Boolean ::= outfitMatching(Outfit) [function]
+</code></pre>
+</li>
+<li><strong>Matching rule</strong>:<pre class=" language-k"><code class="prism  language-k">rule outfitMatching(outfit(C, C, C, C)) =&gt; true()
+</code></pre>
+</li>
+</ul>
+</li>
+<li><strong>Steps</strong>:
+<ul>
+<li>Compile this definition.</li>
+<li>Write test cases to ensure it behaves correctly.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-9-summary-of-key-concepts"><strong>Slide 9: Summary of Key Concepts</strong></h4>
+<ul>
+<li><strong>Productions</strong>: Define structure (data and functions).</li>
+<li><strong>Rules</strong>: Perform pattern matching and rewriting.</li>
+<li><strong>Variables</strong>: Act as placeholders for patterns.</li>
+<li><strong>krun &amp; kompile</strong>: Tools to compile and run K programs.</li>
+</ul>
+<hr>
+<h3 id="slide-10-bnf-syntax-and-parser-generation">Slide 10: <strong>BNF Syntax and Parser Generation</strong></h3>
+<p>Understanding K’s Parsing Mechanisms and Syntax Definitions</p>
+<p><strong>BNF Notation: An Overview</strong></p>
+<p><strong>1. Definition of BNF:</strong></p>
+<ul>
+<li><strong>Backus-Naur Form (BNF)</strong> is a formal notation used to describe the syntax of programming languages, data structures, and various types of formal languages. It is a metasyntax that provides a clear and concise way to define the grammar of a language in terms of its production rules.</li>
+</ul>
+<p><strong>2. Purpose:</strong></p>
+<ul>
+<li>The primary purpose of BNF is to define the structure of statements and expressions in a language so that both humans and machines can understand how to interpret valid sequences of symbols. It serves as a blueprint for parsers and compilers to recognize and process language constructs.</li>
+</ul>
+<p><strong>3. Components of BNF:</strong><br>
+BNF consists of several key components, which include:</p>
+<ul>
+<li>
+<p><strong>Non-terminal Symbols:</strong> These are variables that can be expanded into one or more sequences of terminal symbols or other non-terminal symbols. They are usually represented by uppercase letters or descriptive names.</p>
+</li>
+<li>
+<p><strong>Terminal Symbols:</strong> These are the actual symbols from which the language is constructed. They can be keywords, operators, literals, or other basic elements of the language. Terminal symbols are typically enclosed in quotes or are represented in lowercase.</p>
+</li>
+<li>
+<p><strong>Production Rules:</strong> These rules define how non-terminal symbols can be replaced or expanded into sequences of symbols. Each production rule is written in the form:</p>
+<pre><code>&lt;non-terminal&gt; ::= &lt;expression&gt;
+</code></pre>
+<p>Here, <code>::=</code> means “can be replaced by.” The expression on the right can consist of non-terminals, terminals, or a combination of both.</p>
+</li>
+<li>
+<p><strong>Alternatives:</strong> Multiple expansions for a non-terminal can be specified using the vertical bar (<code>|</code>). For example:</p>
+<pre><code>&lt;expression&gt; ::= &lt;term&gt; | &lt;term&gt; '+' &lt;expression&gt;
+</code></pre>
+</li>
+</ul>
+<p><strong>4. Example of BNF:</strong><br>
+Here’s a simple example of BNF to define basic arithmetic expressions:</p>
+<pre class=" language-bnf"><code class="prism  language-bnf">&lt;expression&gt; ::= &lt;term&gt; | &lt;term&gt; '+' &lt;expression&gt; | &lt;term&gt; '-' &lt;expression&gt;
+&lt;term&gt; ::= &lt;factor&gt; | &lt;factor&gt; '*' &lt;term&gt; | &lt;factor&gt; '/' &lt;term&gt;
+&lt;factor&gt; ::= &lt;number&gt; | '(' &lt;expression&gt; ')'
+&lt;number&gt; ::= &lt;digit&gt; | &lt;digit&gt; &lt;number&gt;
+&lt;digit&gt; ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+</code></pre>
+<p><strong>Explanation of the Example:</strong></p>
+<ul>
+<li><code>&lt;expression&gt;</code> can be a single <code>&lt;term&gt;</code>, or a <code>&lt;term&gt;</code> followed by either a <code>+</code> or <code>-</code> followed by another <code>&lt;expression&gt;</code>.</li>
+<li><code>&lt;term&gt;</code> can be a single <code>&lt;factor&gt;</code>, or a <code>&lt;factor&gt;</code> followed by either a <code>*</code> or <code>/</code> followed by another <code>&lt;term&gt;</code>.</li>
+<li><code>&lt;factor&gt;</code> can be a <code>&lt;number&gt;</code> or an <code>&lt;expression&gt;</code> enclosed in parentheses.</li>
+<li><code>&lt;number&gt;</code> is defined as one or more digits (<code>&lt;digit&gt;</code>), and <code>&lt;digit&gt;</code> is defined as any single numeral from 0 to 9.</li>
+</ul>
+<p><strong>5. Advantages of BNF:</strong></p>
+<ul>
+<li><strong>Clarity and Precision:</strong> BNF provides a clear and unambiguous way to define the grammar of a language.</li>
+<li><strong>Machine Readable:</strong> It is suitable for automatic parsing and is widely used in the development of compilers and interpreters.</li>
+<li><strong>Conciseness:</strong> BNF can express complex language rules in a compact form, making it easier to read and understand.</li>
+</ul>
+<p><strong>6. Variants of BNF:</strong></p>
+<ul>
+<li>There are several variants of BNF, including <strong>Extended Backus-Naur Form (EBNF)</strong>, which adds additional syntax to express certain constructs more succinctly (e.g., optional elements, repetitions).</li>
+<li><strong>ABNF (Augmented Backus-Naur Form)</strong> is another variation that includes additional features for more concise representations.</li>
+</ul>
+<hr>
+<h3 id="slide-11-learning-objectives">Slide 11: Learning Objectives</h3>
+<ul>
+<li>Understand K’s two-level syntax structure: outer and inner syntax.</li>
+<li>Explore how K uses BNF-like notation to define grammars.</li>
+<li>Learn about K’s just-in-time and ahead-of-time parser generation.</li>
+<li>Handle parsing ambiguities and bracket usage.</li>
+<li>Define custom tokens and regular expressions in K.</li>
+</ul>
+<hr>
+<h3 id="slide-12-ks-parsing-approach">Slide 12: K’s Parsing Approach</h3>
+<ul>
+<li><strong>Outer Syntax</strong>: Predefined syntax for requires, modules, imports, and sentences in K.</li>
+<li><strong>Inner Syntax</strong>: User-defined grammar for parsing rules and programs.</li>
+<li><strong>Key Point</strong>: Rules and programs are parsed in the context of modules, making K highly modular.</li>
+</ul>
+<hr>
+<h3 id="slide-13-bnf-productions-in-k">Slide 13: BNF Productions in K</h3>
+<ul>
+<li><strong>Basic BNF Grammar Example: Boolean Expressions</strong></li>
+</ul>
+<pre class=" language-k"><code class="prism  language-k">module LESSON-03-A
+  syntax Boolean ::= "true" | "false"
+                   | "!" Boolean [function]
+                   | Boolean "&amp;&amp;" Boolean [function]
+                   | Boolean "^" Boolean [function]
+                   | Boolean "||" Boolean [function]
+endmodule
+</code></pre>
+<ul>
+<li><strong>Production Rules</strong>: Define Boolean values and operators (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>, etc.) in a simple grammar.</li>
+</ul>
+<hr>
+<h3 id="slide-14-bnf-notation">Slide 14: BNF Notation</h3>
+<h4 id="k-uses-bnf-to-distinguish-between">- K uses BNF to distinguish between:</h4>
+<ul>
+<li><strong>Terminals</strong>: Literal characters in double quotes.</li>
+<li><strong>Non-terminals</strong>: Sort names that accept any valid term of that sort.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class=" language-k"><code class="prism  language-k">syntax Color ::= "Yellow" "(" ")" | "Blue" "(" ")"
+</code></pre>
+<ul>
+<li><strong>krun</strong>: Executes terms parsed from grammar, converting them into AST (Abstract Syntax Tree).</li>
+</ul>
+<hr>
+<h3 id="slide-15-parsing-example-with-kast">Slide 15: Parsing Example with <code>kast</code></h3>
+<ul>
+<li>
+<p><strong>Program</strong>: <code>true &amp;&amp; false</code></p>
+</li>
+<li>
+<p><strong>Command</strong>: <code>kast --output kore and.bool</code></p>
+</li>
+<li>
+<p><strong>KORE Output</strong>: AST representation of the parsed program.</p>
+</li>
+</ul>
+<pre class=" language-k"><code class="prism  language-k">inj{SortBoolean{}, SortKItem{}}(
+  Lbl'UndsAnd-And-UndsUnds'LESSON-03-A'Unds'Boolean'Unds'Boolean'Unds'Boolean{}(
+    Lbltrue'Unds'LESSON-03-A'Unds'Boolean{}(),
+    Lblfalse'Unds'LESSON-03-A'Unds'Boolean{}()
+  )
+)
+</code></pre>
+<hr>
+<h3 id="slide-16-ambiguities-in-parsing">Slide 16: Ambiguities in Parsing</h3>
+<ul>
+<li>
+<p><strong>Ambiguity Example</strong>:</p>
+<ul>
+<li>Input: <code>true &amp;&amp; false || false</code></li>
+<li>K reports ambiguity: It can be parsed as either:
+<ol>
+<li><code>(true &amp;&amp; false) || false</code></li>
+<li><code>true &amp;&amp; (false || false)</code></li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Solution</strong>: Use <strong>brackets</strong> to resolve ambiguity in expressions.</p>
+</li>
+</ul>
+<hr>
+<h3 id="slide-17-handling-brackets-in-k">Slide 17: Handling Brackets in K</h3>
+<ul>
+<li>Define brackets to explicitly group expressions:</li>
+</ul>
+<pre class=" language-k"><code class="prism  language-k">module LESSON-03-D
+  syntax Boolean ::= "true" | "false"
+                   | "(" Boolean ")" [bracket]
+                   | "!" Boolean [function]
+                   | Boolean "&amp;&amp;" Boolean [function]
+                   | Boolean "||" Boolean [function]
+endmodule
+</code></pre>
+<ul>
+<li>Example Programs:
+<ul>
+<li><code>(true &amp;&amp; false) || false</code></li>
+<li><code>true &amp;&amp; (false || false)</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-18-token-definitions-in-k">Slide 18: Token Definitions in K</h3>
+<ul>
+<li>
+<p>Define more complex lexical syntax using <strong>tokens</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">syntax Int ::= r"[\\+\\-]?[0-9]+" [token]
+</code></pre>
+</li>
+<li>
+<p><strong>Example: C-like integer constants</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">syntax IntConstant ::= r"({DecConstant}|{OctConstant}|{HexConstant})({IntSuffix}?)" [token]
+</code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="slide-19-disambiguating-parses">Slide 19: Disambiguating Parses</h3>
+<ol>
+<li>
+<p><strong>Priority Blocks</strong>:</p>
+<ul>
+<li>Used to specify the precedence of different operators.</li>
+<li>Operators with higher precedence (tighter binding) will not allow lower precedence (looser binding) operators to appear as direct children in their AST.</li>
+<li>Example: In the expression <code>true &amp;&amp; false || false</code>, <code>&amp;&amp;</code> has higher precedence than <code>||</code>, resulting in the AST being <code>(true &amp;&amp; false) || false</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Associativity</strong>:</p>
+<ul>
+<li>Defines how operators of the same precedence are parsed.</li>
+<li>Left-associative operators can’t be the direct rightmost child of themselves, while right-associative operators can’t be the direct leftmost child.</li>
+<li>Example: The expression <code>true &amp;&amp; false &amp;&amp; false</code> is parsed as <code>(true &amp;&amp; false) &amp;&amp; false</code> because <code>&amp;&amp;</code> is left-associative.</li>
+</ul>
+</li>
+<li>
+<p><strong>Explicit Priority and Associativity Declarations</strong>:</p>
+<ul>
+<li>Allows grouping of productions across different sections of the grammar.</li>
+<li>Use of <code>group(_)</code> for organizing related productions and applying priority and associativity to those groups.</li>
+</ul>
+</li>
+<li>
+<p><strong>Prefer/Avoid Attributes</strong>:</p>
+<ul>
+<li>Used to resolve ambiguities directly by instructing the parser to prefer one parse over another.</li>
+<li><code>avoid</code> attribute can be added to a production to disallow it in the event of ambiguity.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="slide-20--modules-imports-and-requires-in-k-definitions">Slide 20:  Modules, Imports, and Requires in K Definitions</h3>
+<ul>
+<li>Purpose: Explain how K definitions can be divided into modules and files.</li>
+<li>Focus: Combining these components into a complete K definition.</li>
+</ul>
+<hr>
+<h3 id="slide-21--ks-outer-syntax">Slide 21:  K’s Outer Syntax</h3>
+<ul>
+<li>
+<p>K’s grammar consists of:</p>
+<ul>
+<li><strong>Outer Syntax</strong>: Contains requires, modules, imports, and sentences.</li>
+<li><strong>Inner Syntax</strong>: Represents the actual syntax and structure of the language.</li>
+</ul>
+</li>
+<li>
+<p>The semantics of K is defined by the sentences within a module.</p>
+</li>
+</ul>
+<hr>
+<h3 id="slide-22-basic-module-syntax">Slide 22: Basic Module Syntax</h3>
+<ul>
+<li>
+<p><strong>Module Structure</strong>:</p>
+<ul>
+<li>Module name</li>
+<li>Optional attributes</li>
+<li>List of imports</li>
+<li>List of sentences</li>
+</ul>
+</li>
+<li>
+<p><strong>Valid Module Names</strong>:</p>
+<ul>
+<li><code>FOO</code>, <code>FOO-BAR</code>, <code>foo0</code>, <code>foo0_bar-Baz9</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Invalid Module Names</strong>:</p>
+<ul>
+<li><code>-</code>, <code>-FOO</code>, <code>BAR-</code>, <code>FOO--BAR</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li>
+<p><strong>Empty Module</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">module LESSON-05-A
+endmodule
+</code></pre>
+</li>
+<li>
+<p><strong>Module with Attributes</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">module LESSON-05-B [group(attr1,attr2), private]
+endmodule
+</code></pre>
+</li>
+<li>
+<p><strong>Module with Sentences</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">module LESSON-05-C
+  syntax Boolean ::= "true" | "false"
+  syntax Boolean ::= "not" Boolean [function]
+  rule not true =&gt; false
+  rule not false =&gt; true
+endmodule
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-23---imports">Slide 23 :  Imports</h3>
+<ul>
+<li><strong>Multiple Modules</strong>: A K definition can contain several modules.</li>
+<li><strong>Importing Modules</strong>:
+<ul>
+<li>Syntax: <code>imports &lt;module_name&gt;</code></li>
+<li><strong>Example</strong>:<pre class=" language-k"><code class="prism  language-k">module LESSON-05-D-1
+  syntax Boolean ::= "true" | "false"
+  syntax Boolean ::= "not" Boolean [function]
+endmodule
+
+module LESSON-05-D
+  imports LESSON-05-D-1
+
+  rule not true =&gt; false
+  rule not false =&gt; true
+endmodule
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-24--parsing-with-multiple-modules">Slide 24 : Parsing with Multiple Modules</h3>
+<ul>
+<li>Each module can define distinct syntax.</li>
+<li><strong>Error Example</strong>:
+<ul>
+<li>A module cannot reference syntax it does not import.</li>
+</ul>
+<pre class=" language-k"><code class="prism  language-k">module LESSON-05-E-1
+  rule not true =&gt; false
+  rule not false =&gt; true
+endmodule
+
+module LESSON-05-E-2
+  syntax Boolean ::= "true" | "false"
+  syntax Boolean ::= "not" Boolean [function]
+endmodule
+</code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="slide-25-main-syntax-and-semantics-modules">Slide 25: Main Syntax and Semantics Modules</h3>
+<ul>
+<li>
+<p><strong>Entry Points</strong>:</p>
+<ul>
+<li><strong>Main Syntax Module</strong>: Defines the syntax for parsing.</li>
+<li><strong>Main Semantics Module</strong>: Defines runtime rules for execution.</li>
+</ul>
+</li>
+<li>
+<p><strong>Default Behavior</strong>:</p>
+<ul>
+<li><code>--main-module</code> and <code>--syntax-module</code> can specify modules explicitly.</li>
+<li>Default modules named <code>FOO</code> for semantics and <code>FOO-SYNTAX</code> for syntax.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-26-splitting-a-definition-into-multiple-files">Slide 26: Splitting a Definition into Multiple Files</h3>
+<ul>
+<li><strong>Requires Directive</strong>:
+<ul>
+<li>Syntax: <code>requires "filename.k"</code></li>
+<li>Combines modules from multiple files into a single definition.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-27-putting-it-all-together">Slide 27: Putting It All Together</h3>
+<ul>
+<li>
+<p><strong>Example Definition Structure</strong>:</p>
+<ol>
+<li>
+<p><strong>colors.k</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">module COLORS
+  syntax Color ::= Yellow()
+                 | Blue()
+endmodule
+</code></pre>
+</li>
+<li>
+<p><strong>fruits.k</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">module FRUITS
+  syntax Fruit ::= Banana()
+                 | Blueberry()
+endmodule
+</code></pre>
+</li>
+<li>
+<p><strong>colorOf.k</strong>:</p>
+<pre class=" language-k"><code class="prism  language-k">requires "fruits.k"
+requires "colors.k"
+
+module COLOROF-SYNTAX
+  imports COLORS
+  imports FRUITS
+
+  syntax Color ::= colorOf(Fruit) [function]
+endmodule
+
+module COLOROF
+  imports COLOROF-SYNTAX
+
+  rule colorOf(Banana()) =&gt; Yellow()
+  rule colorOf(Blueberry()) =&gt; Blue()
+endmodule
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Compilation</strong>: Use <code>kompile colorOf.k</code> to compile and use the definition as a single module.</p>
+</li>
+</ul>
+<hr>
+<h3 id="slide-28--solidity-file-simplearithmetic.sol">Slide 28:  Solidity File: <code>SimpleArithmetic.sol</code></h3>
+<p>This smart contract provides basic arithmetic operations similar to the definitions we created in K.</p>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleArithmetic {
+    // Function to add two integers
+    function add(int a, int b) public pure returns (int) {
+        return a + b;
+    }
+
+    // Function to subtract two integers
+    function subtract(int a, int b) public pure returns (int) {
+        return a - b;
+    }
+
+    // Function to multiply two integers
+    function multiply(int a, int b) public pure returns (int) {
+        return a * b;
+    }
+
+    // Function to divide two integers
+    function divide(int a, int b) public pure returns (int) {
+        require(b != 0, "Division by zero");
+        return a / b;
+    }
+
+    // Function to evaluate a boolean expression
+    function evaluate(bool a, bool b) public pure returns (bool) {
+        return a &amp;&amp; b; // Logical AND
+    }
+
+    // Function to evaluate NOT
+    function negate(bool a) public pure returns (bool) {
+        return !a; // Logical NOT
+    }
+}
+</code></pre>
+<h3 id="explanation-of-simplearithmetic.sol">Explanation of <code>SimpleArithmetic.sol</code></h3>
+<ol>
+<li>
+<p><strong>Contract Declaration</strong>: <code>contract SimpleArithmetic</code> defines a new Solidity smart contract named <code>SimpleArithmetic</code>.</p>
+</li>
+<li>
+<p><strong>Function Definitions</strong>:</p>
+<ul>
+<li>Each function performs a basic arithmetic operation (<code>add</code>, <code>subtract</code>, <code>multiply</code>, <code>divide</code>).</li>
+<li>The <code>divide</code> function includes a check to prevent division by zero using <code>require</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Boolean Operations</strong>:</p>
+<ul>
+<li>The <code>evaluate</code> function implements a logical AND operation.</li>
+<li>The <code>negate</code> function implements a logical NOT operation.</li>
+</ul>
+</li>
+</ol>
+<h3 id="k-framework-testing-definitions">K Framework Testing Definitions</h3>
+<h4 id="file-solidity-tests.k">1. File: <code>solidity-tests.k</code></h4>
+<p>This file will contain the necessary K definitions to specify properties for testing the Solidity contract.</p>
+<pre class=" language-k"><code class="prism  language-k">module SOLIDITY-TESTS
+  // Importing necessary modules for Boolean and Arithmetic operations
+  requires "booleans.k"
+  requires "arithmetic.k"
+
+  // Syntax for Solidity function calls and parameters
+  syntax FunctionCall ::= "add" "(" Int "," Int ")" [function]
+  syntax FunctionCall ::= "subtract" "(" Int "," Int ")" [function]
+  syntax FunctionCall ::= "multiply" "(" Int "," Int ")" [function]
+  syntax FunctionCall ::= "divide" "(" Int "," Int ")" [function]
+  syntax FunctionCall ::= "evaluate" "(" Boolean "," Boolean ")" [function]
+  syntax FunctionCall ::= "negate" "(" Boolean ")" [function]
+
+  // Define evaluation rules for testing the smart contract functions
+  rule evalExpr(add(X, Y)) =&gt; X + Y
+  rule evalExpr(subtract(X, Y)) =&gt; X - Y
+  rule evalExpr(multiply(X, Y)) =&gt; X * Y
+  rule evalExpr(divide(X, Y)) =&gt; Y == 0 =&gt; "Division by zero" // Handle division by zero case
+  rule evalExpr(divide(X, Y)) =&gt; X / Y
+  rule evalExpr(evaluate(A, B)) =&gt; A &amp;&amp; B
+  rule evalExpr(negate(A)) =&gt; not A
+
+endmodule
+</code></pre>
+<h3 id="explanation-of-solidity-tests.k">Explanation of <code>solidity-tests.k</code></h3>
+<ul>
+<li>
+<p><strong>Requires Directive</strong>:</p>
+<ul>
+<li><code>requires "booleans.k"</code> and <code>requires "arithmetic.k"</code> include the modules that provide definitions for Boolean and arithmetic operations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Syntax Definitions</strong>:</p>
+<ul>
+<li>We define the syntax for calling the Solidity functions (<code>add</code>, <code>subtract</code>, <code>multiply</code>, <code>divide</code>, <code>evaluate</code>, and <code>negate</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>Evaluation Rules</strong>:</p>
+<ul>
+<li>Each rule specifies how to evaluate a function call against the expected results:
+<ul>
+<li>For example, <code>rule evalExpr(add(X, Y)) =&gt; X + Y</code> indicates that calling <code>add(X, Y)</code> should yield the arithmetic addition of <code>X</code> and <code>Y</code>.</li>
+<li>The division rule checks if <code>Y</code> is zero to prevent division by zero errors.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="file-run_tests.sh">2. File: <code>run_tests.sh</code></h3>
+<p>You can use a simple shell script to compile and run the tests.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># Compile the Solidity contract</span>
+<span class="token keyword">echo</span> <span class="token string">"Compiling the Solidity contract..."</span>
+solc --bin --abi SimpleArithmetic.sol -o build/
+
+<span class="token comment"># Run the K tests</span>
+<span class="token keyword">echo</span> <span class="token string">"Running K tests..."</span>
+kompile solidity-tests.k --main-module SOLIDITY-TESTS
+
+<span class="token comment"># Execute the K test with krun</span>
+krun result.k
+
+<span class="token comment"># Add any additional commands to verify the output as necessary</span>
+</code></pre>
+<h3 id="running-the-tests">Running the Tests</h3>
+<ol>
+<li>
+<p><strong>Compile the Solidity Contract</strong>:</p>
+<ul>
+<li>Use the <code>solc</code> command to compile the <code>SimpleArithmetic.sol</code> contract. This generates binary and ABI files in the <code>build/</code> directory.</li>
+</ul>
+</li>
+<li>
+<p><strong>Run the K Tests</strong>:</p>
+<ul>
+<li>Compile the K definitions using <code>kompile</code>.</li>
+<li>Run the test using <code>krun</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Output Verification</strong>:</p>
+<ul>
+<li>Depending on the logic you want to validate, check the output of the K tests against the expected results from the Solidity functions.</li>
+</ul>
+</li>
+</ol>
+<h3 id="summary">Summary</h3>
+<p>In this setup, we created a simple Solidity smart contract that performs arithmetic and Boolean operations. We also defined a corresponding K framework for testing the smart contract’s functionality by specifying properties of the operations we implemented.</p>
+<p>By executing the K tests, you can ensure that the operations in the Solidity contract behave as expected, and any discrepancies can be identified and addressed. This approach effectively combines smart contract development and formal verification through the K framework.</p>
+</div>
+</body>
+
+</html>

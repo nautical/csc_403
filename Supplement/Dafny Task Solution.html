@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="answer-dafny-erc-20-transfer-implementation"><strong>Answer: Dafny ERC-20 <code>Transfer</code> Implementation</strong></h3>
+<pre class=" language-dafny"><code class="prism  language-dafny">class Token {
+  var balances: map&lt;int, int&gt;
+
+  method Transfer(sender: int, recipient: int, amount: int)
+    requires amount &gt;= 0                                // Cannot transfer negative tokens
+    requires sender in balances                         // Sender must exist
+    requires balances[sender] &gt;= amount                 // Sender must have enough balance
+    requires recipient != 0                             // Recipient cannot be the zero address
+    modifies balances
+    ensures balances[sender] == old(balances[sender]) - amount
+    ensures recipient in old(balances) ==&gt;
+              balances[recipient] == old(balances[recipient]) + amount
+    ensures recipient !in old(balances) ==&gt;
+              balances[recipient] == amount
+    ensures (forall a :: a != sender &amp;&amp; a != recipient ==&gt; balances[a] == old(balances[a]))
+  {
+    // Deduct from sender
+    balances := balances[sender := balances[sender] - amount];
+
+    // Credit recipient
+    if recipient in balances {
+      balances := balances[recipient := balances[recipient] + amount];
+    } else {
+      balances := balances[recipient := amount];
+    }
+  }
+}
+
+</code></pre>
+<hr>
+<h3 id="explanation-of-key-parts">Explanation of Key Parts</h3>
+<ul>
+<li>
+<p><strong>Preconditions (<code>requires</code>)</strong>:</p>
+<ul>
+<li>Ensure valid input: non-negative amount, sender exists, sufficient balance, recipient not zero.</li>
+</ul>
+</li>
+<li>
+<p><strong>Postconditions (<code>ensures</code>)</strong>:</p>
+<ul>
+<li>
+<p>Sender’s balance is correctly reduced.</p>
+</li>
+<li>
+<p>Recipient’s balance is correctly updated whether they existed in the map or not.</p>
+</li>
+<li>
+<p>All other accounts’ balances remain unchanged.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Framing (<code>modifies</code>)</strong>:</p>
+<ul>
+<li>Tells Dafny that only <code>balances</code> may change during this method, which helps with verification.</li>
+</ul>
+</li>
+</ul>
+<hr>
+</div>
+</body>
+
+</html>

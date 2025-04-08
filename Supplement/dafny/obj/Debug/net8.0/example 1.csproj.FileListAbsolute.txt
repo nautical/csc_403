@@ -1,0 +1,12 @@
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/example 1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/example 1.AssemblyInfoInputs.cache
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/example 1.AssemblyInfo.cs
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/example 1.csproj.CoreCompileInputs.cache
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/example 1.sourcelink.json
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/example 1.dll
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/refint/example 1.dll
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/example 1.pdb
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/example 1.deps.json
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/example 1.dll
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/obj/Debug/net8.0/ref/example 1.dll
+/Users/piyushgururani/Downloads/CSC 403/lpu_presentation/Supplement/dafny/example 1.pdb

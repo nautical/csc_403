@@ -1,0 +1,481 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><hr>
+<h3 id="example-1-basic-token-transfer">Example 1: Basic Token Transfer</h3>
+<p>This example introduces a simple token contract, allowing users to transfer tokens to each other.</p>
+<h4 id="solidity-code">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract BasicToken {
+    mapping(address =&gt; uint) public balances;
+    
+    constructor(uint initialSupply) {
+        balances[msg.sender] = initialSupply;
+    }
+    
+    function transfer(address recipient, uint amount) public {
+        require(balances[msg.sender] &gt;= amount, "Insufficient balance");
+        balances[msg.sender] -= amount;
+        balances[recipient] += amount;
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>The constructor sets an initial token balance for the contract creator.</li>
+<li>The <code>transfer</code> function allows users to send tokens to another address, as long as they have enough balance.</li>
+</ol>
+<h4 id="k-framework-specification">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module BASIC-TOKEN                 // Defines the module name "BASIC-TOKEN".
+    imports INT                    // Imports the INT module to use integer operations.
+    imports MAP                    // Imports the MAP module to use mappings (key-value pairs).
+    imports BOOL                   // Imports the BOOL module to use boolean expressions.
+
+    syntax TokenAction ::= "transfer"        // Defines a syntax for a TokenAction, with "transfer" as an action.
+    syntax Address ::= String                // Defines Address type as a string to represent user addresses.
+    syntax TokenState ::= Map                // Defines TokenState as a Map to represent the token balances.
+    syntax KResult ::= Int                   // Defines KResult as an integer, which can be the result type in K operations.
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;            // Defines the K configuration with a program component $PGM of type K.
+                  &lt;balances&gt; .Map &lt;/balances&gt; // Defines the balances component as a map to store each address's token balance.
+
+    // Rule for token transfer
+    rule &lt;k&gt; transfer =&gt; . ... &lt;/k&gt;                     // Starts defining the "transfer" rule in the program (K) context.
+         &lt;balances&gt; (SENDER |-&gt; BAL) =&gt;                 // Accesses the sender's balance (BAL) in the balances map.
+                    (SENDER |-&gt; BAL - AMOUNT) ...       // Updates the sender's balance to subtract the transferred amount.
+                    (RECIPIENT |-&gt; RBAL) =&gt;             // Accesses the recipient's balance (RBAL) in the balances map.
+                    (RECIPIENT |-&gt; RBAL + AMOUNT)       // Updates the recipient's balance to add the transferred amount.
+         &lt;/balances&gt;                                    // Closes the balances component update.
+      requires BAL &gt;=Int AMOUNT                         // Ensures that the sender has enough tokens for the transfer.
+
+</code></pre>
+<p>This specification:</p>
+<ul>
+<li>Ensures the <code>transfer</code> rule only applies if the sender has enough tokens (<code>BAL &gt;= AMOUNT</code>).</li>
+<li>Updates the sender’s balance by subtracting the transferred amount and adds it to the recipient’s balance.</li>
+</ul>
+<hr>
+<h3 id="example-2-access-controlled-counter">Example 2: Access-Controlled Counter</h3>
+<p>This example introduces a counter contract where only the owner can increment or decrement the counter.</p>
+<h4 id="solidity-code-1">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Counter {
+    address public owner;
+    int public count;
+
+    constructor() {
+        owner = msg.sender;
+        count = 0;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the owner");
+        _;
+    }
+
+    function increment() public onlyOwner {
+        count += 1;
+    }
+
+    function decrement() public onlyOwner {
+        count -= 1;
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>The <code>onlyOwner</code> modifier ensures that only the contract owner can call <code>increment</code> and <code>decrement</code>.</li>
+<li>The <code>increment</code> and <code>decrement</code> functions modify the counter.</li>
+</ol>
+<h4 id="k-framework-specification-1">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module COUNTER                    // Defines the module named "COUNTER".
+    imports INT                   // Imports the INT module to use integer operations.
+    imports BOOL                  // Imports the BOOL module to use boolean expressions.
+
+    syntax CounterAction ::= "increment" | "decrement"   // Defines CounterAction with two possible actions: "increment" and "decrement".
+    syntax Address ::= String                           // Defines Address type as a String to represent user addresses.
+    syntax CounterState ::= Int                         // Defines CounterState as an integer type for the counter value.
+    syntax KResult ::= Int                              // Defines KResult as an integer, representing possible return values in K operations.
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;                      // Defines the main program configuration component ($PGM) of type K.
+                  &lt;owner&gt; .String &lt;/owner&gt;             // Defines the "owner" component as a string, representing the owner's address.
+                  &lt;count&gt; 0 &lt;/count&gt;                   // Defines the "count" component, initialized to 0, representing the counter value.
+
+    // Rule for increment function
+    rule &lt;k&gt; increment =&gt; . ... &lt;/k&gt;                   // Begins the rule for the "increment" action in the program (K) context.
+         &lt;count&gt; CNT =&gt; CNT + 1 &lt;/count&gt;               // Updates the "count" value by incrementing it by 1.
+      requires SENDER == OWNER                         // Specifies a condition that the increment action only occurs if SENDER equals OWNER.
+
+    // Rule for decrement function
+    rule &lt;k&gt; decrement =&gt; . ... &lt;/k&gt;                   // Begins the rule for the "decrement" action in the program (K) context.
+         &lt;count&gt; CNT =&gt; CNT - 1 &lt;/count&gt;               // Updates the "count" value by decrementing it by 1.
+      requires SENDER == OWNER                         // Specifies a condition that the decrement action only occurs if SENDER equals OWNER.
+
+</code></pre>
+<p>In this K specification:</p>
+<ul>
+<li>The <code>increment</code> and <code>decrement</code> rules require that the sender (<code>SENDER</code>) is the owner (<code>OWNER</code>) before modifying <code>count</code>.</li>
+</ul>
+<hr>
+<h3 id="example-3-arithmetic-overflow-check">Example 3: Arithmetic Overflow Check</h3>
+<p>This example introduces a contract that adds two numbers and ensures the result doesn’t overflow.</p>
+<h4 id="solidity-code-2">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SafeMath {
+    function safeAdd(uint a, uint b) public pure returns (uint) {
+        require(a + b &gt;= a, "Addition overflow");
+        return a + b;
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>The <code>safeAdd</code> function adds two unsigned integers and checks for overflow using a <code>require</code> statement.</li>
+</ol>
+<h4 id="k-framework-specification-2">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module SAFE-MATH                          // Defines the module named "SAFE-MATH".
+    imports INT                            // Imports the INT module to use integer operations.
+
+    syntax MathAction ::= "safeAdd"        // Defines MathAction with one possible action: "safeAdd".
+    syntax KResult ::= Int                 // Defines KResult as an integer, representing the result type in K operations.
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;          // Defines the main configuration component ($PGM) of type K.
+
+    // Rule for safeAdd function
+    rule &lt;k&gt; safeAdd(A, B) =&gt; (A +Int B) ... &lt;/k&gt;  // Defines the "safeAdd" function rule in the program (K) context.
+      requires (A +Int B) &gt;=Int A                  // Specifies a condition that ensures no overflow: the result must be greater than or equal to A.
+
+</code></pre>
+<p>In this K specification:</p>
+<ul>
+<li>The <code>safeAdd</code> rule only proceeds if the sum of <code>A</code> and <code>B</code> is greater than or equal to <code>A</code>, ensuring no overflow occurs.</li>
+</ul>
+<hr>
+<h3 id="example-4-restricted-access-bank">Example 4: Restricted Access Bank</h3>
+<p>This example builds on the Simple Bank example, but only allows certain users to deposit and withdraw funds.</p>
+<h4 id="solidity-code-3">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract RestrictedBank {
+    address public admin;
+    mapping(address =&gt; uint) public balances;
+    
+    constructor() {
+        admin = msg.sender;
+    }
+
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not an admin");
+        _;
+    }
+
+    function deposit() public payable onlyAdmin {
+        balances[msg.sender] += msg.value;
+    }
+
+    function withdraw(uint amount) public onlyAdmin {
+        require(balances[msg.sender] &gt;= amount, "Insufficient balance");
+        balances[msg.sender] -= amount;
+        payable(msg.sender).transfer(amount);
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>Only the admin can call <code>deposit</code> and <code>withdraw</code>.</li>
+<li>Both functions manage Ether deposits and withdrawals for the admin.</li>
+</ol>
+<h4 id="k-framework-specification-3">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module RESTRICTED-BANK                    // Defines the module named "RESTRICTED-BANK".
+    imports INT                            // Imports the INT module to use integer operations.
+    imports BOOL                           // Imports the BOOL module to use boolean expressions.
+    imports MAP                            // Imports the MAP module to use mappings (key-value pairs).
+
+    syntax BankAction ::= "deposit" | "withdraw"   // Defines BankAction with two possible actions: "deposit" and "withdraw".
+    syntax Address ::= String                      // Defines Address type as a String to represent user addresses.
+    syntax BankState ::= Map                       // Defines BankState as a Map to represent account balances.
+    syntax KResult ::= Int                         // Defines KResult as an integer type for possible result values in K operations.
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;                 // Defines the main configuration component ($PGM) of type K.
+                  &lt;admin&gt; .String &lt;/admin&gt;        // Defines the "admin" component as a string, representing the administrator's address.
+                  &lt;balances&gt; .Map &lt;/balances&gt;     // Defines the "balances" component as a map to store account balances.
+
+    // Rule for deposit function
+    rule &lt;k&gt; deposit =&gt; . ... &lt;/k&gt;                        // Begins the rule for the "deposit" action in the program (K) context.
+         &lt;balances&gt; BALS =&gt; BALS[ADMIN &lt;- BALS[ADMIN] + AMOUNT] &lt;/balances&gt;  // Updates the admin's balance by adding the deposit amount.
+      requires SENDER == ADMIN andBool AMOUNT &gt;Int 0       // Specifies conditions: only the admin can deposit, and amount must be greater than zero.
+
+    // Rule for withdraw function
+    rule &lt;k&gt; withdraw =&gt; . ... &lt;/k&gt;                         // Begins the rule for the "withdraw" action in the program (K) context.
+         &lt;balances&gt; (ADMIN |-&gt; BAL) =&gt; (ADMIN |-&gt; BAL - AMOUNT) &lt;/balances&gt;  // Updates the admin's balance by subtracting the withdrawal amount.
+      requires SENDER == ADMIN andBool BAL &gt;=Int AMOUNT     // Specifies conditions: only the admin can withdraw, and there must be sufficient balance.
+
+</code></pre>
+<p>In this K specification:</p>
+<ul>
+<li>Both <code>deposit</code> and <code>withdraw</code> rules are restricted to the <code>ADMIN</code>.</li>
+<li>The <code>withdraw</code> rule also checks for sufficient balance.</li>
+</ul>
+<hr>
+<h3 id="example-5-timed-lock-contract">Example 5: Timed Lock Contract</h3>
+<p>This contract introduces a time-based lock mechanism where funds deposited by a user can only be withdrawn after a specific time period.</p>
+<h4 id="solidity-code-4">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract TimedLock {
+    struct Lock {
+        uint amount;
+        uint releaseTime;
+    }
+
+    mapping(address =&gt; Lock) public locks;
+
+    function deposit(uint timeInSeconds) public payable {
+        require(msg.value &gt; 0, "No Ether sent");
+        locks[msg.sender] = Lock(msg.value, block.timestamp + timeInSeconds);
+    }
+
+    function withdraw() public {
+        Lock memory userLock = locks[msg.sender];
+        require(block.timestamp &gt;= userLock.releaseTime, "Funds are locked");
+        require(userLock.amount &gt; 0, "No funds to withdraw");
+
+        uint amount = userLock.amount;
+        locks[msg.sender].amount = 0;
+        payable(msg.sender).transfer(amount);
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>Users can deposit Ether and specify a lock time (in seconds).</li>
+<li>They can withdraw only after the release time has passed.</li>
+</ol>
+<h4 id="k-framework-specification-4">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module TIMED-LOCK                              // Defines the module named "TIMED-LOCK".
+    imports INT                                 // Imports the INT module to use integer operations.
+    imports MAP                                 // Imports the MAP module to use mappings (key-value pairs).
+    imports BOOL                                // Imports the BOOL module to use boolean expressions.
+
+    syntax LockAction ::= "deposit" | "withdraw"   // Defines LockAction with two possible actions: "deposit" and "withdraw".
+    syntax Address ::= String                      // Defines Address type as a String to represent user addresses.
+    syntax LockState ::= Map                       // Defines LockState as a Map to store lock data (e.g., amounts, release times).
+    syntax KResult ::= Int                         // Defines KResult as an integer, which can be the result type in K operations.
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;                 // Defines the main configuration component ($PGM) of type K.
+                  &lt;locks&gt; .Map &lt;/locks&gt;           // Defines the "locks" component as a map to store each address’s locked funds and release time.
+                  &lt;currentTime&gt; 0 &lt;/currentTime&gt;  // Defines "currentTime" for simulating time in the module.
+
+    // Rule for deposit function
+    rule &lt;k&gt; deposit(TIME) =&gt; . ... &lt;/k&gt;                                // Begins the rule for the "deposit" action.
+         &lt;locks&gt; LOCKS =&gt; LOCKS[ADDR &lt;- { amount: AMOUNT,               // Adds a lock for the depositor's address in the "locks" map.
+                                           releaseTime: (currentTime +Int TIME) }] &lt;/locks&gt; // Sets the release time based on the deposit time.
+      requires AMOUNT &gt;Int 0                                            // Ensures the deposit amount is greater than zero.
+
+    // Rule for withdraw function
+    rule &lt;k&gt; withdraw =&gt; . ... &lt;/k&gt;                                     // Begins the rule for the "withdraw" action.
+         &lt;locks&gt; LOCKS =&gt; LOCKS[ADDR &lt;- { amount: 0, releaseTime: RELEASE }] &lt;/locks&gt;  // Sets the locked amount to zero after withdrawal.
+      requires LOCKS[ADDR].releaseTime &lt;=Int currentTime                // Ensures the current time has passed the release time.
+       andBool LOCKS[ADDR].amount &gt;Int 0                                // Ensures there are funds available to withdraw.
+
+</code></pre>
+<p>In this K specification:</p>
+<ul>
+<li>The <code>deposit</code> rule creates a lock with an amount and release time.</li>
+<li>The <code>withdraw</code> rule ensures that funds are only withdrawn after the release time and updates the balance to zero after withdrawal.</li>
+</ul>
+<hr>
+<h3 id="example-6-multi-step-workflow-contract">Example 6: Multi-Step Workflow Contract</h3>
+<p>This example demonstrates a contract that manages a two-step approval process for transactions.</p>
+<h4 id="solidity-code-5">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MultiStepApproval {
+    enum State { Initiated, Approved, Executed }
+    struct Transaction {
+        address initiator;
+        uint amount;
+        State state;
+    }
+
+    mapping(uint =&gt; Transaction) public transactions;
+    uint public transactionCount;
+
+    function initiateTransaction(uint amount) public {
+        transactions[transactionCount] = Transaction(msg.sender, amount, State.Initiated);
+        transactionCount++;
+    }
+
+    function approveTransaction(uint id) public {
+        require(transactions[id].state == State.Initiated, "Not in initiated state");
+        transactions[id].state = State.Approved;
+    }
+
+    function executeTransaction(uint id) public {
+        require(transactions[id].state == State.Approved, "Not approved");
+        transactions[id].state = State.Executed;
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>The contract stores a transaction in three possible states: <code>Initiated</code>, <code>Approved</code>, and <code>Executed</code>.</li>
+<li>The workflow requires a transaction to move through each step in sequence.</li>
+</ol>
+<h4 id="k-framework-specification-5">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module MULTI-STEP-APPROVAL
+    imports INT
+    imports MAP
+    imports BOOL
+
+    syntax ApprovalAction ::= "initiateTransaction" | "approveTransaction" | "executeTransaction"
+    syntax Address ::= String
+    syntax ApprovalState ::= Map
+    syntax KResult ::= Int
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;
+                  &lt;transactions&gt; .Map &lt;/transactions&gt;
+
+    // Rule for initiateTransaction function
+    rule &lt;k&gt; initiateTransaction(AMOUNT) =&gt; . ... &lt;/k&gt;
+         &lt;transactions&gt; TS =&gt; TS[TX_ID &lt;- { initiator: INITIATOR, amount: AMOUNT, state: "Initiated" }] &lt;/transactions&gt;
+
+    // Rule for approveTransaction function
+    rule &lt;k&gt; approveTransaction(TX_ID) =&gt; . ... &lt;/k&gt;
+         &lt;transactions&gt; TS =&gt; TS[TX_ID &lt;- { state: "Approved" }] &lt;/transactions&gt;
+      requires TS[TX_ID].state == "Initiated"
+
+    // Rule for executeTransaction function
+    rule &lt;k&gt; executeTransaction(TX_ID) =&gt; . ... &lt;/k&gt;
+         &lt;transactions&gt; TS =&gt; TS[TX_ID &lt;- { state: "Executed" }] &lt;/transactions&gt;
+      requires TS[TX_ID].state == "Approved"
+</code></pre>
+<p>In this K specification:</p>
+<ul>
+<li>Each rule ensures that transactions progress through the defined states in the correct sequence.</li>
+<li>Each function enforces that the current state matches the expected state before moving to the next.</li>
+</ul>
+<hr>
+<h3 id="example-7-ownership-transfer-contract">Example 7: Ownership Transfer Contract</h3>
+<p>This contract introduces ownership transfer where only the current owner can transfer ownership to another address.</p>
+<h4 id="solidity-code-6">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Ownable {
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the owner");
+        _;
+    }
+
+    function transferOwnership(address newOwner) public onlyOwner {
+        require(newOwner != address(0), "New owner is zero address");
+        owner = newOwner;
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>Only the current owner can call <code>transferOwnership</code>.</li>
+<li>Ownership can only be transferred to a non-zero address.</li>
+</ol>
+<h4 id="k-framework-specification-6">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module OWNABLE
+    imports BOOL
+    imports STRING
+
+    syntax OwnershipAction ::= "transferOwnership"
+    syntax Address ::= String
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;
+                  &lt;owner&gt; .String &lt;/owner&gt;
+
+    // Rule for transferOwnership function
+    rule &lt;k&gt; transferOwnership(NEW_OWNER) =&gt; . ... &lt;/k&gt;
+         &lt;owner&gt; _ =&gt; NEW_OWNER &lt;/owner&gt;
+      requires SENDER == OWNER andBool NEW_OWNER =/=K "0x0"
+</code></pre>
+<p>In this K specification:</p>
+<ul>
+<li>The <code>transferOwnership</code> rule verifies that the sender is the current owner and the new owner address is not zero.</li>
+</ul>
+<hr>
+<h3 id="example-8-simple-escrow-contract">Example 8: Simple Escrow Contract</h3>
+<p>This example is an escrow contract where an arbiter manages the funds and can release them to a recipient.</p>
+<h4 id="solidity-code-7">Solidity Code</h4>
+<pre class=" language-solidity"><code class="prism  language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Escrow {
+    address public payer;
+    address public recipient;
+    address public arbiter;
+
+    constructor(address _recipient, address _arbiter) payable {
+        payer = msg.sender;
+        recipient = _recipient;
+        arbiter = _arbiter;
+    }
+
+    function releaseFunds() public {
+        require(msg.sender == arbiter, "Only arbiter can release funds");
+        payable(recipient).transfer(address(this).balance);
+    }
+}
+</code></pre>
+<p>In this contract:</p>
+<ol>
+<li>Only the designated arbiter can release funds to the recipient.</li>
+<li>The contract holds funds upon creation.</li>
+</ol>
+<h4 id="k-framework-specification-7">K Framework Specification</h4>
+<pre class=" language-k"><code class="prism  language-k">module ESCROW
+    imports BOOL
+    imports INT
+    imports STRING
+
+    syntax EscrowAction ::= "releaseFunds"
+    syntax Address ::= String
+
+    configuration &lt;k&gt; $PGM:K &lt;/k&gt;
+                  &lt;balance&gt; 0 &lt;/balance&gt;
+                  &lt;arbiter&gt; .String &lt;/arbiter&gt;
+                  &lt;recipient&gt; .String &lt;/recipient&gt;
+
+    // Rule for releaseFunds function
+    rule &lt;k&gt; releaseFunds =&gt; . ... &lt;/k&gt;
+         &lt;balance&gt; BAL =&gt; 0 &lt;/balance&gt;
+      requires SENDER == ARBITER andBool BAL &gt;Int 0
+</code></pre>
+<p>In this K specification:</p>
+<ul>
+<li>The <code>releaseFunds</code> rule checks that only the arbiter can release funds and that there are funds to release.</li>
+</ul>
+<hr>
+</div>
+</body>
+
+</html>

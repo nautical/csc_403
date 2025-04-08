@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="k-framework---installation-and-basic-usage-for-smart-contract-formal-verification"><strong>K Framework - Installation and Basic Usage for Smart Contract Formal Verification</strong></h3>
+<hr>
+<h4 id="slide-1-what-is-k-framework">Slide 1: <strong>What is K Framework?</strong></h4>
+<ul>
+<li><strong>Definition:</strong> The K Framework is a platform for defining programming languages, formalizing semantics, and verifying properties of programs.</li>
+<li><strong>Key Features:</strong>
+<ul>
+<li>Formal specification of programming languages.</li>
+<li>Automatically generates execution engines and verification tools.</li>
+<li>Ideal for verifying smart contracts due to its precision in handling formal semantics.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-2-why-use-k-framework-for-smart-contracts">Slide 2: <strong>Why Use K Framework for Smart Contracts?</strong></h4>
+<ul>
+<li>
+<p><strong>Why Formal Verification Matters:</strong></p>
+<ul>
+<li>Smart contracts handle significant amounts of funds and sensitive data.</li>
+<li>Bugs or vulnerabilities can lead to serious losses.</li>
+<li>Formal verification ensures correctness by mathematically proving contract behavior under all possible conditions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Benefits of K Framework:</strong></p>
+<ul>
+<li>Provides a rigorous approach to ensuring smart contracts function as expected.</li>
+<li>Enables formalization of the contract’s logic in an executable specification.</li>
+<li>Allows for automated testing and verification.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-3-installing-k-framework">Slide 3: <strong>Installing K Framework</strong></h4>
+<ol>
+<li>
+<p><strong>Pre-requisites:</strong></p>
+<ul>
+<li>Ubuntu (or any Linux distro)</li>
+<li>Java 8 or later</li>
+<li>Haskell</li>
+<li>Z3 Theorem Prover (optional but recommended for formal verification)</li>
+</ul>
+</li>
+<li>
+<p><strong>Installation Steps:</strong></p>
+<ol>
+<li>
+<p><strong>Install Binaries from:</strong><br>
+<code>https://github.com/runtimeverification/k/releases/tag/v7.1.155</code></p>
+</li>
+<li>
+<p><strong>Verify Installation:</strong></p>
+<ul>
+<li>Check by running the command:<pre class=" language-bash"><code class="prism  language-bash">kompile --version
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="slide-4-k-framework-basics">Slide 4: <strong>K Framework Basics</strong></h4>
+<ul>
+<li>
+<p><strong>K Definition Structure:</strong></p>
+<ul>
+<li><strong>Modules:</strong> Contain the syntax and rules that define a language.</li>
+<li><strong>Syntax:</strong> Defines the grammar of the smart contract language.</li>
+<li><strong>Rules:</strong> Specify the operational semantics (how the contract behaves).</li>
+</ul>
+</li>
+<li>
+<p><strong>Smart Contract Representation:</strong></p>
+<ul>
+<li>A smart contract is modeled in K using its language constructs.</li>
+<li>K captures the state of a contract and the logic governing state transitions.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="slide-5-formal-verification-using-k">Slide 5: <strong>Formal Verification Using K</strong></h4>
+<ul>
+<li>
+<p><strong>Goal:</strong> Prove that a smart contract meets its specification without error.</p>
+</li>
+<li>
+<p><strong>Steps to Formal Verification:</strong></p>
+<ol>
+<li><strong>Define the contract’s behavior using K syntax and rules.</strong></li>
+<li><strong>Model the state and transitions of the contract.</strong></li>
+<li><strong>Specify properties and invariants</strong> that the contract must satisfy (e.g., no funds can be lost, only specific users can withdraw, etc.).</li>
+<li><strong>Use the K prover</strong> to verify the contract against the defined properties.</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h4 id="slide-6-example-smart-contract-token-transfer">Slide 6: <strong>Example Smart Contract: Token Transfer</strong></h4>
+<ul>
+<li>
+<p><strong>Problem Statement:</strong></p>
+<ul>
+<li>A simple token contract that allows users to transfer tokens from one account to another.</li>
+</ul>
+</li>
+<li>
+<p><strong>Basic Contract Logic:</strong></p>
+<pre class=" language-solidity"><code class="prism  language-solidity">function transfer(address sender, address receiver, uint amount) public {
+    require(balance[sender] &gt;= amount, "Insufficient funds");
+    balance[sender] -= amount;
+    balance[receiver] += amount;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Key Properties to Verify:</strong></p>
+<ol>
+<li><strong>Balance Preservation:</strong> Total supply of tokens is unchanged after transfer.</li>
+<li><strong>Sender Has Enough Balance:</strong> The sender can’t send more tokens than they own.</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h4 id="slide-7-formalizing-the-token-contract-in-k">Slide 7: <strong>Formalizing the Token Contract in K</strong></h4>
+<ul>
+<li>
+<p><strong>Define Syntax:</strong></p>
+<pre class=" language-k"><code class="prism  language-k">syntax Contract ::= "transfer" "(" Address "," Address "," Int ")" 
+syntax Int ::= balance(Address)
+</code></pre>
+</li>
+<li>
+<p><strong>Define Rules:</strong></p>
+<pre class=" language-k"><code class="prism  language-k">rule &lt;k&gt; transfer(S, R, A) =&gt; . ... &lt;/k&gt;
+     &lt;balance&gt; (S |-&gt; BS =&gt; BS - A)
+               (R |-&gt; BR =&gt; BR + A)
+               ...
+     requires BS &gt;= A
+</code></pre>
+</li>
+<li>
+<p><strong>Property to Verify (Balance Preservation):</strong></p>
+<pre class=" language-k"><code class="prism  language-k">claim &lt;k&gt; transfer(S, R, A) =&gt; . ... &lt;/k&gt;
+      &lt;balance&gt; (S |-&gt; BS) (R |-&gt; BR) =&gt; &lt;balance&gt; (S |-&gt; BS - A) (R |-&gt; BR + A)
+      ensures BS + BR == BS' + BR'
+</code></pre>
+</li>
+</ul>
+<hr>
+<h4 id="slide-8-running-formal-verification">Slide 8: <strong>Running Formal Verification</strong></h4>
+<ol>
+<li>
+<p><strong>Compile the Contract:</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash">kompile contract.k
+</code></pre>
+</li>
+<li>
+<p><strong>Prove Properties:</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash">krun --prove contract-verification-spec.k
+</code></pre>
+</li>
+<li>
+<p><strong>Output:</strong></p>
+<ul>
+<li>If the proof is successful, K Framework confirms that the smart contract satisfies all the specified properties.</li>
+</ul>
+</li>
+</ol>
+<hr>
+</div>
+</body>
+
+</html>
