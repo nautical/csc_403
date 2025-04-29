@@ -22,7 +22,7 @@ class Token {
   {
     // Requirement 1: Update balances in a single atomic operation:
     // 1. Deduct amount from sender
-    // 2. Add amount to recipient (create account if doesn't exist)
+    // 2. Add amount to recipient
     balances := balances[sender := balances[sender] - amount]
                        [recipient := if recipient in balances 
                                    then balances[recipient] + amount 

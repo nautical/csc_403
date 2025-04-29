@@ -1,0 +1,962 @@
+module AUTO-CASTS [digest(yeN10EyTfkiQX2DsdIf85Ct5WWWIbDASZRvjSdc89zk=), org.kframework.attributes.Location(Location(377,1,385,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module AUTO-FOLLOW [digest(5VwlXEHlnJrYr5reTC8S4+bzFaAUMq0JsPENdLTjLfo=), org.kframework.attributes.Location(Location(387,1,398,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module BASIC-K [digest(qGPht6f9yLg48Wyknt7x5oMbPcqhSwE4Mn9ypq3hkmo=), org.kframework.attributes.Location(Location(35,1,42,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-BOOL
+  imports ML-SYNTAX
+  syntax KItem [hook(K.KItem), org.kframework.attributes.Location(Location(38,3,38,31)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax KItem ::= KConfigVar
+  syntax KConfigVar [org.kframework.attributes.Location(Location(40,3,40,28)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md)), token]
+  syntax K ::= KItem
+endmodule
+
+
+module BOOL [digest(RdEgTFZlwJdEvHFWhkT1TCy32jqjhDpuCuAJMymVXp8=), org.kframework.attributes.Location(Location(1176,1,1179,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports BOOL-KORE
+  imports BOOL-COMMON
+endmodule
+
+
+module BOOL-COMMON [digest(K1h9vWOYImDDYSGOzBTljo8Tnpyedg41KNuzmVQB/4k=), org.kframework.attributes.Location(Location(1086,1,1160,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports BOOL-SYNTAX
+  imports BASIC-K
+  syntax priority notBool_ > _impliesBool_ _orBool_ _xorBool_ _andBool_ _andThenBool_ _orElseBool_ > _==Bool_ _=/=Bool_
+  syntax associativity left _xorBool_
+  syntax associativity left _orElseBool_
+  syntax associativity left _orBool_
+  syntax associativity left _impliesBool_
+  syntax associativity left _andThenBool_
+  syntax associativity left _andBool_
+  syntax associativity left _==Bool_ _=/=Bool_
+  syntax associativity left _==Bool_
+  syntax associativity left _=/=Bool_
+  syntax Bool ::= Bool "xorBool" Bool [function, group(boolOperation), hook(BOOL.xor), left, smt-hook(xor), symbol(_xorBool_), total]
+  syntax Bool ::= Bool "orElseBool" Bool [function, group(boolOperation), hook(BOOL.orElse), left, smt-hook(or), symbol(_orElseBool_), total]
+  syntax Bool ::= Bool "orBool" Bool [function, group(boolOperation), hook(BOOL.or), left, smt-hook(or), symbol(_orBool_), total]
+  syntax Bool ::= Bool "impliesBool" Bool [function, group(boolOperation), hook(BOOL.implies), left, smt-hook(=>), symbol(_impliesBool_), total]
+  syntax Bool ::= Bool "andThenBool" Bool [function, group(boolOperation), hook(BOOL.andThen), left, smt-hook(and), symbol(_andThenBool_), total]
+  syntax Bool ::= Bool "andBool" Bool [function, group(boolOperation), hook(BOOL.and), left, smt-hook(and), symbol(_andBool_), total]
+  syntax Bool ::= Bool "==Bool" Bool [comm, function, hook(BOOL.eq), left, smt-hook(=), symbol(_==Bool_), total]
+  syntax Bool ::= Bool "=/=Bool" Bool [comm, function, hook(BOOL.ne), left, smt-hook(distinct), symbol(_=/=Bool_), total]
+  syntax Bool ::= "notBool" Bool [function, group(boolOperation), hook(BOOL.not), smt-hook(not), symbol(notBool_), total]
+  rule `notBool_`(#token("true","Bool"))=>#token("false","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1127,8,1127,29)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `notBool_`(#token("false","Bool"))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1128,8,1128,29)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_xorBool_`(#token("false","Bool"),#SemanticCastToBool(B))=>#SemanticCastToBool(B) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1140,8,1140,38)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_xorBool_`(#SemanticCastToBool(B),#token("false","Bool"))=>#SemanticCastToBool(B) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1141,8,1141,38)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_xorBool_`(#SemanticCastToBool(B),#SemanticCastToBool(B))=>#token("false","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1142,8,1142,38)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_orElseBool_`(#token("true","Bool"),#SemanticCastToBool(_))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1149,8,1149,33)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_orElseBool_`(#token("false","Bool"),#SemanticCastToBool(K))=>#SemanticCastToBool(K) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1151,8,1151,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_orElseBool_`(#SemanticCastToBool(_),#token("true","Bool"))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1150,8,1150,33)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_orElseBool_`(#SemanticCastToBool(K),#token("false","Bool"))=>#SemanticCastToBool(K) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1152,8,1152,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_orBool_`(#token("true","Bool"),#SemanticCastToBool(_))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1144,8,1144,34)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_orBool_`(#token("false","Bool"),#SemanticCastToBool(B))=>#SemanticCastToBool(B) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1146,8,1146,32)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_orBool_`(#SemanticCastToBool(_),#token("true","Bool"))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1145,8,1145,34)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_orBool_`(#SemanticCastToBool(B),#token("false","Bool"))=>#SemanticCastToBool(B) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1147,8,1147,32)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_impliesBool_`(#token("true","Bool"),#SemanticCastToBool(B))=>#SemanticCastToBool(B) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1154,8,1154,36)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_impliesBool_`(#token("false","Bool"),#SemanticCastToBool(_))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1155,8,1155,40)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_impliesBool_`(#SemanticCastToBool(_),#token("true","Bool"))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1156,8,1156,39)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_impliesBool_`(#SemanticCastToBool(B),#token("false","Bool"))=>`notBool_`(#SemanticCastToBool(B)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1157,8,1157,45)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_andThenBool_`(#token("true","Bool"),#SemanticCastToBool(K))=>#SemanticCastToBool(K) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1135,8,1135,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_andThenBool_`(#token("false","Bool"),#SemanticCastToBool(_))=>#token("false","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1137,8,1137,36)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_andThenBool_`(#SemanticCastToBool(_),#token("false","Bool"))=>#token("false","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1138,8,1138,36)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_andThenBool_`(#SemanticCastToBool(K),#token("true","Bool"))=>#SemanticCastToBool(K) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1136,8,1136,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_andBool_`(#token("true","Bool"),#SemanticCastToBool(B))=>#SemanticCastToBool(B) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1130,8,1130,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_andBool_`(#token("false","Bool"),#SemanticCastToBool(_))=>#token("false","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1132,8,1132,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_andBool_`(#SemanticCastToBool(_),#token("false","Bool"))=>#token("false","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1133,8,1133,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_andBool_`(#SemanticCastToBool(B),#token("true","Bool"))=>#SemanticCastToBool(B) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1131,8,1131,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_=/=Bool_`(#SemanticCastToBool(B1),#SemanticCastToBool(B2))=>`notBool_`(`_==Bool_`(#SemanticCastToBool(B1),#SemanticCastToBool(B2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1159,8,1159,57)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module BOOL-KORE [digest(45WfSOLZDZ6vN7wfij2V9A/PulAjs9c58ALUQlsSaCY=), org.kframework.attributes.Location(Location(1162,1,1174,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), symbolic]
+  imports BOOL-COMMON
+  rule #Equals(`notBool_`(#SemanticCastToBool(@B)),#token("true","Bool"))=>#Equals(#SemanticCastToBool(@B),#token("false","Bool")) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1166,8,1166,55)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`notBool_`(#SemanticCastToBool(@B)),#token("false","Bool"))=>#Equals(#SemanticCastToBool(@B),#token("true","Bool")) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1168,8,1168,55)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_orBool_`(#SemanticCastToBool(@B1),#SemanticCastToBool(@B2)),#token("false","Bool"))=>#And(#Equals(#SemanticCastToBool(@B1),#token("false","Bool")),#Equals(#SemanticCastToBool(@B2),#token("false","Bool"))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1173,8,1173,86)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_andBool_`(#SemanticCastToBool(@B1),#SemanticCastToBool(@B2)),#token("true","Bool"))=>#And(#Equals(#SemanticCastToBool(@B1),#token("true","Bool")),#Equals(#SemanticCastToBool(@B2),#token("true","Bool"))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1171,8,1171,84)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("true","Bool"),`notBool_`(#SemanticCastToBool(@B)))=>#Equals(#token("false","Bool"),#SemanticCastToBool(@B)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1165,8,1165,55)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("true","Bool"),`_andBool_`(#SemanticCastToBool(@B1),#SemanticCastToBool(@B2)))=>#And(#Equals(#token("true","Bool"),#SemanticCastToBool(@B1)),#Equals(#token("true","Bool"),#SemanticCastToBool(@B2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1170,8,1170,84)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("false","Bool"),`notBool_`(#SemanticCastToBool(@B)))=>#Equals(#token("true","Bool"),#SemanticCastToBool(@B)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1167,8,1167,55)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("false","Bool"),`_orBool_`(#SemanticCastToBool(@B1),#SemanticCastToBool(@B2)))=>#And(#Equals(#token("false","Bool"),#SemanticCastToBool(@B1)),#Equals(#token("false","Bool"),#SemanticCastToBool(@B2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1172,8,1172,86)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+endmodule
+
+
+module BOOL-SYNTAX [digest(NyXw3ZE2lSn4HD166cKlUkGp6gngWYXMYcMitKhJyCA=), org.kframework.attributes.Location(Location(1080,1,1084,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports SORT-BOOL
+  syntax Bool ::= "true" [token]
+  syntax Bool ::= "false" [token]
+endmodule
+
+
+module BUILTIN-ID-TOKENS [digest(/99H3owdhBQOyynByjmemNq1DkW5pJFycvp958aSSUU=), org.kframework.attributes.Location(Location(63,1,66,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax #UpperId ::= r"[A-Z][a-zA-Z0-9]*" [prec(2), token]
+  syntax #LowerId ::= r"[a-z][a-zA-Z0-9]*" [prec(2), token]
+endmodule
+
+
+module BYTES-HOOKED [digest(rVRo/EdWJLR/fGg78JbdkH6Ufqdn0ZTRyqvjdfWF1/A=), org.kframework.attributes.Location(Location(2010,1,2185,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports STRING-SYNTAX
+  imports BYTES-SYNTAX
+  imports BYTES-STRING-ENCODE
+  syntax associativity right _+Bytes__BYTES-HOOKED_Bytes_Bytes_Bytes
+  syntax String ::= "Bytes2String" "(" Bytes ")" [function, hook(BYTES.bytes2string), total]
+  syntax Signedness ::= "Unsigned" [symbol(unsignedBytes)]
+  syntax Signedness ::= "Signed" [symbol(signedBytes)]
+  syntax Int ::= Bytes "[" Int "]" [function, hook(BYTES.get)]
+  syntax Int ::= "lengthBytes" "(" Bytes ")" [function, hook(BYTES.length), smtlib(lengthBytes), total]
+  syntax Int ::= "Bytes2Int" "(" Bytes "," Endianness "," Signedness ")" [function, hook(BYTES.bytes2int), total]
+  syntax Endianness ::= "LE" [symbol(littleEndianBytes)]
+  syntax Endianness ::= "BE" [symbol(bigEndianBytes)]
+  syntax Bytes ::= Bytes "[" index:Int "<-" value:Int "]" [function, hook(BYTES.update)]
+  syntax Bytes ::= Bytes "+Bytes" Bytes [function, hook(BYTES.concat), right, total]
+  syntax Bytes ::= "substrBytes" "(" Bytes "," startIndex:Int "," endIndex:Int ")" [function, hook(BYTES.substr)]
+  syntax Bytes ::= "reverseBytes" "(" Bytes ")" [function, hook(BYTES.reverse), total]
+  syntax Bytes ::= "replaceAtBytes" "(" dest:Bytes "," index:Int "," src:Bytes ")" [function, hook(BYTES.replaceAt)]
+  syntax Bytes ::= "padRightBytes" "(" Bytes "," length:Int "," value:Int ")" [function, hook(BYTES.padRight)]
+  syntax Bytes ::= "padLeftBytes" "(" Bytes "," length:Int "," value:Int ")" [function, hook(BYTES.padLeft)]
+  syntax Bytes ::= "memsetBytes" "(" dest:Bytes "," index:Int "," count:Int "," v:Int ")" [function, hook(BYTES.memset)]
+  syntax Bytes ::= "String2Bytes" "(" String ")" [function, hook(BYTES.string2bytes), total]
+  syntax Bytes ::= "Int2Bytes" "(" length:Int "," Int "," Endianness ")" [function, hook(BYTES.int2bytes), total]
+  syntax Bytes ::= "Int2Bytes" "(" Int "," Endianness "," Signedness ")" [function, symbol(Int2BytesNoLen), total]
+  syntax Bytes ::= ".Bytes" [function, hook(BYTES.empty), total]
+endmodule
+
+
+module BYTES-STRING-ENCODE [digest(SUpTIvyIpmO9pV60lzrKrkTdGDWpVTiDhVDfICWeIQE=), org.kframework.attributes.Location(Location(1996,1,2006,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), symbolic]
+  imports BYTES-SYNTAX
+  syntax String ::= "decodeBytes" "(" encoding:String "," contents:Bytes ")" [function, hook(BYTES.decodeBytes)]
+  syntax Bytes ::= "encodeBytes" "(" encoding:String "," contents:String ")" [function, hook(BYTES.encodeBytes)]
+endmodule
+
+
+module BYTES-SYNTAX [digest(f3G0srIOyv5rTWPl6+I/GQRpMbZBm3zx6wbJy8SEApg=), org.kframework.attributes.Location(Location(1987,1,1992,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports STRING-SYNTAX
+  syntax Bytes [hook(BYTES.Bytes), org.kframework.attributes.Location(Location(1990,3,1990,35)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Bytes ::= r"b[\"]([ !#-\\[\\]-~]|([\\\\][tnfr\"\\\\]|[\\\\][x][0-9a-fA-F]{2}))*[\"]" [token]
+endmodule
+
+
+module CALC-BOOL [digest(evKbaWsVCj4zz2jmydTRcUaD5sRH10KSzSXc0mYQhec=), org.kframework.attributes.Location(Location(57,1,110,10)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k))]
+  imports INT
+  imports DEFAULT-CONFIGURATION
+  imports CALC-BOOL-SYNTAX
+  imports BOOL
+  rule `_||__CALC-BOOL-SYNTAX_Bool_Bool_Bool`(#SemanticCastToBool(B1),#SemanticCastToBool(B2))=>`_orBool_`(#SemanticCastToBool(B1),#SemanticCastToBool(B2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(108,10,108,34)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_^__CALC-BOOL-SYNTAX_Int_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_^Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(80,10,80,31)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_>__CALC-BOOL-SYNTAX_Bool_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_>Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(94,10,94,33)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_>=__CALC-BOOL-SYNTAX_Bool_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_>=Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(91,10,91,33)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_==__CALC-BOOL-SYNTAX_Bool_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_==Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(97,10,97,33)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_<__CALC-BOOL-SYNTAX_Bool_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_<Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(88,10,88,33)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_<=__CALC-BOOL-SYNTAX_Bool_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_<=Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(85,10,85,33)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_/__CALC-BOOL-SYNTAX_Int_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_/Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(77,10,77,31)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_-__CALC-BOOL-SYNTAX_Int_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_-Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(71,10,71,31)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_+__CALC-BOOL-SYNTAX_Int_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_+Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(68,10,68,31)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_*__CALC-BOOL-SYNTAX_Int_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_*Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(74,10,74,31)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_&&__CALC-BOOL-SYNTAX_Bool_Bool_Bool`(#SemanticCastToBool(B1),#SemanticCastToBool(B2))=>`_andBool_`(#SemanticCastToBool(B1),#SemanticCastToBool(B2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(105,10,105,35)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_!=__CALC-BOOL-SYNTAX_Bool_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_=/=Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(100,10,100,34)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module CALC-BOOL-SYNTAX [digest(yY25VcWt9Lv1Ev/cfKj+jtWeQV9YRjBjHOqh8V1Z28E=), org.kframework.attributes.Location(Location(2,1,54,10)), org.kframework.attributes.Source(Source(/Users/piyushgururani/Desktop/Presentation/Supplement/Solidity Basics/k/02-calc-bool/calc-bool.k))]
+  imports INT-SYNTAX
+  imports BOOL-SYNTAX
+  syntax priority (_)_CALC-BOOL-SYNTAX_Int_Int > _^__CALC-BOOL-SYNTAX_Int_Int_Int > _*__CALC-BOOL-SYNTAX_Int_Int_Int _/__CALC-BOOL-SYNTAX_Int_Int_Int > _+__CALC-BOOL-SYNTAX_Int_Int_Int _-__CALC-BOOL-SYNTAX_Int_Int_Int
+  syntax associativity left _^__CALC-BOOL-SYNTAX_Int_Int_Int
+  syntax associativity left _+__CALC-BOOL-SYNTAX_Int_Int_Int _-__CALC-BOOL-SYNTAX_Int_Int_Int
+  syntax associativity left _*__CALC-BOOL-SYNTAX_Int_Int_Int _/__CALC-BOOL-SYNTAX_Int_Int_Int
+  syntax associativity left _&&__CALC-BOOL-SYNTAX_Bool_Bool_Bool _||__CALC-BOOL-SYNTAX_Bool_Bool_Bool
+  syntax Int ::= Int "^" Int [function]
+  syntax Int ::= Int "/" Int [function]
+  syntax Int ::= Int "-" Int [function]
+  syntax Int ::= Int "+" Int [function]
+  syntax Int ::= Int "*" Int [function]
+  syntax Int ::= "(" Int ")" [bracket, bracketLabel((_)_CALC-BOOL-SYNTAX_Int_Int)]
+  syntax Exp ::= Int
+  syntax Exp ::= Bool
+  syntax Bool ::= Int ">=" Int [function]
+  syntax Bool ::= Int ">" Int [function]
+  syntax Bool ::= Int "==" Int [function]
+  syntax Bool ::= Int "<=" Int [function]
+  syntax Bool ::= Int "<" Int [function]
+  syntax Bool ::= Int "!=" Int [function]
+  syntax Bool ::= Bool "||" Bool [function]
+  syntax Bool ::= Bool "&&" Bool [function]
+  syntax Bool ::= "(" Bool ")" [bracket, bracketLabel((_)_CALC-BOOL-SYNTAX_Bool_Bool)]
+endmodule
+
+
+module CONFIG-CELLS [digest(Adms+G7z+7ExqHz+NSa6y0W11bwPpgSwRrEGC+opPww=), org.kframework.attributes.Location(Location(305,1,318,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports RULE-LISTS
+  imports KCELLS
+  syntax Cell ::= "<" #CellName #CellProperties ">" K "</" #CellName ">" [symbol(#configCell)]
+  syntax Cell ::= "<" #CellName "/>" [symbol(#externalCell)]
+  syntax #CellProperty ::= #CellName "=" KString [symbol(#cellProperty)]
+  syntax #CellProperties ::= #CellProperty #CellProperties [symbol(#cellPropertyList)]
+  syntax #CellProperties ::= "" [symbol(#cellPropertyListTerminator)]
+  syntax #CellName ::= r"[a-zA-Z][a-zA-Z0-9\\-]*" [prec(1), token]
+  syntax #CellName ::= #UpperId [token]
+  syntax #CellName ::= #LowerId [token]
+endmodule
+
+
+module DEFAULT-CONFIGURATION [digest(scgFBLF8fNh5tJHxwsv0p6aJvrOfXkANL1GtCvdqE5Y=), org.kframework.attributes.Location(Location(524,1,528,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports MAP
+  imports BASIC-K
+  syntax KCell ::= "initKCell" "(" Map ")" [function, initializer]
+  syntax KCell ::= "<k>" K "</k>" [cell, cellName(k), format(%1%i%n%2%d%n%3), maincell, org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule initKCell(Init)=>`<k>`(#noDots(.KList),#SemanticCastToK(`project:KItem`(`Map:lookup`(Init,#token("$PGM","KConfigVar")))),#noDots(.KList)) requires #token("true","Bool") ensures #token("true","Bool") [initializer]
+endmodule
+
+
+module DEFAULT-LAYOUT [digest(QahWu5S5oYXowXdE9RMniNKGhTL7G1QCIXTkUlDi2m4=), org.kframework.attributes.Location(Location(510,1,514,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax #Layout ::= r"[ \\n\\r\\t]"
+  syntax #Layout ::= r"/\\*([^*]|\\*+[^*/])*\\*+/"
+  syntax #Layout ::= r"//[^\\n\\r]*"
+endmodule
+
+
+module DOMAINS-SYNTAX [digest(Zwy0P2Mp6xwwBxLx79bGaD/CoTNbcy2Rv1d4WVpiofg=), org.kframework.attributes.Location(Location(39,1,45,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports UNSIGNED-INT-SYNTAX
+  imports STRING-SYNTAX
+  imports SORT-K
+  imports ID-SYNTAX
+  imports BOOL-SYNTAX
+endmodule
+
+
+module FLOAT-SYNTAX [digest(I7pNw5ugekHiaPLxDZ6qo61Q597tUbvw0bmjBgr5V4Q=), org.kframework.attributes.Location(Location(1482,1,1487,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Float [hook(FLOAT.Float), org.kframework.attributes.Location(Location(1483,3,1483,35)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Float ::= r"[+\\-]?Infinity([fFdD]|[pP][0-9]+[xX][0-9]+)?" [prec(3), token]
+  syntax Float ::= r"NaN([fFdD]|[pP][0-9]+[xX][0-9]+)?" [prec(3), token]
+  syntax Float ::= r"([+\\-]?[0-9]+(\\.[0-9]*)?|\\.[0-9]+)([eE][+\\-]?[0-9]+)?([fFdD]|[pP][0-9]+[xX][0-9]+)?" [prec(1), token]
+endmodule
+
+
+module ID-SYNTAX [digest(5CR14G1AFSwvw3G2rVmEOcrklCLhrUgwYGp0/HoDQhQ=), org.kframework.attributes.Location(Location(2254,1,2256,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Id [org.kframework.attributes.Location(Location(2255,3,2255,20)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), token]
+endmodule
+
+
+module ID-SYNTAX-PROGRAM-PARSING [digest(n8ymLzMstM3sQbP9k66N41SCvCymNN/zhI7qZyoQ8vs=), org.kframework.attributes.Location(Location(2247,1,2252,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports BUILTIN-ID-TOKENS
+  syntax Id ::= r"[A-Za-z_][A-Za-z0-9_]*" [prec(1), token]
+  syntax Id ::= #UpperId [token]
+  syntax Id ::= #LowerId [token]
+endmodule
+
+
+module INT [digest(Wd4lvGpc+k8TmvFaAN2kSUcvTa5BE9iiKWTz024awFU=), org.kframework.attributes.Location(Location(1420,1,1447,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports K-EQUAL
+  imports INT-SYMBOLIC
+  imports INT-KORE
+  imports INT-COMMON
+  imports BOOL
+  syntax Int ::= "freshInt" "(" Int ")" [freshGenerator, function, private, total]
+  rule `signExtendBitRangeInt(_,_,_)_INT-COMMON_Int_Int_Int_Int`(#SemanticCastToInt(I),#SemanticCastToInt(IDX),#SemanticCastToInt(LEN))=>`_-Int_`(`_modInt_`(`_+Int_`(`bitRangeInt(_,_,_)_INT-COMMON_Int_Int_Int_Int`(#SemanticCastToInt(I),#SemanticCastToInt(IDX),#SemanticCastToInt(LEN)),`_<<Int_`(#token("1","Int"),`_-Int_`(#SemanticCastToInt(LEN),#token("1","Int")))),`_<<Int_`(#token("1","Int"),#SemanticCastToInt(LEN))),`_<<Int_`(#token("1","Int"),`_-Int_`(#SemanticCastToInt(LEN),#token("1","Int")))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1429,8,1429,164)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `minInt(_,_)_INT-COMMON_Int_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>#SemanticCastToInt(I2) requires `_>=Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1440,8,1440,57)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `minInt(_,_)_INT-COMMON_Int_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>#SemanticCastToInt(I1) requires `_<Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1439,8,1439,57)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `freshInt(_)_INT_Int_Int`(#SemanticCastToInt(I))=>#SemanticCastToInt(I) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1446,8,1446,28)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `bitRangeInt(_,_,_)_INT-COMMON_Int_Int_Int_Int`(#SemanticCastToInt(I),#SemanticCastToInt(IDX),#SemanticCastToInt(LEN))=>`_modInt_`(`_>>Int_`(#SemanticCastToInt(I),#SemanticCastToInt(IDX)),`_<<Int_`(#token("1","Int"),#SemanticCastToInt(LEN))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1427,8,1427,85)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_modInt_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_%Int_`(`_+Int_`(`_%Int_`(#SemanticCastToInt(I1),`absInt(_)_INT-COMMON_Int_Int`(#SemanticCastToInt(I2))),`absInt(_)_INT-COMMON_Int_Int`(#SemanticCastToInt(I2))),`absInt(_)_INT-COMMON_Int_Int`(#SemanticCastToInt(I2))) requires `_=/=Int_`(#SemanticCastToInt(I2),#token("0","Int")) ensures #token("true","Bool") [concrete, org.kframework.attributes.Location(Location(1434,5,1437,23)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), simplification]
+  rule `_dividesInt__INT-COMMON_Bool_Int_Int`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_==Int_`(`_%Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(I1)),#token("0","Int")) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1443,8,1443,58)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_divInt_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_/Int_`(`_-Int_`(#SemanticCastToInt(I1),`_modInt_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))),#SemanticCastToInt(I2)) requires `_=/=Int_`(#SemanticCastToInt(I2),#token("0","Int")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1431,8,1432,23)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `_=/=Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`notBool_`(`_==Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1442,8,1442,53)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module INT-COMMON [digest(OCTyTIVLLuEPxSBufJ4syiOk/6/QJYFX19vt6qJhB5U=), org.kframework.attributes.Location(Location(1207,1,1354,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports INT-SYNTAX
+  imports BOOL
+  syntax priority ~Int_ > _^Int_ _^%Int__ > _divInt_ _%Int_ _/Int_ _modInt_ _*Int_ > _-Int_ _+Int_ > _<<Int_ _>>Int_ > _&Int_ > _xorInt_ > _|Int_
+  syntax associativity left _|Int_
+  syntax associativity left _xorInt_
+  syntax associativity left _modInt_
+  syntax associativity left _divInt_ _%Int_ _/Int_ _modInt_ _*Int_
+  syntax associativity left _divInt_
+  syntax associativity left _^Int_ _^%Int__
+  syntax associativity left _^Int_
+  syntax associativity left _^%Int__
+  syntax associativity left _>>Int_
+  syntax associativity left _<<Int_ _>>Int_
+  syntax associativity left _<<Int_
+  syntax associativity left _/Int_
+  syntax associativity left _-Int_ _+Int_
+  syntax associativity left _-Int_
+  syntax associativity left _+Int_
+  syntax associativity left _*Int_
+  syntax associativity left _&Int_
+  syntax associativity left _%Int_
+  syntax K ::= "srandInt" "(" Int ")" [function, hook(INT.srand), impure]
+  syntax Int ::= Int "|Int" Int [comm, function, hook(INT.or), left, smtlib(orInt), symbol(_|Int_), total]
+  syntax Int ::= Int "xorInt" Int [comm, function, hook(INT.xor), left, smtlib(xorInt), symbol(_xorInt_), total]
+  syntax Int ::= Int "modInt" Int [function, hook(INT.emod), left, smt-hook(mod), symbol(_modInt_)]
+  syntax Int ::= Int "divInt" Int [function, hook(INT.ediv), left, smt-hook(div), symbol(_divInt_)]
+  syntax Int ::= Int "^Int" Int [function, hook(INT.pow), left, smt-hook(^), symbol(_^Int_)]
+  syntax Int ::= Int "^%Int" Int Int [function, hook(INT.powmod), left, smt-hook((mod (^ #1 #2) #3)), symbol(_^%Int__)]
+  syntax Int ::= Int ">>Int" Int [function, hook(INT.shr), left, smtlib(shrInt), symbol(_>>Int_)]
+  syntax Int ::= Int "<<Int" Int [function, hook(INT.shl), left, smtlib(shlInt), symbol(_<<Int_)]
+  syntax Int ::= Int "/Int" Int [function, hook(INT.tdiv), left, smt-hook((ite (or (= 0 (mod #1 #2)) (>= #1 0)) (div #1 #2) (ite (> #2 0) (+ (div #1 #2) 1) (- (div #1 #2) 1)))), symbol(_/Int_)]
+  syntax Int ::= Int "-Int" Int [function, hook(INT.sub), left, smt-hook(-), symbol(_-Int_), total]
+  syntax Int ::= Int "+Int" Int [comm, function, hook(INT.add), left, smt-hook(+), symbol(_+Int_), total]
+  syntax Int ::= Int "*Int" Int [comm, function, hook(INT.mul), left, smt-hook(*), symbol(_*Int_), total]
+  syntax Int ::= Int "&Int" Int [comm, function, hook(INT.and), left, smtlib(andInt), symbol(_&Int_), total]
+  syntax Int ::= Int "%Int" Int [function, hook(INT.tmod), left, smt-hook((ite (or (= 0 (mod #1 #2)) (>= #1 0)) (mod #1 #2) (ite (> #2 0) (- (mod #1 #2) #2) (+ (mod #1 #2) #2)))), symbol(_%Int_)]
+  syntax Int ::= "~Int" Int [function, hook(INT.not), smtlib(notInt), symbol(~Int_), total]
+  syntax Int ::= "signExtendBitRangeInt" "(" Int "," index:Int "," length:Int ")" [function, hook(INT.signExtendBitRange)]
+  syntax Int ::= "randInt" "(" Int ")" [function, hook(INT.rand), impure]
+  syntax Int ::= "minInt" "(" Int "," Int ")" [function, hook(INT.min), smt-hook((ite (< #1 #2) #1 #2)), total]
+  syntax Int ::= "maxInt" "(" Int "," Int ")" [function, hook(INT.max), smt-hook((ite (< #1 #2) #2 #1)), total]
+  syntax Int ::= "log2Int" "(" Int ")" [function, hook(INT.log2)]
+  syntax Int ::= "bitRangeInt" "(" Int "," index:Int "," length:Int ")" [function, hook(INT.bitRange)]
+  syntax Int ::= "absInt" "(" Int ")" [function, hook(INT.abs), smt-hook((ite (< #1 0) (- 0 #1) #1)), total]
+  syntax Bool ::= Int "dividesInt" Int [function]
+  syntax Bool ::= Int ">Int" Int [function, hook(INT.gt), smt-hook(>), symbol(_>Int_), total]
+  syntax Bool ::= Int ">=Int" Int [function, hook(INT.ge), smt-hook(>=), symbol(_>=Int_), total]
+  syntax Bool ::= Int "==Int" Int [comm, function, hook(INT.eq), smt-hook(=), symbol(_==Int_), total]
+  syntax Bool ::= Int "=/=Int" Int [comm, function, hook(INT.ne), smt-hook(distinct), symbol(_=/=Int_), total]
+  syntax Bool ::= Int "<Int" Int [function, hook(INT.lt), smt-hook(<), symbol(_<Int_), total]
+  syntax Bool ::= Int "<=Int" Int [function, hook(INT.le), smt-hook(<=), symbol(_<=Int_), total]
+endmodule
+
+
+module INT-KORE [digest(jiI7Ii1OclMSxE/5LjNIjG70j2GkFW+NugNi3v51yR4=), org.kframework.attributes.Location(Location(1388,1,1418,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), symbolic]
+  imports K-EQUAL
+  imports INT-COMMON
+  imports BOOL
+  rule `_==K_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2))=>`_==Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.eq-k-to-eq-int), org.kframework.attributes.Location(Location(1393,31,1393,74)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_-Int_`(`_-Int_`(#SemanticCastToInt(C),#SemanticCastToInt(I2)),#SemanticCastToInt(I3))=>`_-Int_`(#SemanticCastToInt(C),`_+Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(I3))) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I2, I3), org.kframework.attributes.Location(Location(1415,8,1415,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(C)]
+  rule `_-Int_`(#SemanticCastToInt(I1),`_-Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(C)))=>`_+Int_`(`_-Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)),#SemanticCastToInt(C)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I2), org.kframework.attributes.Location(Location(1414,8,1414,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(C)]
+  rule `_-Int_`(#SemanticCastToInt(I1),`_+Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(C)))=>`_-Int_`(`_-Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)),#SemanticCastToInt(C)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I2), org.kframework.attributes.Location(Location(1413,8,1413,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(C)]
+  rule `_-Int_`(#SemanticCastToInt(I1),`_+Int_`(#SemanticCastToInt(B),#SemanticCastToInt(I3)))=>`_-Int_`(`_-Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I3)),#SemanticCastToInt(B)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I3), org.kframework.attributes.Location(Location(1409,8,1409,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(B)]
+  rule `_-Int_`(#SemanticCastToInt(A),#SemanticCastToInt(I))=>`_+Int_`(#SemanticCastToInt(A),`_-Int_`(#token("0","Int"),#SemanticCastToInt(I))) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I), org.kframework.attributes.Location(Location(1405,8,1405,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification(51), symbolic(A)]
+  rule `_+Int_`(`_-Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(B)),#SemanticCastToInt(I3))=>`_-Int_`(`_+Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I3)),#SemanticCastToInt(B)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I3), org.kframework.attributes.Location(Location(1412,8,1412,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(B)]
+  rule `_+Int_`(`_+Int_`(#SemanticCastToInt(A),#SemanticCastToInt(I2)),#SemanticCastToInt(I3))=>`_+Int_`(#SemanticCastToInt(A),`_+Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(I3))) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I2, I3), org.kframework.attributes.Location(Location(1407,8,1407,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(A)]
+  rule `_+Int_`(#SemanticCastToInt(I1),`_-Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(C)))=>`_-Int_`(`_+Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)),#SemanticCastToInt(C)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I2), org.kframework.attributes.Location(Location(1411,8,1411,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(C)]
+  rule `_+Int_`(#SemanticCastToInt(I1),`_+Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(C)))=>`_+Int_`(`_+Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)),#SemanticCastToInt(C)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I2), org.kframework.attributes.Location(Location(1410,8,1410,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(C)]
+  rule `_+Int_`(#SemanticCastToInt(I1),`_+Int_`(#SemanticCastToInt(B),#SemanticCastToInt(I3)))=>`_+Int_`(#SemanticCastToInt(B),`_+Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I3))) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I3), org.kframework.attributes.Location(Location(1408,8,1408,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(B)]
+  rule `_+Int_`(#SemanticCastToInt(I),#SemanticCastToInt(B))=>`_+Int_`(#SemanticCastToInt(B),#SemanticCastToInt(I)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I), org.kframework.attributes.Location(Location(1404,8,1404,28)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification(51), symbolic(B)]
+  rule `_&Int_`(#SemanticCastToInt(I1),`_&Int_`(#SemanticCastToInt(I2),#SemanticCastToInt(C)))=>`_&Int_`(`_&Int_`(#SemanticCastToInt(I1),#SemanticCastToInt(I2)),#SemanticCastToInt(C)) requires #token("true","Bool") ensures #token("true","Bool") [concrete(I1, I2), org.kframework.attributes.Location(Location(1417,8,1417,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification, symbolic(C)]
+  rule #Equals(`_==Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)),#token("true","Bool"))=>#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2)) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.eq-int-true-left), org.kframework.attributes.Location(Location(1394,31,1394,78)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_==Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)),#token("false","Bool"))=>#Not(#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2))) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.eq-int-false-left), org.kframework.attributes.Location(Location(1396,31,1396,84)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_=/=Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)),#token("true","Bool"))=>#Not(#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2))) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.neq-int-true-left), org.kframework.attributes.Location(Location(1398,31,1398,84)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_=/=Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)),#token("false","Bool"))=>#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2)) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.neq-int-false-left), org.kframework.attributes.Location(Location(1400,31,1400,78)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("true","Bool"),`_==Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)))=>#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2)) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.eq-int-true-rigth), org.kframework.attributes.Location(Location(1395,31,1395,78)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("true","Bool"),`_=/=Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)))=>#Not(#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2))) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.neq-int-true-right), org.kframework.attributes.Location(Location(1399,31,1399,84)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("false","Bool"),`_==Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)))=>#Not(#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2))) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.eq-int-false-rigth), org.kframework.attributes.Location(Location(1397,31,1397,84)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("false","Bool"),`_=/=Int_`(#SemanticCastToInt(K1),#SemanticCastToInt(K2)))=>#Equals(#SemanticCastToInt(K1),#SemanticCastToInt(K2)) requires #token("true","Bool") ensures #token("true","Bool") [label(INT-KORE.neq-int-false-right), org.kframework.attributes.Location(Location(1401,31,1401,78)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+endmodule
+
+
+module INT-SYMBOLIC [digest(UK5RaYZhcW6bzqAMGodD9e2/tCkCVZPEaMXnW0g7p2I=), org.kframework.attributes.Location(Location(1356,1,1373,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), symbolic]
+  imports INT-SYMBOLIC-KORE
+  imports INT-COMMON
+  imports BOOL
+  rule `_modInt_`(#SemanticCastToInt(X),#SemanticCastToInt(N))=>#SemanticCastToInt(X) requires `_andBool_`(`_<=Int_`(#token("0","Int"),#SemanticCastToInt(X)),`_<Int_`(#SemanticCastToInt(X),#SemanticCastToInt(N))) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1365,8,1365,59)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), simplification]
+  rule `_>>Int_`(#token("0","Int"),#SemanticCastToInt(_))=>#token("0","Int") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1372,8,1372,22)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_>>Int_`(#SemanticCastToInt(X),#token("0","Int"))=>#SemanticCastToInt(X) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1371,8,1371,22)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_<<Int_`(#token("0","Int"),#SemanticCastToInt(_))=>#token("0","Int") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1370,8,1370,22)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_<<Int_`(#SemanticCastToInt(X),#token("0","Int"))=>#SemanticCastToInt(X) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1369,8,1369,22)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_-Int_`(#SemanticCastToInt(I),#token("0","Int"))=>#SemanticCastToInt(I) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1363,8,1363,21)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_+Int_`(#SemanticCastToInt(I),#token("0","Int"))=>#SemanticCastToInt(I) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1362,8,1362,21)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule `_%Int_`(#SemanticCastToInt(X),#SemanticCastToInt(N))=>#SemanticCastToInt(X) requires `_andBool_`(`_<=Int_`(#token("0","Int"),#SemanticCastToInt(X)),`_<Int_`(#SemanticCastToInt(X),#SemanticCastToInt(N))) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1366,8,1366,59)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), simplification]
+endmodule
+
+
+module INT-SYMBOLIC-KORE [digest(lRb00oAL6kxVzYgdX6YMGIaaRk+0QMp+tbcUMJzwpH0=), haskell, org.kframework.attributes.Location(Location(1375,1,1386,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), symbolic]
+  imports ML-SYNTAX
+  imports INT-COMMON
+  imports BOOL
+  rule #Ceil(`_modInt_`(#SemanticCastToInt(@I1),#SemanticCastToInt(@I2)))=>#And(#And(#Equals(`_=/=Int_`(#SemanticCastToInt(@I2),#token("0","Int")),#token("true","Bool")),#Ceil(#SemanticCastToInt(@I1))),#Ceil(#SemanticCastToInt(@I2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1383,8,1383,102)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Ceil(`_>>Int_`(#SemanticCastToInt(@I1),#SemanticCastToInt(@I2)))=>#And(#And(#Equals(`_>=Int_`(#SemanticCastToInt(@I2),#token("0","Int")),#token("true","Bool")),#Ceil(#SemanticCastToInt(@I1))),#Ceil(#SemanticCastToInt(@I2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1384,8,1384,102)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Ceil(`_<<Int_`(#SemanticCastToInt(@I1),#SemanticCastToInt(@I2)))=>#And(#And(#Equals(`_>=Int_`(#SemanticCastToInt(@I2),#token("0","Int")),#token("true","Bool")),#Ceil(#SemanticCastToInt(@I1))),#Ceil(#SemanticCastToInt(@I2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1385,8,1385,102)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Ceil(`_/Int_`(#SemanticCastToInt(@I1),#SemanticCastToInt(@I2)))=>#And(#And(#Equals(`_=/=Int_`(#SemanticCastToInt(@I2),#token("0","Int")),#token("true","Bool")),#Ceil(#SemanticCastToInt(@I1))),#Ceil(#SemanticCastToInt(@I2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1381,8,1381,102)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Ceil(`_%Int_`(#SemanticCastToInt(@I1),#SemanticCastToInt(@I2)))=>#And(#And(#Equals(`_=/=Int_`(#SemanticCastToInt(@I2),#token("0","Int")),#token("true","Bool")),#Ceil(#SemanticCastToInt(@I1))),#Ceil(#SemanticCastToInt(@I2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1382,8,1382,102)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+endmodule
+
+
+module INT-SYNTAX [digest(CwZhLaq0yZAfgguBqC5BTkSnmlrozkI5GAjpMnwglEw=), org.kframework.attributes.Location(Location(1202,1,1205,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports UNSIGNED-INT-SYNTAX
+  syntax Int ::= r"[+\\-]?[0-9]+" [prec(2), prefer, token]
+endmodule
+
+
+module K [digest(j8XRCYrN7/V4gZhCZv3f1DhEHt7gfptojOX7Szl+l28=), org.kframework.attributes.Location(Location(451,1,481,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-PREDICATES
+  imports REQUIRES-ENSURES
+  imports RECORD-PRODUCTIONS
+  imports KSEQ-SYMBOLIC
+  imports KREWRITE
+  imports K-SORT-LATTICE
+  imports AUTO-FOLLOW
+  imports AUTO-CASTS
+  syntax {Sort} Sort ::= Sort "#as" Sort [symbol(#KAs)]
+  syntax {Sort} Sort ::= "#fun" "(" Sort ")" "(" Sort ")" [prefer, symbol(#fun2)]
+  syntax {Sort1, Sort2} Sort1 ::= "#let" Sort2 "=" Sort2 "#in" Sort1 [symbol(#let)]
+  syntax {Sort1, Sort2} Sort1 ::= "#fun" "(" Sort2 "=>" Sort1 ")" "(" Sort2 ")" [symbol(#fun3)]
+  syntax associativity left _:=K_ _:/=K_
+  syntax Bool ::= K ":=K" K [function, group(equalEqualK), symbol(_:=K_), total]
+  syntax Bool ::= K ":/=K" K [function, group(notEqualEqualK), symbol(_:/=K_), total]
+endmodule
+
+
+module K-AMBIGUITIES [digest(R9j/CymMGxaqHjthdo82sPWL3iycxf+7PSwYf3ErUhs=), org.kframework.attributes.Location(Location(546,1,550,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax {Sort} Sort ::= "amb" "(" Sort "," Sort ")" [symbol(amb)]
+endmodule
+
+
+module K-BOTTOM-SORT [digest(1j3v4wDccAtv2EZmq1Z8sNndHbR0uA3DbRg0vI9G9hY=), org.kframework.attributes.Location(Location(366,1,370,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-KBOTT
+  syntax {Sort} Sort ::= KBott
+  syntax KItem ::= KBott
+endmodule
+
+
+module K-EQUAL [digest(RL4qRXvW1t4oZHGmDW48hWTnCBPUBHHtsKyZl9hfu8w=), org.kframework.attributes.Location(Location(2317,1,2327,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports K-EQUAL-SYNTAX
+  imports K-EQUAL-KORE
+  imports BOOL
+  rule ite(#SemanticCastToBool(C),#SemanticCastToK(_),#SemanticCastToK(B2))=>#SemanticCastToK(B2) requires `notBool_`(#SemanticCastToBool(C)) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2325,8,2325,67)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule ite(#SemanticCastToBool(C),#SemanticCastToK(B1),#SemanticCastToK(_))=>#SemanticCastToK(B1) requires #SemanticCastToBool(C) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2324,8,2324,59)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `_=/=K_`(#SemanticCastToK(K1),#SemanticCastToK(K2))=>`notBool_`(`_==K_`(#SemanticCastToK(K1),#SemanticCastToK(K2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2322,8,2322,45)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module K-EQUAL-KORE [digest(x7PrwVf+zkfd946Vl0aB6aFsd8o81zTPa9wTeXKIuHA=), org.kframework.attributes.Location(Location(2301,1,2315,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), symbolic]
+  imports K-EQUAL-SYNTAX
+  imports BOOL
+  rule `_==K_`(#SemanticCastToBool(K1),#SemanticCastToBool(K2))=>`_==Bool_`(#SemanticCastToBool(K1),#SemanticCastToBool(K2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2305,8,2305,43)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_==K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)),#token("true","Bool"))=>#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2306,8,2306,51)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_==K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)),#token("false","Bool"))=>#Not(#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2308,8,2308,58)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_=/=K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)),#token("true","Bool"))=>#Not(#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2310,8,2310,58)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(`_=/=K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)),#token("false","Bool"))=>#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2312,8,2312,53)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("true","Bool"),`_==K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)))=>#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2307,8,2307,51)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("true","Bool"),`_=/=K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)))=>#Not(#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2311,8,2311,58)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("false","Bool"),`_==K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)))=>#Not(#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2309,8,2309,58)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+  rule #Equals(#token("false","Bool"),`_=/=K_`(#SemanticCastToK(K1),#SemanticCastToK(K2)))=>#Equals(#SemanticCastToK(K1),#SemanticCastToK(K2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2313,8,2313,53)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+endmodule
+
+
+module K-EQUAL-SYNTAX [digest(AvM5K/nlsvnFoerYnx2OjVyOvDn/WPu1iphjW84pn3I=), org.kframework.attributes.Location(Location(2287,1,2299,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports BOOL
+  imports BASIC-K
+  syntax {Sort} Sort ::= "#if" Bool "#then" Sort "#else" Sort "#fi" [function, hook(KEQUAL.ite), smt-hook(ite), symbol(ite), total]
+  syntax priority _==K_ _:=K_ _=/=K_ _:/=K_ > #Exists weakAlwaysFinally #Ceil notBool_ #AG #Or #Not _xorBool_ _andBool_ _andThenBool_ #And #Forall _impliesBool_ _orBool_ #Equals #Floor weakExistsFinally _orElseBool_ #Implies
+  syntax associativity left _==K_ _=/=K_
+  syntax Bool ::= K "==K" K [comm, function, group(equalEqualK), hook(KEQUAL.eq), smt-hook(=), symbol(_==K_), total]
+  syntax Bool ::= K "=/=K" K [comm, function, group(notEqualEqualK), hook(KEQUAL.ne), smt-hook(distinct), symbol(_=/=K_), total]
+endmodule
+
+
+module K-IO [digest(ef/Cu8qE2rEK2doitVKy2pyYDHxPlvuO6lRoFU+hkWQ=), org.kframework.attributes.Location(Location(2384,1,2674,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports STRING
+  imports LIST
+  imports INT
+  syntax Stream ::= "#parseInput" "(" String "," String ")"
+  syntax Stream ::= "#ostream" "(" Int ")"
+  syntax Stream ::= "#istream" "(" Int ")"
+  syntax Stream ::= "#buffer" "(" K ")"
+  syntax KItem ::= "#systemResult" "(" Int "," String "," String ")" [symbol(#systemResult)]
+  syntax KItem ::= "#system" "(" String ")" [function, hook(IO.system), impure]
+  syntax K ::= "#write" "(" fd:Int "," value:String ")" [function, hook(IO.write), impure]
+  syntax K ::= "#unlock" "(" fd:Int "," endIndex:Int ")" [function, hook(IO.unlock), impure]
+  syntax K ::= "#traceK" "(" value:K ")" [function, hook(IO.traceTerm), impure, returnsUnit, symbol(#traceK), total]
+  syntax K ::= "#trace" "(" value:KItem ")" [function, hook(IO.traceTerm), impure, returnsUnit, symbol(#trace), total]
+  syntax K ::= "#shutdownWrite" "(" fd:Int ")" [function, hook(IO.shutdownWrite), impure]
+  syntax K ::= "#seekEnd" "(" fd:Int "," fromEnd:Int ")" [function, hook(IO.seekEnd), impure]
+  syntax K ::= "#seek" "(" fd:Int "," index:Int ")" [function, hook(IO.seek), impure]
+  syntax K ::= "#remove" "(" path:String ")" [function, hook(IO.remove), impure, total]
+  syntax K ::= "#putc" "(" fd:Int "," value:Int ")" [function, hook(IO.putc), impure]
+  syntax K ::= "#logToFile" "(" name:String "," value:String ")" [function, hook(IO.log), impure, returnsUnit, symbol(#logToFile), total]
+  syntax K ::= "#log" "(" value:String ")" [function, hook(IO.logString), impure, returnsUnit, symbol(#log), total]
+  syntax K ::= "#lock" "(" fd:Int "," endIndex:Int ")" [function, hook(IO.lock), impure]
+  syntax K ::= "#close" "(" fd:Int ")" [function, hook(IO.close), impure]
+  syntax Int ::= "#time" "(" ")" [function, hook(IO.time), impure]
+  syntax Int ::= "#stdout" [function, total]
+  syntax Int ::= "#stdin" [function, total]
+  syntax Int ::= "#stderr" [function, total]
+  syntax IOString ::= String
+  syntax IOString ::= IOError
+  syntax IOString ::= "#read" "(" fd:Int "," length:Int ")" [function, hook(IO.read), impure]
+  syntax IOInt ::= Int
+  syntax IOInt ::= IOError
+  syntax IOInt ::= "#tell" "(" fd:Int ")" [function, hook(IO.tell), impure]
+  syntax IOInt ::= "#open" "(" path:String "," mode:String ")" [function, hook(IO.open), impure]
+  syntax IOInt ::= "#open" "(" path:String ")" [function]
+  syntax IOInt ::= "#getc" "(" fd:Int ")" [function, hook(IO.getc), impure]
+  syntax IOInt ::= "#accept" "(" fd:Int ")" [function, hook(IO.accept), impure]
+  syntax IOFile ::= IOError
+  syntax IOFile ::= "#tempFile" "(" path:String "," fd:Int ")" [symbol(#tempFile)]
+  syntax IOFile ::= "#mkstemp" "(" template:String ")" [function, hook(IO.mkstemp), impure]
+  syntax IOError ::= "#unknownIOError" "(" errno:Int ")" [symbol(#unknownIOError)]
+  syntax IOError ::= "#EXDEV" [symbol(#EXDEV)]
+  syntax IOError ::= "#EWOULDBLOCK" [symbol(#EWOULDBLOCK)]
+  syntax IOError ::= "#ETOOMANYREFS" [symbol(#ETOOMANYREFS)]
+  syntax IOError ::= "#ETIMEDOUT" [symbol(#ETIMEDOUT)]
+  syntax IOError ::= "#ESRCH" [symbol(#ESRCH)]
+  syntax IOError ::= "#ESPIPE" [symbol(#ESPIPE)]
+  syntax IOError ::= "#ESOCKTNOSUPPORT" [symbol(#ESOCKTNOSUPPORT)]
+  syntax IOError ::= "#ESHUTDOWN" [symbol(#ESHUTDOWN)]
+  syntax IOError ::= "#EROFS" [symbol(#EROFS)]
+  syntax IOError ::= "#ERANGE" [symbol(#ERANGE)]
+  syntax IOError ::= "#EPROTOTYPE" [symbol(#EPROTOTYPE)]
+  syntax IOError ::= "#EPROTONOSUPPORT" [symbol(#EPROTONOSUPPORT)]
+  syntax IOError ::= "#EPIPE" [symbol(#EPIPE)]
+  syntax IOError ::= "#EPFNOSUPPORT" [symbol(#EPFNOSUPPORT)]
+  syntax IOError ::= "#EPERM" [symbol(#EPERM)]
+  syntax IOError ::= "#EOVERFLOW" [symbol(#EOVERFLOW)]
+  syntax IOError ::= "#EOPNOTSUPP" [symbol(#EOPNOTSUPP)]
+  syntax IOError ::= "#EOF" [symbol(#EOF)]
+  syntax IOError ::= "#ENXIO" [symbol(#ENXIO)]
+  syntax IOError ::= "#ENOTTY" [symbol(#ENOTTY)]
+  syntax IOError ::= "#ENOTSOCK" [symbol(#ENOTSOCK)]
+  syntax IOError ::= "#ENOTEMPTY" [symbol(#ENOTEMPTY)]
+  syntax IOError ::= "#ENOTDIR" [symbol(#ENOTDIR)]
+  syntax IOError ::= "#ENOTCONN" [symbol(#ENOTCONN)]
+  syntax IOError ::= "#ENOSYS" [symbol(#ENOSYS)]
+  syntax IOError ::= "#ENOSPC" [symbol(#ENOSPC)]
+  syntax IOError ::= "#ENOPROTOOPT" [symbol(#ENOPROTOOPT)]
+  syntax IOError ::= "#ENOMEM" [symbol(#ENOMEM)]
+  syntax IOError ::= "#ENOLCK" [symbol(#ENOLCK)]
+  syntax IOError ::= "#ENOEXEC" [symbol(#ENOEXEC)]
+  syntax IOError ::= "#ENOENT" [symbol(#ENOENT)]
+  syntax IOError ::= "#ENODEV" [symbol(#ENODEV)]
+  syntax IOError ::= "#ENOBUFS" [symbol(#ENOBUFS)]
+  syntax IOError ::= "#ENFILE" [symbol(#ENFILE)]
+  syntax IOError ::= "#ENETUNREACH" [symbol(#ENETUNREACH)]
+  syntax IOError ::= "#ENETRESET" [symbol(#ENETRESET)]
+  syntax IOError ::= "#ENETDOWN" [symbol(#ENETDOWN)]
+  syntax IOError ::= "#ENAMETOOLONG" [symbol(#ENAMETOOLONG)]
+  syntax IOError ::= "#EMSGSIZE" [symbol(#EMSGSIZE)]
+  syntax IOError ::= "#EMLINK" [symbol(#EMLINK)]
+  syntax IOError ::= "#EMFILE" [symbol(#EMFILE)]
+  syntax IOError ::= "#ELOOP" [symbol(#ELOOP)]
+  syntax IOError ::= "#EISDIR" [symbol(#EISDIR)]
+  syntax IOError ::= "#EISCONN" [symbol(#EISCONN)]
+  syntax IOError ::= "#EIO" [symbol(#EIO)]
+  syntax IOError ::= "#EINVAL" [symbol(#EINVAL)]
+  syntax IOError ::= "#EINTR" [symbol(#EINTR)]
+  syntax IOError ::= "#EINPROGRESS" [symbol(#EINPROGRESS)]
+  syntax IOError ::= "#EHOSTUNREACH" [symbol(#EHOSTUNREACH)]
+  syntax IOError ::= "#EHOSTDOWN" [symbol(#EHOSTDOWN)]
+  syntax IOError ::= "#EFBIG" [symbol(#EFBIG)]
+  syntax IOError ::= "#EFAULT" [symbol(#EFAULT)]
+  syntax IOError ::= "#EEXIST" [symbol(#EEXIST)]
+  syntax IOError ::= "#EDOM" [symbol(#EDOM)]
+  syntax IOError ::= "#EDESTADDRREQ" [symbol(#EDESTADDRREQ)]
+  syntax IOError ::= "#EDEADLK" [symbol(#EDEADLK)]
+  syntax IOError ::= "#ECONNRESET" [symbol(#ECONNRESET)]
+  syntax IOError ::= "#ECONNREFUSED" [symbol(#ECONNREFUSED)]
+  syntax IOError ::= "#ECONNABORTED" [symbol(#ECONNABORTED)]
+  syntax IOError ::= "#ECHILD" [symbol(#ECHILD)]
+  syntax IOError ::= "#EBUSY" [symbol(#EBUSY)]
+  syntax IOError ::= "#EBADF" [symbol(#EBADF)]
+  syntax IOError ::= "#EALREADY" [symbol(#EALREADY)]
+  syntax IOError ::= "#EAGAIN" [symbol(#EAGAIN)]
+  syntax IOError ::= "#EAFNOSUPPORT" [symbol(#EAFNOSUPPORT)]
+  syntax IOError ::= "#EADDRNOTAVAIL" [symbol(#EADDRNOTAVAIL)]
+  syntax IOError ::= "#EADDRINUSE" [symbol(#EADDRINUSE)]
+  syntax IOError ::= "#EACCES" [symbol(#EACCES)]
+  syntax IOError ::= "#E2BIG" [symbol(#E2BIG)]
+  rule `#stdout_K-IO_Int`(.KList)=>#token("1","Int") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2589,8,2589,20)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `#stdin_K-IO_Int`(.KList)=>#token("0","Int") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2588,8,2588,19)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `#stderr_K-IO_Int`(.KList)=>#token("2","Int") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2590,8,2590,20)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `#open(_)_K-IO_IOInt_String`(#SemanticCastToString(S))=>`#open(_,_)_K-IO_IOInt_String_String`(#SemanticCastToString(S),#token("\"r+\"","String")) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(2493,8,2493,48)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module K-LOCATIONS [digest(h5p7/IkOHBCyAQQ4JdG8qxw4H6dqm9nnlPad7PPPN7A=), org.kframework.attributes.Location(Location(563,1,570,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports STRING-SYNTAX
+  imports INT-SYNTAX
+  syntax {Sort} Sort ::= "#location" "(" Sort "," String "," Int "," Int "," Int "," Int ")" [format(%3), symbol(#location)]
+endmodule
+
+
+module K-REFLECTION [digest(kvsvz61cYlPBsR7dwpzTWtrXZUWyZUy1JX6aYVBLXjI=), org.kframework.attributes.Location(Location(2343,1,2363,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports STRING
+  imports BASIC-K
+  syntax {Sort} String ::= "#unparseKORE" "(" Sort ")" [function, hook(KREFLECTION.printKORE)]
+  syntax String ::= "#sort" "(" K ")" [function, hook(KREFLECTION.sort)]
+  syntax String ::= "#kompiledDirectory" "(" ")" [function, hook(KREFLECTION.kompiledDir)]
+  syntax List ::= "#argv" "(" ")" [function, hook(KREFLECTION.argv)]
+  syntax KItem ::= "getsymbol" "(" K ")" [function, hook(KREFLECTION.getKLabel)]
+  syntax KItem ::= "#fresh" "(" String ")" [function, hook(KREFLECTION.fresh), impure]
+  syntax K ::= "#getenv" "(" String ")" [function, hook(KREFLECTION.getenv), impure]
+  syntax K ::= "#configuration" [function, hook(KREFLECTION.configuration), impure]
+  syntax IOError ::= "#noParse" "(" String ")" [symbol(#noParse)]
+endmodule
+
+
+module K-SORT-LATTICE [digest(5sfKs0Ytbk1tmGlfzG5UWYrUr7nvc8fDGfC/Quz7OrA=), org.kframework.attributes.Location(Location(372,1,375,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports K-TOP-SORT
+  imports K-BOTTOM-SORT
+endmodule
+
+
+module K-TERM [digest(ZIvdKjAMHjG4TchOZ4P3Ek2WtcquQgwHvyLbM8yJcJo=), org.kframework.attributes.Location(Location(484,1,492,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-PREDICATES
+  imports RECORD-PRODUCTIONS
+  imports KSEQ-SYMBOLIC
+  imports KREWRITE
+  imports K-SORT-LATTICE
+  imports AUTO-FOLLOW
+  imports AUTO-CASTS
+endmodule
+
+
+module K-TOP-SORT [digest(yk8jHTvB7QhXK+dxcMFAjX932Kx/ZMgQaZSTjwBQTew=), org.kframework.attributes.Location(Location(360,1,364,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-KBOTT
+  syntax {Sort} KItem ::= Sort
+  syntax KItem ::= KBott
+endmodule
+
+
+module KAST [digest(nT5k2f5E340ACxwA5ayNGdq5TKMZT00AkJDKEtZT09o=), org.kframework.attributes.Location(Location(73,1,91,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-KBOTT
+  imports KSTRING
+  imports BUILTIN-ID-TOKENS
+  imports BASIC-K
+  syntax associativity left #KList
+  syntax KList ::= KList "," KList [assoc, left, prefer, symbol(#KList), unit(#EmptyKList)]
+  syntax KList ::= K
+  syntax KList ::= ".KList" [symbol(#EmptyKList)]
+  syntax KLabel ::= r"`(\\\\`|(\\\\\\\\|[^`\\\\\\n\\r]))+`" [token]
+  syntax KLabel ::= r"[#a-z][a-zA-Z0-9]*" [prec(1), token]
+  syntax KLabel ::= #LowerId [token]
+  syntax KItem ::= KBott
+  syntax KBott ::= KLabel "(" KList ")" [symbol(#KApply)]
+  syntax KBott ::= "#token" "(" KString "," KString ")" [symbol(#KToken)]
+  syntax KBott ::= "#klabel" "(" KLabel ")" [symbol(#WrappedKLabel)]
+endmodule
+
+
+module KCELLS [digest(3Bls2Eyup1vijGUhrCMq9Nb1lgGR6f81m0LWQUqlfBQ=), org.kframework.attributes.Location(Location(235,1,248,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports KAST
+  syntax associativity non-assoc #withConfig [org.kframework.attributes.Location(Location(246,3,246,31)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax associativity left #cells
+  syntax KItem ::= Bag
+  syntax Cell [org.kframework.attributes.Location(Location(238,3,238,14)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax Bag ::= KBott
+  syntax Bag ::= Cell
+  syntax Bag ::= Bag Bag [assoc, left, symbol(#cells), unit(#cells)]
+  syntax Bag ::= ".Bag" [symbol(#cells)]
+  syntax Bag ::= ".::Bag" [symbol(#cells)]
+  syntax Bag ::= "(" Bag ")" [bracket, bracketLabel((_)_KCELLS_Bag_Bag)]
+  syntax #RuleBody ::= "[" "[" K "]" "]" Bag [avoid, symbol(#withConfig)]
+endmodule
+
+
+module KREWRITE [digest(FYir0HBHpP2Y0PG9iBabdxoiwfL9fFMziZgUSh6jSs0=), org.kframework.attributes.Location(Location(444,1,448,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax {Sort} Sort ::= Sort "=>" Sort [symbol(#KRewrite)]
+  syntax priority #KRewrite > #withConfig
+  syntax associativity non-assoc #KRewrite [org.kframework.attributes.Location(Location(446,3,446,29)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module KSEQ [digest(ElvR0omf/yE4hVyghdOdpgpnWQMIfMusHEM8UDnSrOA=), org.kframework.attributes.Location(Location(95,1,103,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports KAST
+  imports K-TOP-SORT
+  syntax {Sort} Sort ::= "(" Sort ")" [applyPriority(1), bracket, bracketLabel((_)_KSEQ_Sort_Sort{Sort}), group(defaultBracket)]
+  syntax associativity left #KSequence [org.kframework.attributes.Location(Location(101,3,101,25)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax associativity left #KSequence
+  syntax K ::= K "~>" K [assoc, left, symbol(#KSequence), unit(#EmptyK)]
+  syntax K ::= ".K" [symbol(#EmptyK)]
+  syntax K ::= "." [deprecated, symbol(#EmptyK), unparseAvoid]
+endmodule
+
+
+module KSEQ-SYMBOLIC [digest(yJBLLS1rDghySJ8NKJDiyKAGYuBcnD5hHdCy7qbb3uc=), org.kframework.attributes.Location(Location(201,1,211,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports ML-SYNTAX
+  imports KVARIABLE-SYNTAX
+  imports KSEQ
+  syntax KConfigVar ::= r"\\$([A-Z][A-Za-z0-9'_]*)" [token]
+  syntax KBott ::= KConfigVar
+  syntax KBott ::= #KVariable
+  syntax #KVariable ::= r"(!|(\\?|@))?([A-Z][A-Za-z0-9'_]*|(_|_[A-Z][A-Za-z0-9'_]*))" [prec(1), token]
+  syntax #KVariable ::= #UpperId [token]
+endmodule
+
+
+module KSTRING [digest(CZRMkUWit9YS8OyP6FODwAGIFHK2Jsd3MZjHC2ZeXYY=), org.kframework.attributes.Location(Location(58,1,61,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax KString ::= r"[\"]([^\"\\n\\r\\\\]|([\\\\][nrtf\"\\\\]|([\\\\][x][0-9a-fA-F]{2}|([\\\\][u][0-9a-fA-F]{4}|[\\\\][U][0-9a-fA-F]{8}))))*[\"]" [token]
+endmodule
+
+
+module KVARIABLE-SYNTAX [digest(nF1oIka7Ca/Xb+XgmNjTORUo746FC642GBlXnX+0XGk=), org.kframework.attributes.Location(Location(196,1,198,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax #KVariable [org.kframework.attributes.Location(Location(197,3,197,20)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module LIST [digest(PebnJwKdEOEaaiufUE+iqvlZ/HvkXBS71aj8JgZwmrE=), org.kframework.attributes.Location(Location(909,1,1033,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports INT-SYNTAX
+  imports BASIC-K
+  syntax associativity left _List_
+  syntax List [hook(LIST.List), org.kframework.attributes.Location(Location(913,3,913,32)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax List ::= List List [assoc, element(ListItem), format(%1%n%2), function, hook(LIST.concat), left, smtlib(smt_seq_concat), symbol(_List_), total, unit(.List), update(List:set)]
+  syntax List ::= List "[" index:Int "<-" value:KItem "]" [function, hook(LIST.update), symbol(List:set)]
+  syntax List ::= "updateList" "(" dest:List "," index:Int "," src:List ")" [function, hook(LIST.updateAll)]
+  syntax List ::= "range" "(" List "," fromFront:Int "," fromBack:Int ")" [function, hook(LIST.range), symbol(List:range)]
+  syntax List ::= "pushList" "(" KItem "," List ")" [function, hook(LIST.push), symbol(pushList), total]
+  syntax List ::= "makeList" "(" length:Int "," value:KItem ")" [function, hook(LIST.make)]
+  syntax List ::= "fillList" "(" List "," index:Int "," length:Int "," value:KItem ")" [function, hook(LIST.fill)]
+  syntax List ::= "ListItem" "(" KItem ")" [function, hook(LIST.element), smtlib(smt_seq_elem), symbol(ListItem), total]
+  syntax List ::= ".List" [function, hook(LIST.unit), smtlib(smt_seq_nil), symbol(.List), total]
+  syntax KItem ::= List "[" Int "]" [function, hook(LIST.get), symbol(List:get)]
+  syntax Int ::= "size" "(" List ")" [function, hook(LIST.size), smtlib(smt_seq_len), symbol(sizeList), total]
+  syntax Bool ::= KItem "in" List [function, hook(LIST.in), symbol(_inList_), total]
+  rule pushList(#SemanticCastToKItem(K),#SemanticCastToList(L1))=>`_List_`(`ListItem`(#SemanticCastToKItem(K)),#SemanticCastToList(L1)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(954,8,954,54)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module MAP [digest(U7WcEmSl+HR86I7IGlvmU8CcHmBTpJ8HxgcUkYeyfDk=), org.kframework.attributes.Location(Location(212,1,404,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports SET
+  imports LIST
+  imports INT-SYNTAX
+  imports BOOL-SYNTAX
+  syntax priority _|->_ > .Map _Map_
+  syntax associativity non-assoc _|->_ [org.kframework.attributes.Location(Location(260,3,260,25)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax associativity left _Map_
+  syntax Set ::= "keys" "(" Map ")" [function, hook(MAP.keys), total]
+  syntax Map [hook(MAP.Map), org.kframework.attributes.Location(Location(218,3,218,29)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Map ::= Map Map [assoc, comm, element(_|->_), format(%1%n%2), function, hook(MAP.concat), index(0), left, symbol(_Map_), unit(.Map)]
+  syntax Map ::= Map "[" key:KItem "<-" value:KItem "]" [function, hook(MAP.update), prefer, symbol(Map:update), total]
+  syntax Map ::= Map "[" KItem "<-" "undef" "]" [function, hook(MAP.remove), symbol(_[_<-undef]), total]
+  syntax Map ::= Map "-Map" Map [function, hook(MAP.difference), total]
+  syntax Map ::= KItem "|->" KItem [function, hook(MAP.element), injective, symbol(_|->_), total]
+  syntax Map ::= "updateMap" "(" Map "," Map ")" [function, hook(MAP.updateAll), total]
+  syntax Map ::= "removeAll" "(" Map "," Set ")" [function, hook(MAP.removeAll), total]
+  syntax Map ::= ".Map" [function, hook(MAP.unit), symbol(.Map), total]
+  syntax List ::= "values" "(" Map ")" [function, hook(MAP.values)]
+  syntax List ::= "keys_list" "(" Map ")" [function, hook(MAP.keys_list)]
+  syntax KItem ::= Map "[" KItem "]" [function, hook(MAP.lookup), symbol(Map:lookup)]
+  syntax KItem ::= Map "[" KItem "]" "orDefault" KItem [function, hook(MAP.lookupOrDefault), symbol(Map:lookupOrDefault), total]
+  syntax KItem ::= "choice" "(" Map ")" [function, hook(MAP.choice), symbol(Map:choice)]
+  syntax Int ::= "size" "(" Map ")" [function, hook(MAP.size), symbol(sizeMap), total]
+  syntax Bool ::= Map "<=Map" Map [function, hook(MAP.inclusion), total]
+  syntax Bool ::= KItem "in_keys" "(" Map ")" [function, hook(MAP.in_keys), total]
+endmodule
+
+
+module MINT-SYNTAX [digest(/pRW1jHKusHxWW6ZIXoWOwy04V8wN2tFy1abSVcfBhk=), org.kframework.attributes.Location(Location(2852,1,2859,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax {Width} MInt{Width} ::= r"[+\\-]?[0-9]+[pP][0-9]+" [hook(MINT.literal), prec(2), token]
+  syntax MInt{Width} [hook(MINT.MInt), org.kframework.attributes.Location(Location(2855,3,2855,47)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+endmodule
+
+
+module ML-SYNTAX [digest(ZsgmbGSR5GSMCQkS36ExpzTOLiSYqFQ8HDK6/xk/9M0=), not-lr1, org.kframework.attributes.Location(Location(135,1,160,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-K
+  syntax {Sort} Sort ::= Sort "#Or" Sort [assoc, comm, format(%i%1%d%n%2%n%i%3%d), group(mlOp), left, mlOp, symbol(#Or), unit(#Bottom)]
+  syntax {Sort} Sort ::= Sort "#Implies" Sort [format(%i%1%d%n%2%n%i%3%d), group(mlImplies, mlOp), mlOp, symbol(#Implies)]
+  syntax {Sort} Sort ::= Sort "#And" Sort [assoc, comm, format(%i%1%d%n%2%n%i%3%d), group(mlAnd, mlOp), left, mlOp, symbol(#And), unit(#Top)]
+  syntax {Sort} Sort ::= "#wEF" "(" Sort ")" [group(mlOp), mlOp, symbol(weakExistsFinally)]
+  syntax {Sort} Sort ::= "#wAF" "(" Sort ")" [group(mlOp), mlOp, symbol(weakAlwaysFinally)]
+  syntax {Sort} Sort ::= "#Top" [group(mlUnary), symbol(#Top)]
+  syntax {Sort} Sort ::= "#Not" "(" Sort ")" [group(mlUnary, mlOp), mlOp, symbol(#Not)]
+  syntax {Sort} Sort ::= "#Bottom" [group(mlUnary), symbol(#Bottom)]
+  syntax {Sort} Sort ::= "#AG" "(" Sort ")" [group(mlOp), mlOp, symbol(#AG)]
+  syntax {Sort1, Sort2} Sort2 ::= "{" Sort1 "#Equals" Sort1 "}" [comm, format(%1%i%n%2%d%n%3%i%n%4%d%n%5), group(mlEquals, mlOp), mlOp, symbol(#Equals)]
+  syntax {Sort1, Sort2} Sort2 ::= "#Forall" Sort1 "." Sort2 [group(mlQuantifier, mlOp), mlBinder, mlOp, symbol(#Forall)]
+  syntax {Sort1, Sort2} Sort2 ::= "#Floor" "(" Sort1 ")" [group(mlUnary, mlOp), mlOp, symbol(#Floor)]
+  syntax {Sort1, Sort2} Sort2 ::= "#Exists" Sort1 "." Sort2 [group(mlQuantifier, mlOp), mlBinder, mlOp, symbol(#Exists)]
+  syntax {Sort1, Sort2} Sort2 ::= "#Ceil" "(" Sort1 ")" [group(mlUnary, mlOp), mlOp, symbol(#Ceil)]
+  syntax priority #Implies > #Forall #Exists
+  syntax priority #Ceil #Floor #Top #Not #Bottom > #Equals > #And
+  syntax priority #And > #Or > #Implies
+  syntax associativity left #Or
+  syntax associativity left #And
+endmodule
+
+
+module PROGRAM-LISTS [digest(ljgenSN1NyiROhfDNTKEEfzs1eFAxTqqqXpUqCXgJ8c=), org.kframework.attributes.Location(Location(400,1,412,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-K
+endmodule
+
+
+module RECORD-PRODUCTIONS [digest(+hjBMZMdjvQLQc9fz9o5jh1bWeelKiYTXhzP5XyMp00=), org.kframework.attributes.Location(Location(421,1,426,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module REQUIRES-ENSURES [digest(wGarhxoKAO2fEFEMwgi+BfwPtHlmF4cmkW8+qJvjOV4=), org.kframework.attributes.Location(Location(340,1,349,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports BASIC-K
+  syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]
+  syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]
+  syntax #RuleContent ::= #RuleBody "requires" Bool "ensures" Bool [symbol(#ruleRequiresEnsures)]
+  syntax #RuleContent ::= #RuleBody "ensures" Bool [symbol(#ruleEnsures)]
+  syntax #RuleBody ::= K
+endmodule
+
+
+module RULE-CELLS [digest(R44LMsZoHRulxFS7SUosBQGZDSHZrV0RRDf/Ah3FjmY=), org.kframework.attributes.Location(Location(269,1,290,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports RULE-LISTS
+  imports KCELLS
+  syntax Int [org.kframework.attributes.Location(Location(280,3,280,13)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax GeneratedCounterCell ::= "<generatedCounter>" Int "</generatedCounter>" [cell, internal, symbol(<generatedCounter>)]
+  syntax #OptionalDots ::= "..." [symbol(#dots)]
+  syntax #OptionalDots ::= "" [symbol(#noDots)]
+endmodule
+
+
+module RULE-LISTS [digest(IvIn9r6rZWFy5pziEqMyoMOAqhjW7l37VKpCzHVo6Aw=), org.kframework.attributes.Location(Location(414,1,419,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module SET [digest(ndl0QU9YncflV1v2Satde1O/iAQmbWJUjXa9Grya/10=), org.kframework.attributes.Location(Location(696,1,808,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports INT-SYNTAX
+  imports BASIC-K
+  syntax associativity left _|Set__SET_Set_Set_Set
+  syntax associativity left _Set_
+  syntax Set [hook(SET.Set), org.kframework.attributes.Location(Location(700,3,700,29)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Set ::= Set Set [assoc, comm, element(SetItem), format(%1%n%2), function, hook(SET.concat), idem, left, symbol(_Set_), unit(.Set)]
+  syntax Set ::= Set "|Set" Set [comm, function, hook(SET.union), left, total]
+  syntax Set ::= Set "-Set" Set [function, hook(SET.difference), symbol(Set:difference), total]
+  syntax Set ::= "intersectSet" "(" Set "," Set ")" [comm, function, hook(SET.intersection), total]
+  syntax Set ::= "SetItem" "(" KItem ")" [function, hook(SET.element), injective, symbol(SetItem), total]
+  syntax Set ::= ".Set" [function, hook(SET.unit), symbol(.Set), total]
+  syntax KItem ::= "choice" "(" Set ")" [function, hook(SET.choice), symbol(Set:choice)]
+  syntax Int ::= "size" "(" Set ")" [function, hook(SET.size), total]
+  syntax Bool ::= Set "<=Set" Set [function, hook(SET.inclusion), total]
+  syntax Bool ::= KItem "in" Set [function, hook(SET.in), symbol(Set:in), total]
+  rule `_|Set__SET_Set_Set_Set`(#SemanticCastToSet(S1),#SemanticCastToSet(S2))=>`_Set_`(#SemanticCastToSet(S1),`Set:difference`(#SemanticCastToSet(S2),#SemanticCastToSet(S1))) requires #token("true","Bool") ensures #token("true","Bool") [concrete, org.kframework.attributes.Location(Location(749,8,749,45)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module SORT-BOOL [digest(MOJQzHCYZvfNVc9VnLwmNlWjgceQnEcg7fFrrKnRy1w=), org.kframework.attributes.Location(Location(1076,1,1078,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Bool [hook(BOOL.Bool), org.kframework.attributes.Location(Location(1077,3,1077,32)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+endmodule
+
+
+module SORT-K [digest(ckybQDoW3lupp9Jaq14Mywas3AdxNTkBtgcsdMM6ZZ8=), org.kframework.attributes.Location(Location(26,1,28,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  syntax K [hook(K.K), org.kframework.attributes.Location(Location(27,3,27,23)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module SORT-KBOTT [digest(mYzTFEZOmAIiUtGzOWmOsUQEQ2s9bU5Q4chLCUpKwZk=), org.kframework.attributes.Location(Location(68,1,71,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+  imports SORT-K
+  syntax KBott [org.kframework.attributes.Location(Location(70,3,70,15)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module SORT-PREDICATES [digest(ahFlabySG8V7pf/VZcreS2iQFeHex5iFaSImOctpWh8=), org.kframework.attributes.Location(Location(428,1,433,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/kast.md))]
+endmodule
+
+
+module STDIN-STREAM [digest(9XhZUf2LhShCOJ3m6CzPcOXraBJwNjtFmDm/atH3qbY=), org.kframework.attributes.Location(Location(2682,1,2763,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports MAP
+  imports LIST
+  imports K-REFLECTION
+  imports K-IO
+  imports INT
+  imports BOOL
+  syntax StdinCell ::= "initStdinCell" "(" Map ")" [function, initializer]
+  syntax StdinCell ::= "<stdin>" List "</stdin>" [cell, cellName(stdin), format(%1%i%n%2%d%n%3), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule initStdinCell(Init)=>`<stdin>`(#noDots(.KList),`_List_`(`_List_`(`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(`project:String`(`Map:lookup`(Init,#token("$STDIN","KConfigVar")))))),`ListItem`(#SemanticCastToString(`project:String`(`Map:lookup`(Init,#token("$IO","KConfigVar")))))),`ListItem`(`#istream(_)_K-IO_Stream_Int`(`#stdin_K-IO_Int`(.KList)))),#noDots(.KList)) requires #token("true","Bool") ensures #token("true","Bool") [initializer]
+  rule `<stdin>`(#noDots(.KList),`_List_`(`_List_`(`_List_`(`ListItem`(`#parseInput(_,_)_K-IO_Stream_String_String`(#SemanticCastToString(_),#SemanticCastToString(Delimiters))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(S)=>`_+String__STRING-COMMON_String_String_String`(#SemanticCastToString(S),`chrChar(_)_STRING-COMMON_String_Int`(`project:Int`(`#getc(_)_K-IO_IOInt_Int`(#SemanticCastToInt(N)))))))),`ListItem`(#token("\"on\"","String"))),`ListItem`(`#istream(_)_K-IO_Stream_Int`(#SemanticCastToInt(N)))),#noDots(.KList)) requires `_==Int_`(`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S),#SemanticCastToString(Delimiters),#token("0","Int")),#token("-1","Int")) ensures #token("true","Bool") [label(STDIN-STREAM.stdinGetc), org.kframework.attributes.Location(Location(2693,8,2699,49)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), priority(200), stream]
+  rule `<stdin>`(#noDots(.KList),`_List_`(`_List_`(`ListItem`(`#parseInput(_,_)_K-IO_Stream_String_String`(#token("\"String\"","String"),#SemanticCastToString(Delimiters)))=>`ListItem`(#SemanticCastToString(S)),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(S)=>#token("\"\"","String")))),#SemanticCastToList(_)),#noDots(.KList)) requires `_=/=Int_`(`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S),#SemanticCastToString(Delimiters),#token("0","Int")),#token("-1","Int")) ensures #token("true","Bool") [label(STDIN-STREAM.stdinParseString), org.kframework.attributes.Location(Location(2704,8,2709,50)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), stream]
+  rule `<stdin>`(#noDots(.KList),`_List_`(`_List_`(`ListItem`(`#parseInput(_,_)_K-IO_Stream_String_String`(#token("\"Int\"","String"),#SemanticCastToString(Delimiters)))=>`ListItem`(`String2Int(_)_STRING-COMMON_Int_String`(`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S),#token("0","Int"),`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S),#SemanticCastToString(Delimiters),#token("0","Int"))))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(S)=>`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S),`_+Int_`(`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S),#SemanticCastToString(Delimiters),#token("0","Int")),#token("1","Int")),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S)))))),#SemanticCastToList(_)),#noDots(.KList)) requires `_andBool_`(`_=/=Int_`(`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S),#SemanticCastToString(Delimiters),#token("0","Int")),#token("-1","Int")),`_>Int_`(`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S)),#token("1","Int"))) ensures #token("true","Bool") [label(STDIN-STREAM.stdinParseInt), org.kframework.attributes.Location(Location(2714,8,2721,38)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), stream]
+  rule `<stdin>`(#noDots(.KList),`_List_`(`_List_`(`ListItem`(`#parseInput(_,_)_K-IO_Stream_String_String`(#SemanticCastToString(Sort),#SemanticCastToString(Delimiters))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(S)=>`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S),#token("1","Int"),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S)))))),#SemanticCastToList(_)),#noDots(.KList)) requires `_andBool_`(`_andBool_`(`_=/=Int_`(`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S),#SemanticCastToString(Delimiters),#token("0","Int")),#token("-1","Int")),`_=/=String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(Sort),#token("\"String\"","String"))),`_<=Int_`(`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S)),#token("1","Int"))) ensures #token("true","Bool") [label(STDIN-STREAM.stdinTrim), org.kframework.attributes.Location(Location(2725,8,2732,39)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), stream]
+  rule `<stdin>`(#noDots(.KList),`_List_`(`.List`(.KList)=>`ListItem`(`#parseInput(_,_)_K-IO_Stream_String_String`(#SemanticCastToString(?Sort),#SemanticCastToString(?Delimiters))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(_)))),#dots(.KList)) requires #token("true","Bool") ensures #token("true","Bool") [label(STDIN-STREAM.stdinUnblock), org.kframework.attributes.Location(Location(2750,8,2754,16)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module STDOUT-STREAM [digest(X1RssUm6lSuVOg+W8Q32VWCNda9HdxOpcVPaiAzEdLw=), org.kframework.attributes.Location(Location(2765,1,2833,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports STRING
+  imports MAP
+  imports LIST
+  imports K-IO
+  syntax StdoutCell ::= "initStdoutCell" "(" Map ")" [function, initializer]
+  syntax StdoutCell ::= "<stdout>" List "</stdout>" [cell, cellName(stdout), format(%1%i%n%2%d%n%3), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule initStdoutCell(Init)=>`<stdout>`(#noDots(.KList),`_List_`(`_List_`(`ListItem`(`#ostream(_)_K-IO_Stream_Int`(`#stdout_K-IO_Int`(.KList))),`ListItem`(#SemanticCastToString(`project:String`(`Map:lookup`(Init,#token("$IO","KConfigVar")))))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#token("\"\"","String")))),#noDots(.KList)) requires #token("true","Bool") ensures #token("true","Bool") [initializer]
+  rule `<stdout>`(#noDots(.KList),`_List_`(`_List_`(`_List_`(`_List_`(`ListItem`(`#ostream(_)_K-IO_Stream_Int`(#SemanticCastToInt(_))),`ListItem`(#SemanticCastToKItem(_))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(Buffer)=>`_+String__STRING-COMMON_String_String_String`(#SemanticCastToString(Buffer),`Int2String(_)_STRING-COMMON_String_Int`(#SemanticCastToInt(I)))))),`ListItem`(#SemanticCastToInt(I))=>`.List`(.KList)),#SemanticCastToList(_)),#noDots(.KList)) requires #token("true","Bool") ensures #token("true","Bool") [label(STDOUT-STREAM.stdoutBufferInt), org.kframework.attributes.Location(Location(2784,8,2790,17)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), priority(25), stream]
+  rule `<stdout>`(#noDots(.KList),`_List_`(`_List_`(`_List_`(`_List_`(`ListItem`(`#ostream(_)_K-IO_Stream_Int`(#SemanticCastToInt(_))),`ListItem`(#SemanticCastToKItem(_))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(Buffer)=>`_+String__STRING-COMMON_String_String_String`(#SemanticCastToString(Buffer),`Float2String(_)_STRING-COMMON_String_Float`(#SemanticCastToFloat(F)))))),`ListItem`(#SemanticCastToFloat(F))=>`.List`(.KList)),#SemanticCastToList(_)),#noDots(.KList)) requires #token("true","Bool") ensures #token("true","Bool") [label(STDOUT-STREAM.stdoutBufferFloat), org.kframework.attributes.Location(Location(2774,8,2780,17)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), priority(25), stream]
+  rule `<stdout>`(#noDots(.KList),`_List_`(`_List_`(`_List_`(`_List_`(`ListItem`(`#ostream(_)_K-IO_Stream_Int`(#SemanticCastToInt(_))),`ListItem`(#SemanticCastToKItem(_))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(Buffer)=>`_+String__STRING-COMMON_String_String_String`(#SemanticCastToString(Buffer),#SemanticCastToString(S))))),`ListItem`(#SemanticCastToString(S))=>`.List`(.KList)),#SemanticCastToList(_)),#noDots(.KList)) requires #token("true","Bool") ensures #token("true","Bool") [label(STDOUT-STREAM.stdoutBufferString), org.kframework.attributes.Location(Location(2794,8,2800,17)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), priority(25), stream]
+  rule `<stdout>`(#noDots(.KList),`_List_`(`_List_`(`_List_`(`ListItem`(`#ostream(_)_K-IO_Stream_Int`(#SemanticCastToInt(N)=>`project:Int`(`#write(_,_)_K-IO_K_Int_String`(#SemanticCastToInt(N),#SemanticCastToString(S))~>#SemanticCastToInt(N)))),`ListItem`(#token("\"on\"","String"))),`ListItem`(`#buffer(_)_K-IO_Stream_K`(#SemanticCastToString(S)=>#token("\"\"","String")))),#SemanticCastToList(_)),#noDots(.KList)) requires `_=/=String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S),#token("\"\"","String")) ensures #token("true","Bool") [label(STDOUT-STREAM.stdoutWrite), org.kframework.attributes.Location(Location(2806,8,2812,28)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), priority(30), stream]
+endmodule
+
+
+module STRING [digest(UKzjSiCmMez2OIJwgymX5LrIzKeoAwV+ul5a5DSq0MM=), org.kframework.attributes.Location(Location(1918,1,1921,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports STRING-KORE
+  imports STRING-COMMON
+endmodule
+
+
+module STRING-COMMON [digest(WezcZH+9fqznXGFyp5OxRvJV2YhivxYXsEH0w84z6Ec=), org.kframework.attributes.Location(Location(1700,1,1908,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  imports STRING-SYNTAX
+  imports K-EQUAL
+  imports INT
+  imports FLOAT-SYNTAX
+  imports BOOL
+  syntax associativity left _+String__STRING-COMMON_String_String_String
+  syntax String ::= String "+String" String [function, hook(STRING.concat), left, total]
+  syntax String ::= "substrString" "(" String "," startIndex:Int "," endIndex:Int ")" [function, hook(STRING.substr), total]
+  syntax String ::= "replaceFirst" "(" haystack:String "," needle:String "," replacement:String ")" [function, hook(STRING.replaceFirst), total]
+  syntax String ::= "replaceAll" "(" haystack:String "," needle:String "," replacement:String ")" [function, hook(STRING.replaceAll), total]
+  syntax String ::= "replace" "(" haystack:String "," needle:String "," replacement:String "," times:Int ")" [function, hook(STRING.replace)]
+  syntax String ::= "newUUID" [function, hook(STRING.uuid), impure]
+  syntax String ::= "directionalityChar" "(" String ")" [function, hook(STRING.directionality)]
+  syntax String ::= "chrChar" "(" Int ")" [function, hook(STRING.chr)]
+  syntax String ::= "categoryChar" "(" String ")" [function, hook(STRING.category)]
+  syntax String ::= "Int2String" "(" Int ")" [function, hook(STRING.int2string), total]
+  syntax String ::= "Float2String" "(" Float "," format:String ")" [function, hook(STRING.floatFormat), symbol(FloatFormat)]
+  syntax String ::= "Float2String" "(" Float ")" [function, hook(STRING.float2string), total]
+  syntax String ::= "Bool2String" "(" Bool ")" [function, total]
+  syntax String ::= "Base2String" "(" Int "," base:Int ")" [function, hook(STRING.base2string)]
+  syntax Int ::= "rfindString" "(" haystack:String "," needle:String "," index:Int ")" [function, hook(STRING.rfind)]
+  syntax Int ::= "rfindChar" "(" haystack:String "," needles:String "," index:Int ")" [function, hook(STRING.rfindChar)]
+  syntax Int ::= "ordChar" "(" String ")" [function, hook(STRING.ord)]
+  syntax Int ::= "lengthString" "(" String ")" [function, hook(STRING.length), total]
+  syntax Int ::= "findString" "(" haystack:String "," needle:String "," index:Int ")" [function, hook(STRING.find)]
+  syntax Int ::= "findChar" "(" haystack:String "," needles:String "," index:Int ")" [function, hook(STRING.findChar)]
+  syntax Int ::= "countAllOccurrences" "(" haystack:String "," needle:String ")" [function, hook(STRING.countAllOccurrences), total]
+  syntax Int ::= "String2Int" "(" String ")" [function, hook(STRING.string2int)]
+  syntax Int ::= "String2Base" "(" String "," base:Int ")" [function, hook(STRING.string2base)]
+  syntax Float ::= "String2Float" "(" String ")" [function, hook(STRING.string2float)]
+  syntax Bool ::= String ">String" String [function, hook(STRING.gt), total]
+  syntax Bool ::= String ">=String" String [function, hook(STRING.ge), total]
+  syntax Bool ::= String "==String" String [comm, function, hook(STRING.eq), total]
+  syntax Bool ::= String "=/=String" String [comm, function, hook(STRING.ne), total]
+  syntax Bool ::= String "<String" String [function, hook(STRING.lt), total]
+  syntax Bool ::= String "<=String" String [function, hook(STRING.le), total]
+  syntax Bool ::= "String2Bool" "(" String ")" [function]
+  rule `rfindChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(_),#token("\"\"","String"),#SemanticCastToInt(_))=>#token("-1","Int") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1883,8,1883,33)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `rfindChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),#SemanticCastToString(S2),#SemanticCastToInt(I))=>`maxInt(_,_)_INT-COMMON_Int_Int_Int`(`rfindString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("0","Int"),#token("1","Int")),#SemanticCastToInt(I)),`rfindChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("1","Int"),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S2))),#SemanticCastToInt(I))) requires `_=/=String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S2),#token("\"\"","String")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1882,8,1882,182)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `replaceFirst(_,_,_)_STRING-COMMON_String_String_String_String`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#SemanticCastToString(_))=>#SemanticCastToString(Source) requires `_<Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#token("0","Int")),#token("0","Int")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1893,8,1894,57)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `replaceFirst(_,_,_)_STRING-COMMON_String_String_String_String`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#SemanticCastToString(Replacement))=>`_+String__STRING-COMMON_String_String_String`(`_+String__STRING-COMMON_String_String_String`(`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(Source),#token("0","Int"),`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#token("0","Int"))),#SemanticCastToString(Replacement)),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(Source),`_+Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#token("0","Int")),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(ToReplace))),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(Source)))) requires `_>=Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#token("0","Int")),#token("0","Int")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1890,8,1892,66)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `replaceAll(_,_,_)_STRING-COMMON_String_String_String_String`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#SemanticCastToString(Replacement))=>`replace(_,_,_,_)_STRING-COMMON_String_String_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#SemanticCastToString(Replacement),`countAllOccurrences(_,_)_STRING-COMMON_Int_String_String`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1906,8,1906,154)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `replace(_,_,_,_)_STRING-COMMON_String_String_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(_),#SemanticCastToString(_),#SemanticCastToInt(Count))=>#SemanticCastToString(Source) requires `_>=Int_`(#SemanticCastToInt(Count),#token("0","Int")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1904,8,1905,31)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)]), owise]
+  rule `replace(_,_,_,_)_STRING-COMMON_String_String_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#SemanticCastToString(Replacement),#SemanticCastToInt(Count))=>`_+String__STRING-COMMON_String_String_String`(`_+String__STRING-COMMON_String_String_String`(`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(Source),#token("0","Int"),`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#token("0","Int"))),#SemanticCastToString(Replacement)),`replace(_,_,_,_)_STRING-COMMON_String_String_String_String_Int`(`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(Source),`_+Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#token("0","Int")),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(ToReplace))),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(Source))),#SemanticCastToString(ToReplace),#SemanticCastToString(Replacement),`_-Int_`(#SemanticCastToInt(Count),#token("1","Int")))) requires `_andBool_`(`_>Int_`(#SemanticCastToInt(Count),#token("0","Int")),`_>=Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToReplace),#token("0","Int")),#token("0","Int"))) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1900,8,1903,79)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(_),#token("\"\"","String"),#SemanticCastToInt(_))=>#token("-1","Int") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1881,8,1881,32)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),#SemanticCastToString(S2),#SemanticCastToInt(I))=>ite(`_==Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("0","Int"),#token("1","Int")),#SemanticCastToInt(I)),#token("-1","Int")),`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("1","Int"),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S2))),#SemanticCastToInt(I)),ite(`_==Int_`(`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("1","Int"),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S2))),#SemanticCastToInt(I)),#token("-1","Int")),`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("0","Int"),#token("1","Int")),#SemanticCastToInt(I)),`minInt(_,_)_INT-COMMON_Int_Int_Int`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("0","Int"),#token("1","Int")),#SemanticCastToInt(I)),`findChar(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(S1),`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(S2),#token("1","Int"),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(S2))),#SemanticCastToInt(I))))) requires `_=/=String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S2),#token("\"\"","String")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1880,8,1880,431)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `countAllOccurrences(_,_)_STRING-COMMON_Int_String_String`(#SemanticCastToString(Source),#SemanticCastToString(ToCount))=>`_+Int_`(#token("1","Int"),`countAllOccurrences(_,_)_STRING-COMMON_Int_String_String`(`substrString(_,_,_)_STRING-COMMON_String_String_Int_Int`(#SemanticCastToString(Source),`_+Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToCount),#token("0","Int")),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(ToCount))),`lengthString(_)_STRING-COMMON_Int_String`(#SemanticCastToString(Source))),#SemanticCastToString(ToCount))) requires `_>=Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToCount),#token("0","Int")),#token("0","Int")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1887,8,1888,60)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `countAllOccurrences(_,_)_STRING-COMMON_Int_String_String`(#SemanticCastToString(Source),#SemanticCastToString(ToCount))=>#token("0","Int") requires `_<Int_`(`findString(_,_,_)_STRING-COMMON_Int_String_String_Int`(#SemanticCastToString(Source),#SemanticCastToString(ToCount),#token("0","Int")),#token("0","Int")) ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1885,8,1886,59)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody "requires" Bool [symbol(#ruleRequires)])]
+  rule `_>String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S1),#SemanticCastToString(S2))=>`_<String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S2),#SemanticCastToString(S1)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1877,8,1877,52)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_>=String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S1),#SemanticCastToString(S2))=>`notBool_`(`_<String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S1),#SemanticCastToString(S2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1878,8,1878,63)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_=/=String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S1),#SemanticCastToString(S2))=>`notBool_`(`_==String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S1),#SemanticCastToString(S2))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1856,8,1856,65)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `_<=String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S1),#SemanticCastToString(S2))=>`notBool_`(`_<String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S2),#SemanticCastToString(S1))) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1876,8,1876,63)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `String2Bool(_)_STRING-COMMON_Bool_String`(#token("\"true\"","String"))=>#token("true","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1782,8,1782,36)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `String2Bool(_)_STRING-COMMON_Bool_String`(#token("\"false\"","String"))=>#token("false","Bool") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1783,8,1783,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `Bool2String(_)_STRING-COMMON_String_Bool`(#token("true","Bool"))=>#token("\"true\"","String") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1776,8,1776,36)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+  rule `Bool2String(_)_STRING-COMMON_String_Bool`(#token("false","Bool"))=>#token("\"false\"","String") requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1777,8,1777,37)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)])]
+endmodule
+
+
+module STRING-KORE [digest(YShhkCdudopnQP5QkYaK9cAQ5kon4BVNoBoICs1IeHg=), org.kframework.attributes.Location(Location(1910,1,1916,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), symbolic]
+  imports STRING-COMMON
+  imports K-EQUAL
+  rule `_==K_`(#SemanticCastToString(S1),#SemanticCastToString(S2))=>`_==String__STRING-COMMON_Bool_String_String`(#SemanticCastToString(S1),#SemanticCastToString(S2)) requires #token("true","Bool") ensures #token("true","Bool") [org.kframework.attributes.Location(Location(1914,8,1914,49)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md)), org.kframework.definition.Production(syntax #RuleContent ::= #RuleBody [symbol(#ruleNoConditions)]), simplification]
+endmodule
+
+
+module STRING-SYNTAX [digest(urIvB5SBek3KkeQOK5p+0560jZezWFn42o/trLm4TBY=), org.kframework.attributes.Location(Location(1695,1,1698,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax String [hook(STRING.String), org.kframework.attributes.Location(Location(1696,3,1696,38)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax String ::= r"[\"]([^\"\\n\\r\\\\]|([\\\\][nrtf\"\\\\]|([\\\\][x][0-9a-fA-F]{2}|([\\\\][u][0-9a-fA-F]{4}|[\\\\][U][0-9a-fA-F]{8}))))*[\"]" [token]
+endmodule
+
+
+module UNSIGNED-INT-SYNTAX [digest(Tfp9QYLXybwhv6hzgwVBLRC+1CgNZVPefQ2srkHIizk=), org.kframework.attributes.Location(Location(1197,1,1200,10)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Int [hook(INT.Int), org.kframework.attributes.Location(Location(1198,3,1198,29)), org.kframework.attributes.Source(Source(/nix/store/hlljayvq4yxqxm32n0vy0qhf2na701qq-k-7.1.158-bd34ca161369a5e1731c61074ed04607c8cc5bad/include/kframework/builtin/domains.md))]
+  syntax Int ::= r"[0-9]+" [prec(2), prefer, token]
+endmodule

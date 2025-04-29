@@ -1,0 +1,807 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="example-1-calculator">Example 1: Calculator</h1>
+<p>Our first example is that of a calculator that works with simple integer arithmetic, that is, addition, subtraction, multiplication, division, and exponentiation, and the first step is to define the appropriate syntax. This can be done in <code>K</code> as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Calculator syntax
+
+module CALC-SYNTAX
+
+imports INT-SYNTAX // Int is the K built-in integer sort
+
+  
+
+// Integer arithmetic syntax
+
+syntax Int ::=
+
+"(" Int ")" [bracket]
+
+&gt; left: // left: indicates left associativity
+
+Int "^" Int [function] // and &gt; indicates lower priority of below productions
+
+&gt; left:
+
+Int "*" Int [function]
+
+| Int "/" Int [function]
+
+&gt; left:
+
+Int "+" Int [function]
+
+| Int "-" Int [function]
+
+endmodule
+
+</code></pre>
+<p>The next step is to define the calculator semantics by providing the set of appropriate rewriting rules of the format <code>[LHS] =&gt; [RHS]</code>, as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Calculator semantics
+
+module CALC
+
+imports INT
+
+imports CALC-SYNTAX
+
+  
+
+// Integer arithmetic semantics
+
+rule E1 + E2 =&gt; E1 +Int E2
+
+rule E1 - E2 =&gt; E1 -Int E2
+
+rule E1 * E2 =&gt; E1 *Int E2
+
+rule E1 / E2 =&gt; E1 /Int E2
+
+rule E1 ^ E2 =&gt; E1 ^Int E2
+
+endmodule
+
+</code></pre>
+<p><code>K</code> applies these rewriting rules, informally, by matching the <code>[LHS]</code> to the current expression and then rewriting that matched part to <code>[RHS]</code>. For example, <code>1 + 2</code> matches <code>E1 + E2</code> syntactically (with <code>1</code> matching <code>E1</code>, <code>+</code> matching <code>+</code> and <code>2</code> matching <code>E2</code>), which then, by the first rule, is rewritten to <code>1 +Int 2</code>, and then further evaluated via semantic integer addition to <code>3</code>.</p>
+<h2 id="compiling-and-running-the-calculator">Compiling and running the calculator</h2>
+<pre><code>
+Input
+
+=====
+
+1 + 2 + 3
+
+  
+
+Output
+
+======
+
+&lt;k&gt;
+
+6 ~&gt; .
+
+&lt;/k&gt;
+
+</code></pre>
+<p>which you can interpret, ignoring the <code>&lt;k&gt; ... &lt;./k&gt;</code> wrapper and the <code>~&gt; .</code> in the <code>Output</code> portion, as "the expression <code>1 + 2 + 3</code> was successfully evaluated/rewritten to <code>6</code>".</p>
+<p>You can experiment with modifying the tests, but also with modifying operator associativity and priority: for example, running <code>1.calc</code> with <code>+</code> not declared as left-associative (that is, <code>&gt; Int "+" Int [function]</code> or <code>2.calc</code> with all operators being of the same priority (using <code>|</code> instead of <code>&gt;</code>), both of which should result in parsing ambiguity errors. You would then have to use parentheses to manually disambiguate the parsing.</p>
+<h1 id="example-2-calculator-with-boolean-expressions">Example 2: Calculator with Boolean Expressions</h1>
+<p>In this exercise, we extend the calculator of Exercise 1 to include Boolean expressions, such as the standard propositional connectives and integer comparisons. The syntax extension is straightforward, introducing the <code>Bool</code> built-in sort for Booleans, and defining top-level expressions as either integers or Booleans:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Expression calculator syntax
+
+module CALC-BOOL-SYNTAX
+
+imports INT-SYNTAX // Int is the K built-in integer sort
+
+imports BOOL-SYNTAX // Bool is the K built-in Boolean sort
+
+  
+
+// Expressions are either integers or Booleans
+
+syntax Exp ::= Int | Bool
+
+  
+
+// Integer arithmetic syntax from Exercise 1
+
+syntax Int ::=
+
+...
+
+  
+
+// Integer comparison syntax
+
+syntax Bool ::=
+
+"(" Bool ")" [bracket]
+
+| Int "&lt;=" Int [function]
+
+| Int "&lt;" Int [function]
+
+| Int "&gt;=" Int [function]
+
+| Int "&gt;" Int [function]
+
+| Int "==" Int [function]
+
+| Int "!=" Int [function]
+
+  
+
+// Propositional connective syntax
+
+syntax Bool ::=
+
+Bool "&amp;&amp;" Bool [function]
+
+| Bool "||" Bool [function]
+
+endmodule
+
+</code></pre>
+<p>The semantics is also straightforwardly extended to the newly defined operators:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Expression calculator semantics
+
+module CALC-BOOL
+
+imports INT
+
+imports BOOL
+
+imports CALC-BOOL-SYNTAX
+
+  
+
+// Integer arithmetic semantics
+
+...
+
+  
+
+// Integer comparison semantics
+
+rule I1 &lt;= I2 =&gt; I1 &lt;=Int I2
+
+rule I1 &lt; I2 =&gt; I1 &lt;Int I2
+
+rule I1 &gt;= I2 =&gt; I1 &gt;=Int I2
+
+rule I1 &gt; I2 =&gt; I1 &gt;Int I2
+
+rule I1 == I2 =&gt; I1 ==Int I2
+
+rule I1 != I2 =&gt; I1 =/=Int I2
+
+  
+
+// Propositional connective semantics
+
+rule B1 &amp;&amp; B2 =&gt; B1 andBool B2
+
+rule B1 || B2 =&gt; B1 orBool B2
+
+endmodule
+
+</code></pre>
+<h1 id="example-3-variables-in-expressions-explicit-substitution">Example 3: Variables in Expressions, Explicit Substitution</h1>
+<p>In this exercise, we take the expression calculator of the <a href="../02-calc-bool/README.md">previous exercise</a> and extend the syntax of integer expressions with variables. To evaluate such expressions, we move from the functional to the stateful fragment of K, using configurations to model a variable store (hard-coded for this example), and evaluate expressions using explicit substitution. In the syntax, variables are modelled using the <code>K</code> built-in <code>Id</code> sort, and the integer and Boolean expressions contain all of the previously seen operators:</p>
+<pre class=" language-k"><code class="prism  language-k">
+module SUBST-SYNTAX
+
+imports INT-SYNTAX // Int is the K built-in integer sort
+
+imports BOOL-SYNTAX // Bool is the K built-in Boolean sort
+
+imports ID // Id is the K built-in sort for identifiers (variables)
+
+  
+
+// Expressions are either integer or Boolean expressions
+
+syntax Exp ::= IExp | BExp
+
+  
+
+// An integer expression is either an integer value or a variable identifier
+
+syntax IExp ::= Int | Id
+
+// or any of the arithmetic operators
+
+syntax IExp ::= IExp "^" IExp
+
+&gt; IExp "*" IExp
+
+| IExp "/" IExp
+
+&gt; IExp "+" IExp
+
+| IExp "-" IExp
+
+// or a bracketed integer expression
+
+syntax IExp ::= "(" IExp ")" [bracket]
+
+// A Boolean expression is either a Boolean value
+
+syntax BExp ::= Bool
+
+// or any of the comparison operators
+
+syntax BExp ::= IExp "&lt;=" IExp
+
+| IExp "&lt;" IExp
+
+| IExp "&gt;=" IExp
+
+| IExp "&gt;" IExp
+
+| IExp "==" IExp
+
+| IExp "!=" IExp
+
+// or any of the propositional connectives
+
+syntax BExp ::= BExp "&amp;&amp;" BExp
+
+| BExp "||" BExp
+
+// or a bracketed Boolean expression
+
+syntax BExp ::= "(" BExp ")" [bracket]
+
+endmodule
+
+</code></pre>
+<p>The semantics, on the other hand, becomes more involved. First, we have to model the variable store, which we do using <code>K</code> configurations. In particular, our configuration is of the form:</p>
+<pre class=" language-k"><code class="prism  language-k">
+configuration
+
+// K cell, containing the expression to be evaluated
+
+&lt;k&gt; $PGM:Exp &lt;/k&gt;
+
+// Variable store, modelled as a K map
+
+&lt;store&gt;
+
+#token("a", "Id") |-&gt; 16
+
+#token("b", "Id") |-&gt; 9
+
+#token("c", "Id") |-&gt; 4
+
+#token("d", "Id") |-&gt; 2
+
+&lt;/store&gt;
+
+</code></pre>
+<p>and contains two components. The first is a <code>K</code> cell, which contains the expression to be evaluated and which is initially populated with the contents of the passed input file (denoted by <code>$PGM</code>). The second is the variable store, which is modelled as a <code>K</code> map, and which contains some hard-coded variables (<code>a</code>, <code>b</code>, <code>c</code>, and <code>d</code>) with their values.</p>
+<p>Next, we declare that expressions should be evaluated, with each type of expressions having its dedicated substitution (<code>substI</code> and <code>substB</code>):</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Integer expression evaluation via explicit substitution
+
+rule
+
+&lt;k&gt; IE:IExp =&gt; substI(IE, STORE) ... &lt;/k&gt;
+
+&lt;store&gt; STORE &lt;/store&gt;
+
+requires notBool isInt(IE)
+
+  
+
+// Boolean expression evaluation via explicit substitution
+
+rule
+
+&lt;k&gt; BE:BExp =&gt; substB(BE, STORE) ... &lt;/k&gt;
+
+&lt;store&gt; STORE &lt;/store&gt;
+
+requires notBool isBool(BE)
+
+</code></pre>
+<p>The first rule states that, given a configuration containing an integer expression <code>IE</code> and store <code>STORE</code>, if <code>IE</code> is not an integer value, then it should be rewritten to the result of the substitution given on the right hand side, and the store should remain the same. The second rule is analogous. The side conditions, given by the <code>requires</code> clauses, are there to ensure that the evaluation terminates.[^1]</p>
+<p>The actual integer substitution function is defined as follows (with some non-instructive cases elided):</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Integer expression substitution
+
+syntax Int ::= substI ( IExp , Map ) [function]
+
+// Base case: integer values evaluate to themselves
+
+rule substI(I:Int, _SUBST) =&gt; I
+
+  
+
+// Base case: identifiers evaluate to their value in the store
+
+rule substI(I:Id, SUBST) =&gt; {SUBST [ I ]}:&gt;Int
+
+  
+
+// Inductive cases
+
+rule substI(I1 + I2, SUBST) =&gt; substI(I1, SUBST) +Int substI(I2, SUBST)
+
+rule substI(I1 - I2, SUBST) =&gt; substI(I1, SUBST) -Int substI(I2, SUBST)
+
+...
+
+</code></pre>
+<p>The substitution is defined as a function mapping an integer expression (<code>IExp</code>) and a variable store (<code>Map</code>) to an integer. It has two base cases, which state that integers evaluate to themselves, and that variables evaluate to their value in the store (denoted by <code>[SUBST [I]]</code>). The cases for all of the arithmetic operators are straightforward, that is, the substitution is simply applied to the operands inductively. The Boolean substitution function is defined analogously, using the integer substitution function where required (for example, in the comparison operators).</p>
+<p>[^1] One might think, given the base cases of the substitutions in which integers and Booleans evaluate to themselves, that these side conditions are not necessary. However, if they were removed, <code>K</code> would simply keep attempting to rewrite the final obtained value using the substitution, and this would keep succeeding, the value would keep being rewritten to itself, and the evaluation wound not terminate.</p>
+<h1 id="example-4-assignment">Example 4: Assignment</h1>
+<p>In this exercise, we take the <a href="../03-subst/README.md">previous exercise</a> and build a simple programming language on top of the expression evaluator, starting from a variable assignment command and command sequencing.</p>
+<h2 id="version-1-assignment-with-explicit-substitution">Version 1: Assignment with explicit substitution</h2>
+<p>For the first attempt (cf. <a href="assignment.k">assignment.k</a>), we still evaluate expressions using an explicit substitution. We extend the syntax of the previous exercise with statements, as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+...
+
+  
+
+// A statement is
+
+syntax Stmt ::=
+
+// either an assignment
+
+Id "=" IExp ";"
+
+// or a (left-associative) sequence of statements
+
+| Stmt Stmt [left]
+
+  
+
+...
+
+</code></pre>
+<p>For the semantics, the <code>K</code> cell needs to contain the statement to be executed, and we also no longer hard-code the store variables, but instead start from an empty store (denoted by <code>.Map</code>):</p>
+<pre class=" language-k"><code class="prism  language-k">
+configuration
+
+// K cell, containing the stmt to be evaluated
+
+&lt;k&gt; $PGM:Stmt &lt;/k&gt;
+
+// Variable store, modelled as a K map, initially empty
+
+&lt;store&gt; .Map &lt;/store&gt;
+
+</code></pre>
+<p>The evaluation of expressions remains the same, and is followed by the evaluation of statements, defined as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Assignment
+
+rule
+
+&lt;k&gt; ID = IE ; =&gt; . ... &lt;/k&gt;
+
+&lt;mem&gt; MEM =&gt; MEM [ ID &lt;- substI(IE, MEM) ] &lt;/mem&gt;
+
+  
+
+// Sequencing
+
+rule
+
+&lt;k&gt; S1:Stmt S2:Stmt =&gt; S1 ~&gt; S2 ... &lt;/k&gt;
+
+</code></pre>
+<p>The assignment rule features a rewriting rule in both components of the configuration. In the <code>K</code> cell, it “consumes” the leading assignment command, <code>ID = IE;</code>, leaving <code>.</code> behind (more on this shortly). The value of the variable being assigned to, <code>ID</code>, is updated in the variable store to the evaluation of the expression being assigned, <code>IE</code>, in the current store, <code>STORE</code>.</p>
+<p>The sequencing rule simply sets up the evaluation so that the statement <code>S1</code> is evaluated first and the statement <code>S2</code> second. To illustrate this better, consider the sequence <code>X = 5; Y = 3; Z = 2;</code> and consider only the contents of the <code>K</code> cell during its evaluation. First, recalling that sequencing is left-associative, the sequencing rule rewrites the given sequence to <code>X = 5; ~&gt; Y = 3; Z = 2;</code>. Then, the assignment rule executes <code>X = 5</code>, leaving <code>. ~&gt; Y = 3; Z = 2;</code> (and updating the variable store appropriately). Finally, using a built-in rewriting rule, <code>. ~&gt; S =&gt; S</code>, <code>K</code> rewrites this to <code>Y = 3; Z = 2;</code> and the evaluation continues with the next assignment.</p>
+<h2 id="version-2-assignment-with-deterministic-evaluation-order">Version 2: Assignment with deterministic evaluation order</h2>
+<p>Writing the substitution explicitly is tedious, and would not scale for larger languages. For this reason, <code>K</code> provides mechanisms that significantly automate this process, which we illustrate in <a href="assignment-strict.k">assignment-strict.k</a>).</p>
+<p>First, in the syntax, we annotate operators with the <code>seqstrict</code> attribute (given below for integer arithmetic expressions):</p>
+<pre class=" language-k"><code class="prism  language-k">
+// An integer expression is either an integer value or a variable identifier
+
+syntax IExp ::= Int | Id
+
+// or any of the arithmetic operators
+
+syntax IExp ::= IExp "^" IExp [seqstrict]
+
+| IExp "*" IExp [seqstrict]
+
+| IExp "/" IExp [seqstrict]
+
+&gt; IExp "+" IExp [seqstrict]
+
+| IExp "-" IExp [seqstrict]
+
+// or a bracketed integer expression
+
+syntax IExp ::= "(" IExp ")" [bracket]
+
+</code></pre>
+<p>which, essentially, means that the sub-expressions of the given binary operators are to be evaluated deterministically, left-to-right. To make the order non-deterministic, you could use the <code>strict</code> attribute instead. We also need to tell <code>K</code> when the evaluation should stop (in this case, when we’ve reached an integer or a Boolean value), and this is done by extending the <code>K</code> built-in <code>KResult</code> sort, as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+syntax KResult ::= Int | Bool
+
+</code></pre>
+<p>The semantics is substantially simplified in that there is no more substitution, and the expression evaluation is formulated straightforwardly, as illusatrated by the following excerpt:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Base case: Variables evaluate to their values in the store
+
+rule
+
+&lt;k&gt; I:Id =&gt; STORE[I] ... &lt;/k&gt;
+
+&lt;store&gt; STORE &lt;/store&gt;
+
+  
+
+// Arithmetic operators
+
+rule &lt;k&gt; I1 + I2 =&gt; I1 +Int I2 ... &lt;/k&gt;
+
+rule &lt;k&gt; I1 - I2 =&gt; I1 -Int I2 ... &lt;/k&gt;
+
+...
+
+</code></pre>
+<p>In particular, operator evaluation has the same complexity (simplicity) as in the <a href="../01-calc/README.md">first</a> and <a href="../02-calc-bool/README.md">second</a> exercises, with the only difference being that they explicitly make use of the <code>K</code> cell (<code>&lt;k&gt; ... &lt;/k&gt;</code>). The semantics of the assignment is also slightly modified to state that the value being assigned is an integer, rather than an integer expression:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Assignment
+
+rule
+
+&lt;k&gt; ID = I:Int ; =&gt; . ... &lt;/k&gt;
+
+&lt;store&gt; STORE =&gt; STORE [ ID &lt;- I ] &lt;/store&gt;
+
+</code></pre>
+<h1 id="example-5-control-flow">Example 5: Control flow</h1>
+<p>In this exercise, we take the <a href="../04-assignment/README.md">previous exercise</a> and extend the syntax of commands with blocks of commands and some control flow constructs, such as the <code>if</code>-<code>else</code> conditional statement and the <code>while</code> loop:</p>
+<pre class=" language-k"><code class="prism  language-k">
+...
+
+  
+
+// Statements
+
+syntax Stmt ::=
+
+Id "=" IExp ";" [strict(2)] // Assignment
+
+| Stmt Stmt [left] // Sequence
+
+| "{" Stmt "}" // Block statement
+
+| "{" "}" // Empty block
+
+| "if" "(" BExp ")" Stmt "else" Stmt [strict(1)] // If conditional
+
+| "while" "(" BExp ")" Stmt // While loop
+
+...
+
+</code></pre>
+<p>The semantics of commands is also extended, as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+// Assignment
+
+rule &lt;k&gt; ID = I:Int ; =&gt; . ... &lt;/k&gt;
+
+&lt;mem&gt; MEM =&gt; MEM [ ID &lt;- I ] &lt;/mem&gt;
+
+  
+
+// Sequencing
+
+rule &lt;k&gt; S1:Stmt S2:Stmt =&gt; S1 ~&gt; S2 ... &lt;/k&gt;
+
+  
+
+// Block statements
+
+rule &lt;k&gt; { S } =&gt; S ... &lt;/k&gt;
+
+rule &lt;k&gt; { } =&gt; . ... &lt;/k&gt;
+
+  
+
+// If conditional
+
+rule &lt;k&gt; if (true) THEN else _ELSE =&gt; THEN ... &lt;/k&gt;
+
+rule &lt;k&gt; if (false) _THEN else ELSE =&gt; ELSE ... &lt;/k&gt;
+
+  
+
+// While loop
+
+rule &lt;k&gt; while ( BE ) BODY =&gt; if ( BE ) { BODY while ( BE ) BODY } else { } ... &lt;/k&gt;
+
+</code></pre>
+<p>The block-statement rules are straightforward: the non-empty block evaluates to the command in the block, and the empty block evaluates to nothing. There are two <code>if</code>-rules, also straightforward, one per each of the branches, depending on the value of the Boolean condition. The <code>while</code> loop is transformed into an equivalent <code>if</code> statement that checks the loop condition and: if it is true, executes the sequence of the loop body, followed by the original while loop; and otherwise, exits the loop altogether. this is a common approach in small-step programming-language semantics.</p>
+<h2 id="proving-program-properties">Proving program properties</h2>
+<p>This exercise also comes with two examples that demonstrate how <code>K</code> can be used to verify program properties by means of symbolic execution, <a href="../tests/05-control-flow/if-spec.k">if-spec.k</a> and <a href="../tests/05-control-flow/while-spec.k">while-spec.k</a>. The examples can be run by executing</p>
+<p><code>make tests/[exercise-folder]/[test-file].kprove</code></p>
+<p>in the root folder. The proofs pass if the output equals <code>#Top</code>. Additionally, you can step through the proofs in the debugger by executing <code>kprove --debugger [path-to-file]</code>. To enable definition pretty-printing, you can run the command <code>alias konfig = config | kast --input kore --output pretty /dev/stdin</code> inside the repl.</p>
+<h3 id="proofs-about-if-statements-if-spec.k">Proofs about <code>if</code> statements: <code>if-spec.k</code></h3>
+<p>We first specify several programs that use <code>if</code> statements. To this end, we define several variables that we will use (<code>$a</code>, <code>$b</code>, and <code>$c</code> in the <code>SIMPLE-SPEC-SYNTAX</code> module), together with some simplifications in the <code>VERIFICATION</code> module, which we will address shortly, when describing the proofs.</p>
+<pre class=" language-k"><code class="prism  language-k">
+requires "../../05-control-flow/control-flow.k"
+
+requires "domains.md"
+
+  
+
+module SIMPLE-SPEC-SYNTAX
+
+imports CONTROL-FLOW-SYNTAX
+
+  
+
+syntax Id ::= "$a" [token]
+
+| "$b" [token]
+
+| "$c" [token]
+
+endmodule
+
+  
+
+module VERIFICATION
+
+imports SIMPLE-SPEC-SYNTAX
+
+imports CONTROL-FLOW
+
+  
+
+rule { MAP [ K &lt;- V' ] #Equals MAP [ K &lt;- V ] } =&gt; { V' #Equals V } [simplification, anywhere]
+
+  
+
+rule maxInt(X, Y) =&gt; Y requires X &lt;Int Y [simplification]
+
+rule maxInt(X, Y) =&gt; X requires notBool X &lt;Int Y [simplification]
+
+endmodule
+
+</code></pre>
+<p>The first claim to prove is the following:</p>
+<pre class=" language-k"><code class="prism  language-k">
+claim
+
+&lt;k&gt;
+
+if ( 3 &lt; 4 ) {
+
+$c = 1 ;
+
+} else {
+
+$c = 2 ;
+
+} =&gt; . ...
+
+&lt;/k&gt;
+
+&lt;store&gt; STORE =&gt; STORE [ $c &lt;- 1 ] &lt;/store&gt;
+
+</code></pre>
+<p>and it states that the execution of the given program only updates the value of <code>$c</code> in the variable store to <code>1</code>, which is evident, given that the “then” branch of the code will be executed since <code>3</code> is less than <code>4</code>. The second claim:</p>
+<pre class=" language-k"><code class="prism  language-k">
+claim
+
+&lt;k&gt;
+
+$a = A:Int ; $b = B:Int ;
+
+if (A &lt; B) {
+
+$c = B ;
+
+} else {
+
+$c = A ;
+
+} =&gt; . ...
+
+&lt;/k&gt;
+
+&lt;store&gt; STORE =&gt; STORE [ $a &lt;- A ] [ $b &lt;- B ] [ $c &lt;- ?C:Int ] &lt;/store&gt;
+
+ensures A &lt;=Int ?C andBool
+
+B &lt;=Int ?C
+
+</code></pre>
+<p>introduces two symbolic integers, <code>A</code> and <code>B</code>, and states that after the execution of the given program, the store will have been updated so that the value of <code>$a</code> equals <code>A</code>, the value of <code>$b</code> equals <code>B</code>, and the value of <code>$c</code> equals <em>some</em> symbolic integer <code>?C</code> such that <code>A &lt;= C</code> and <code>B &lt;= C</code>. More precisely, for symbolic variables, the notation <code>?</code> denotes <em>existential quantification</em>, whereas the absence of <code>?</code> (for example, the way <code>A</code> and <code>B</code> are introduced) denotes <em>universal quantification</em>. The <code>ensures</code> clause corresponds to a post-condition of sorts, stating conditions that must hold after the execution. The last claim states precisely what the value of <code>?C</code> is, replacing it with the function <code>maxInt(A, B)</code>, defined in the <code>VERIFICATION</code> module as the greater of the two parameters.</p>
+<pre class=" language-k"><code class="prism  language-k">
+claim
+
+&lt;k&gt;
+
+$a = A:Int ; $b = B:Int ;
+
+if (A &lt; B) {
+
+$c = B ;
+
+} else {
+
+$c = A ;
+
+} =&gt; . ...
+
+&lt;/k&gt;
+
+&lt;store&gt; STORE =&gt; STORE [ $a &lt;- A ] [ $b &lt;- B ] [ $c &lt;- maxInt(A, B) ] &lt;/store&gt;
+
+</code></pre>
+<h4 id="aside-simplifications">Aside: Simplifications</h4>
+<p>The <code>maxInt</code> function used in the last claim is defined via two simplifications, which can be thought of as hints that <code>K</code> can use to simplify the current configuration. For example, given the <code>maxInt</code> simplifications</p>
+<pre class=" language-k"><code class="prism  language-k">
+rule maxInt(X, Y) =&gt; Y requires X &lt;Int Y [simplification]
+
+rule maxInt(X, Y) =&gt; X requires notBool X &lt;Int Y [simplification]
+
+</code></pre>
+<p>the first one states that <code>maxInt(X, Y)</code> simplifies to <code>Y</code> whenever <code>X</code> is smaller than <code>Y</code>, and the second one states that it simplifies to <code>X</code> otherwise, effectively meaning that <code>maxInt(X, Y)</code> represents the greater of the two parameters. The third simplification in the <code>VERIFICATION</code> module is more interesting:</p>
+<pre class=" language-k"><code class="prism  language-k">
+rule { MAP [ K &lt;- V' ] #Equals MAP [ K &lt;- V ] } =&gt; { V' #Equals V } [simplification, anywhere]
+
+</code></pre>
+<p>and what it states is that if two maps are equal, then the values for the same keys in each of them have to be the same.</p>
+<h3 id="proofs-about-while-loops-while-spec.k">Proofs about <code>while</code> loops: <code>while-spec.k</code></h3>
+<p>Next, we use <code>K</code> to prove, albeit indirectly, that the sum of the first <code>N</code> integers equals <code>(N * (N + 1)) / 2</code>. We do so by proving the following claim:</p>
+<pre class=" language-k"><code class="prism  language-k">
+claim
+
+&lt;k&gt;
+
+while ( 0 &lt; $n ) {
+
+$s = $s + $n ;
+
+$n = $n - 1 ;
+
+} =&gt; . ...
+
+&lt;/k&gt;
+
+&lt;store&gt;
+
+$s |-&gt; (S:Int =&gt; S +Int ((N +Int 1) *Int N /Int 2))
+
+$n |-&gt; (N:Int =&gt; 0)
+
+&lt;/store&gt;
+
+requires N &gt;=Int 0
+
+</code></pre>
+<p>which states that after the given <code>while</code> loop, which, in each iteration, adds the value of <code>$n</code> to <code>$s</code>, the value of <code>$n</code> equals <code>0</code> and the value of <code>$s</code> has been incremented by <code>(N * (N + 1)) / 2</code>, where <code>N</code> is the (symbolic) initial value of <code>$n</code>.</p>
+<h1 id="example-6-procedures">Example 6: Procedures</h1>
+<p>In this exercise, we take the <a href="../05-control-flow/README.md">previous exercise</a> and extend the language with procedures and procedure calls. In particular, the syntax of statements is as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+...
+
+  
+
+syntax Stmt ::=
+
+Id "=" IExp ";" [strict(2)] // Assignment
+
+| Stmt Stmt [left] // Sequence
+
+| Block // Block
+
+| "if" "(" BExp ")" Block "else" Block [strict(1)] // If conditional
+
+| "while" "(" BExp ")" Block // While loop
+
+| "return" IExp ";" [seqstrict] // Return statement
+
+| "def" Id "(" Ids ")" Block // Function definition
+
+  
+
+syntax Block ::=
+
+"{" Stmt "}" // Block with statement
+
+| "{" "}" // Empty block
+
+  
+
+...
+
+</code></pre>
+<p>where <code>Ids</code> represent, without going into too much <code>K</code>-related detail, a comma-separated list of identifiers. This means that we have two new statements: the return statement, <code>return ie</code>, which terminates function execution, returning the (integer) expression <code>ie</code>; and the functions declarations statement, <code>def fid(x1, ..., xn) { fbody }</code>, which declares a new function with identifier <code>fid</code>, parameters <code>x1, ..., xn</code>, and body <code>fbody</code>. Integer expressions are also extended with function calls</p>
+<pre class=" language-k"><code class="prism  language-k">
+syntax IExp ::=
+
+...
+
+| Id "(" Exps ")" [strict(2)]
+
+</code></pre>
+<p>where <code>Exps</code> represent a comma-separated list of expressions. When it comes to the semantics, configurations are extended with: a functiont table that stores all of the declared functions, denoted by <code>funcs</code>; and a call stack, denoted by <code>stack</code>, which contains a list whose elements are statement-store pairs:</p>
+<pre class=" language-k"><code class="prism  language-k">
+configuration
+
+&lt;k&gt; $PGM:Stmt &lt;/k&gt;
+
+&lt;store&gt; .Map &lt;/store&gt;
+
+&lt;funcs&gt; .Map &lt;/funcs&gt;
+
+&lt;stack&gt; .List &lt;/stack&gt;
+
+</code></pre>
+<p>The function table gets updated with every function definition, as follows:</p>
+<pre class=" language-k"><code class="prism  language-k">
+rule &lt;k&gt; def FNAME ( ARGS ) BODY =&gt; . ... &lt;/k&gt;
+
+&lt;funcs&gt; FS =&gt; FS [ FNAME &lt;- def FNAME ( ARGS ) BODY ] &lt;/funcs&gt;
+
+</code></pre>
+<p>The statement-store pairs of the call stack are meant to represent the continuation and the associated store at each call site, and we can see how they are managed in the rule for calling functions and the return rules. The function call rule is as follows</p>
+<pre class=" language-k"><code class="prism  language-k">
+rule &lt;k&gt; FNAME ( IS:Ints ) ~&gt; CONT =&gt; #makeBindings(ARGS, IS) ~&gt; BODY &lt;/k&gt;
+
+&lt;funcs&gt; ... FNAME |-&gt; def FNAME ( ARGS ) BODY ... &lt;/funcs&gt;
+
+&lt;store&gt; STORE =&gt; .Map &lt;/store&gt;
+
+&lt;stack&gt; .List =&gt; ListItem(state(CONT, STORE)) ... &lt;/stack&gt;
+
+</code></pre>
+<p>placing the current continuation <code>CONT</code> and store <code>STORE</code> on top of the call stack (using <code>ListItem</code>), as well as setting up the execution of the function being called. This is done by getting the function arguments (<code>ARGS</code>) and body (<code>BODY</code>) from the function table, setting the store to the empty store, and setting the evaluation to <code>#makeBindings(ARGS, IS) ~&gt; BODY</code>, where the former, defined by</p>
+<pre class=" language-k"><code class="prism  language-k">
+rule &lt;k&gt; #makeBindings(.Ids, .Ints) =&gt; . ... &lt;/k&gt;
+
+  
+
+rule &lt;k&gt; #makeBindings((I:Id, IDS =&gt; IDS), (IN:Int, INTS =&gt; INTS)) ... &lt;/k&gt;
+
+&lt;store&gt; STORE =&gt; STORE [ I &lt;- IN ] &lt;/store&gt;
+
+</code></pre>
+<p>fills the store with the function arguments mapped to their passed values.</p>
+<p>On the other hand, there are two rules for the <code>return</code> statement:</p>
+<pre class=" language-k"><code class="prism  language-k">
+rule &lt;k&gt; return I:Int ; ~&gt; _ =&gt; I ~&gt; CONT &lt;/k&gt;
+
+&lt;stack&gt; ListItem(state(CONT, STORE)) =&gt; .List ... &lt;/stack&gt;
+
+&lt;store&gt; _ =&gt; STORE &lt;/store&gt;
+
+  
+
+rule &lt;k&gt; return I:Int ; ~&gt; . =&gt; I &lt;/k&gt;
+
+&lt;stack&gt; .List &lt;/stack&gt;
+
+</code></pre>
+<p>The first return rule handles the case in which the call stack is non-empty.</p>
+<p>By matching on the first stack frame (using <code>ListItem</code>), we obtain the continuation <code>CONT</code> and the calling store <code>STORE</code>, at the same time removing said stack frame by rewriting it to <code>.</code>. Then, we set the remaining evaluation to the return value followed by the continuation, <code>I ~&gt; CONT</code>, and reset the store to the calling store. The second return rule deals with the case in which the call stack is empty (by matching on <code>.List</code>), meaning that we are returning from the top-level function, in which case we only return <code>I</code>.</p>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,652 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><hr>
+<h3 id="slide-1-emerging-trends-and-future-directions"><strong>Slide 1: Emerging Trends and Future Directions</strong></h3>
+<ul>
+<li><strong>Title:</strong> Emerging Trends and Future Directions in Blockchain Security</li>
+<li><strong>Subtitle:</strong> Privacy in Blockchain, Governance, Quantum Computing, and New Platforms</li>
+<li><strong>Objective</strong>: This unit explores advanced security concepts in blockchain, addressing privacy, governance, and emerging technologies, and provides an in-depth look at the future of blockchain.</li>
+</ul>
+<hr>
+<h3 id="slide-2-introduction-to-blockchain-security"><strong>Slide 2: Introduction to Blockchain Security</strong></h3>
+<ul>
+<li><strong>Overview</strong>: Blockchain security is a foundational concern as blockchain technology underpins systems in finance, healthcare, logistics, and more. The distributed nature of blockchain enables transparency, but also introduces unique security challenges.</li>
+<li><strong>Topics Covered</strong>:
+<ul>
+<li><strong>Privacy in Blockchain</strong>: Blockchain’s public ledger demands methods like Zero-Knowledge Proofs (ZKPs) and zk-SNARKs to protect user privacy.</li>
+<li><strong>Governance Models</strong>: The way blockchain projects are governed affects their security and resilience against centralization.</li>
+<li><strong>Quantum Computing Impact</strong>: As quantum computing advances, it may compromise traditional cryptographic methods used in blockchain.</li>
+<li><strong>Emerging Platforms</strong>: New platforms like Polkadot and Cosmos are pioneering interoperability and scaling solutions.</li>
+<li><strong>Future Directions</strong>: Research into scalability, privacy, and cross-chain interoperability remains critical to blockchain’s evolution.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-3-privacy-in-blockchain-–-importance-of-privacy"><strong>Slide 3: Privacy in Blockchain – Importance of Privacy</strong></h3>
+<ul>
+<li><strong>Blockchain Privacy Needs</strong>: Since blockchains are often public, every transaction is visible to anyone on the network. However, many users require privacy to protect sensitive information, especially for financial transactions and personal data.</li>
+<li><strong>User Privacy Requirements</strong>: While transparency and immutability are essential to blockchain’s trust model, these characteristics can conflict with privacy demands. Blockchain users increasingly seek methods to retain transaction confidentiality without sacrificing security or trust.</li>
+<li><strong>Current Privacy Solutions</strong>: Technologies such as Zero-Knowledge Proofs (ZKPs), zk-SNARKs (Succinct Non-Interactive Arguments of Knowledge), and zk-Rollups provide innovative solutions for protecting user data. These tools allow transactions to be verified without revealing details, making them invaluable for privacy on public blockchains.</li>
+</ul>
+<hr>
+<h3 id="slide-4--elliptic-curve-cryptography-ecc-a-deep-dive"><strong>Slide 4 : Elliptic Curve Cryptography (ECC)</strong>: A Deep Dive</h3>
+<p>Elliptic Curve Cryptography (ECC) is a modern cryptographic technique used widely for securing digital communication. It’s based on the mathematics of elliptic curves over finite fields and is considered more efficient than other cryptographic methods, such as RSA or DSA, for the same level of security.</p>
+<h3 id="what-is-an-elliptic-curve"><strong>What is an Elliptic Curve?</strong></h3>
+<p>At the core of ECC is an <strong>elliptic curve</strong>, a special type of curve defined by an equation. The general equation for an elliptic curve in mathematics is:</p>
+<p>[<br>
+y^2 = x^3 + ax + b<br>
+]</p>
+<p>Where:</p>
+<ul>
+<li>( x ) and ( y ) are variables (points on the curve).</li>
+<li>( a ) and ( b ) are constants that define the shape of the curve.</li>
+<li>This curve forms a smooth, symmetric shape when plotted on a graph, and it is not a simple straight line, but rather a set of points that satisfies the equation.</li>
+</ul>
+<h3 id="elliptic-curves-in-cryptography"><strong>Elliptic Curves in Cryptography</strong></h3>
+<p>In cryptography, elliptic curves are used in a specific context: <strong>finite fields</strong>. This means that both ( x ) and ( y ) are numbers taken from a finite set of values (called a <strong>finite field</strong>), often chosen to be large prime numbers or powers of prime numbers. This limitation gives rise to the cryptographic properties of ECC, especially in terms of security and efficiency.</p>
+<p>The elliptic curve equation looks the same, but it operates in a finite field. Essentially, instead of continuous values for ( x ) and ( y ), they are restricted to numbers between 0 and a large prime number ( p ).</p>
+<h3 id="the-math-behind-ecc-point-multiplication"><strong>The Math Behind ECC: Point Multiplication</strong></h3>
+<p>In ECC, cryptographic operations are based on the <strong>mathematical operation of point multiplication</strong>. This is a process where a point on the curve is multiplied by a scalar (a number). The result is another point on the curve.</p>
+<p>The operation is defined as follows:</p>
+<ol>
+<li>You have an elliptic curve and a <strong>base point</strong> ( G ), which is a known point on the curve.</li>
+<li><strong>Point multiplication</strong> involves multiplying the base point ( G ) by a scalar ( k ) (a number).</li>
+<li>The result of this operation is another point ( P = k \cdot G ) on the curve.</li>
+</ol>
+<p>For example, if you multiply ( G ) by 3, you would get the point ( 3 \cdot G ), which is a point that is three times the distance of ( G ) on the curve. The multiplication here is not simple scaling; it is an elliptic curve operation that can be done using a series of modular additions.</p>
+<p>The critical thing to note is that <strong>point multiplication is easy to compute</strong>, but <strong>inversing the process (called the Elliptic Curve Discrete Logarithm Problem, or ECDLP) is computationally infeasible</strong>, even for large numbers. This is the foundation of security in ECC.</p>
+<h3 id="elliptic-curve-cryptographic-algorithms"><strong>Elliptic Curve Cryptographic Algorithms</strong></h3>
+<ol>
+<li>
+<p><strong>ECDSA (Elliptic Curve Digital Signature Algorithm)</strong>:</p>
+<ul>
+<li>ECDSA is a variant of the Digital Signature Algorithm (DSA) that uses ECC for the generation and verification of digital signatures.</li>
+<li>It’s widely used in blockchain systems like Bitcoin to sign transactions and verify the authenticity of messages.</li>
+</ul>
+</li>
+<li>
+<p><strong>ECDH (Elliptic Curve Diffie-Hellman)</strong>:</p>
+<ul>
+<li>ECDH is used for <strong>key exchange</strong>. It allows two parties to agree on a shared secret over an insecure channel. The shared secret can then be used for symmetric encryption.</li>
+<li>ECC enables secure key exchange with smaller keys compared to traditional Diffie-Hellman (DH).</li>
+</ul>
+</li>
+<li>
+<p><strong>ECIES (Elliptic Curve Integrated Encryption Scheme)</strong>:</p>
+<ul>
+<li>ECIES is an encryption scheme that combines elliptic curve public key cryptography with symmetric encryption. It’s often used for encrypting messages or data securely.</li>
+</ul>
+</li>
+</ol>
+<h3 id="why-use-ecc"><strong>Why Use ECC?</strong></h3>
+<p>ECC provides several benefits that make it superior to traditional cryptographic methods like RSA:</p>
+<ol>
+<li>
+<p><strong>Smaller Key Sizes with Equivalent Security</strong>:</p>
+<ul>
+<li>For equivalent security levels, ECC requires much smaller keys compared to RSA. For example, a 256-bit ECC key provides the same security as a 3072-bit RSA key. Smaller key sizes result in faster computations and reduced storage requirements.</li>
+<li>Example: To secure a connection with <strong>ECC</strong> using a 256-bit key, you need a smaller key and less computational power than using <strong>RSA</strong> with a 3072-bit key.</li>
+</ul>
+</li>
+<li>
+<p><strong>Efficiency</strong>:</p>
+<ul>
+<li>The smaller key sizes directly lead to faster operations. This is especially useful in environments with limited resources, such as IoT devices, mobile applications, and blockchain systems.</li>
+</ul>
+</li>
+<li>
+<p><strong>Strong Security</strong>:</p>
+<ul>
+<li>The difficulty of solving the <strong>Elliptic Curve Discrete Logarithm Problem (ECDLP)</strong>, which involves finding the scalar ( k ) given two points on the curve, makes ECC resistant to attacks.</li>
+<li>This is a mathematically hard problem that has no efficient solution with current algorithms.</li>
+</ul>
+</li>
+</ol>
+<h3 id="ecc-in-blockchain"><strong>ECC in Blockchain</strong></h3>
+<p>In blockchain, ECC is used for several purposes:</p>
+<ul>
+<li><strong>Wallet Management</strong>: Each wallet typically contains an elliptic curve public-private key pair. The private key is used to sign transactions, while the public key (or derived public address) is used to receive transactions.</li>
+<li><strong>Transaction Signing</strong>: Blockchain systems like <strong>Bitcoin</strong> and <strong>Ethereum</strong> use ECC for transaction signing. When a user wants to send cryptocurrency, they sign the transaction with their private key, proving ownership of the funds.</li>
+<li><strong>Security</strong>: The security of blockchain networks is based on the difficulty of solving the ECDLP. If an attacker could break ECC, they could forge signatures and gain unauthorized access to funds.</li>
+</ul>
+<h4 id="example-ecc-transaction-signing-python"><strong>Example: ECC Transaction Signing (Python)</strong></h4>
+<p>Here’s an example of how elliptic curve cryptography can be used for digital signature generation and verification.</p>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">from</span> ecdsa <span class="token keyword">import</span> SigningKey<span class="token punctuation">,</span> NIST256p
+
+<span class="token comment"># Create a private key using the NIST256p curve (this is a standard elliptic curve used in Bitcoin)</span>
+private_key <span class="token operator">=</span> SigningKey<span class="token punctuation">.</span>generate<span class="token punctuation">(</span>curve<span class="token operator">=</span>NIST256p<span class="token punctuation">)</span>
+
+<span class="token comment"># Generate the corresponding public key</span>
+public_key <span class="token operator">=</span> private_key<span class="token punctuation">.</span>get_verifying_key<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Message to sign</span>
+message <span class="token operator">=</span> b<span class="token string">"Blockchain transaction"</span>
+
+<span class="token comment"># Sign the message with the private key</span>
+signature <span class="token operator">=</span> private_key<span class="token punctuation">.</span>sign<span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+
+<span class="token comment"># Verify the signature using the public key</span>
+is_valid <span class="token operator">=</span> public_key<span class="token punctuation">.</span>verify<span class="token punctuation">(</span>signature<span class="token punctuation">,</span> message<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Message: {message}"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Signature: {signature}"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Is the signature valid? {'Yes' if is_valid else 'No'}"</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="conclusion"><strong>Conclusion</strong></h3>
+<p>Elliptic Curve Cryptography (ECC) is a crucial component of modern cryptographic systems, offering <strong>efficient</strong>, <strong>secure</strong>, and <strong>scalable</strong> solutions. Its strength lies in the fact that it allows high levels of security with smaller key sizes, making it ideal for resource-constrained environments like blockchain systems.</p>
+<ul>
+<li><strong>Applications</strong>: ECC powers key exchange, digital signatures, and encryption in many blockchain networks (Bitcoin, Ethereum) and is central to privacy-focused cryptographic protocols.</li>
+<li><strong>Security</strong>: ECC’s security derives from the <strong>Elliptic Curve Discrete Logarithm Problem (ECDLP)</strong>, which is computationally infeasible to reverse, making it a backbone of modern cryptographic practices.</li>
+</ul>
+<hr>
+<h3 id="slide-5-zero-knowledge-proofs-zkps"><strong>Slide 5: Zero-Knowledge Proofs (ZKPs)</strong></h3>
+<ul>
+<li><strong>Definition</strong>: A Zero-Knowledge Proof (ZKP) is a cryptographic technique that allows one party (the “prover”) to convince another (the “verifier”) that they know a piece of information without disclosing the information itself. ZKPs are foundational to maintaining privacy in blockchain by enabling trust without transparency.</li>
+<li><strong>Key Properties</strong>:
+<ul>
+<li><strong>Completeness</strong>: If the statement is true, an honest prover can convince the verifier.</li>
+<li><strong>Soundness</strong>: If the statement is false, no dishonest prover can deceive the verifier.</li>
+<li><strong>Zero-Knowledge</strong>: The verifier learns nothing beyond the validity of the statement.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-6-how-do-zero-knowledge-proofs-work"><strong>Slide 6: How Do Zero-Knowledge Proofs Work?</strong></h3>
+<ul>
+<li>
+<p><strong>Core Principles</strong>:</p>
+<ul>
+<li><strong>Completeness</strong>: An honest verifier is convinced of the prover’s knowledge if the statement is true.</li>
+<li><strong>Soundness</strong>: Dishonest provers cannot convince a verifier if the statement is false.</li>
+<li><strong>Zero-Knowledge</strong>: The verifier gains no additional information beyond the fact that the statement is true.</li>
+</ul>
+</li>
+<li>
+<p><strong>Conceptual Example</strong>:</p>
+<ul>
+<li>Imagine a cave with two paths leading to a locked door. Alice wants to prove to Bob that she knows the door’s passcode without revealing it. By repeatedly asking her to return via either path (randomly chosen by him), Bob gains confidence in her knowledge of the passcode as she consistently succeeds in following his instructions.</li>
+</ul>
+</li>
+<li>
+<p><strong>How It’s Done Cryptographically</strong>: Cryptographic circuits simulate these challenges, proving that a user knows an answer (e.g., a passcode) without revealing it.</p>
+</li>
+</ul>
+<hr>
+<h3 id="slide-7-types-of-zero-knowledge-proofs"><strong>Slide 7: Types of Zero-Knowledge Proofs</strong></h3>
+<ul>
+<li><strong>zk-SNARKs</strong>: Small, easy-to-verify proofs using elliptical curves, often used for privacy-efficient transactions (e.g., Zcash). SNARKs, which stands for “succinct non-interactive argument of knowledge”, are small in size and easy to verify. They generate a cryptographic proof using elliptical curves, which is more gas-efficient than the hashing function method used by STARKS. zk-STARKs</li>
+<li><strong>zk-STARKs</strong>: Highly scalable and faster than SNARKs due to minimal prover-verifier interaction, suitable for high-throughput applications.</li>
+<li><strong>PLONK</strong>: Allows multiple participants to use a universal trusted setup across different programs.</li>
+<li><strong>Bulletproofs</strong>: Compact, non-interactive proofs that require no trusted setup, ideal for enabling private transactions in cryptocurrencies.</li>
+</ul>
+<hr>
+<h3 id="slide-8-zero-knowledge-proof-use-cases-in-blockchain"><strong>Slide 8: Zero-Knowledge Proof Use Cases in Blockchain</strong></h3>
+<ul>
+<li><strong>Private Transactions</strong>: Used in privacy-focused blockchains like Zcash to keep transaction details confidential.</li>
+<li><strong>Verifiable Computations</strong>: Allows decentralized oracles to confirm data without revealing it, adding a privacy layer for off-chain data.</li>
+<li><strong>Scaling and Security</strong>: zk-Rollups and Validiums enable scalable Layer 2 solutions that increase throughput on Ethereum by securely bundling transactions.</li>
+<li><strong>Decentralized Identity</strong>: ZKPs support identity systems allowing users to validate identity without revealing personal data.</li>
+</ul>
+<hr>
+<h3 id="slide-9-zkp-in-privacy-preserving-solutions-–-chainlink’s-deco"><strong>Slide 9: ZKP in Privacy-Preserving Solutions – Chainlink’s DECO</strong></h3>
+<ul>
+<li>
+<p><strong>DECO</strong>: A Chainlink protocol leveraging ZKPs to ensure data privacy and integrity during data transmission from trusted servers to the blockchain.</p>
+</li>
+<li>
+<p><strong>Functionality</strong>:</p>
+<ul>
+<li><strong>TLS-Backed Proofs</strong>: Uses modern TLS protocols to maintain confidentiality and tamper-proof delivery.</li>
+<li><strong>Applications</strong>: Decentralized identity (DID) systems, undercollateralized loans, and Sybil-resistant mechanisms.</li>
+<li><strong>Institutional Benefits</strong>: Data providers can securely monetize proprietary datasets on-chain by sharing only attested proofs, not actual data.</li>
+</ul>
+</li>
+<li>
+<p><strong>Advantages</strong>: Institutions can interact with public blockchains without compromising sensitive information, supporting compliance with GDPR, HIPAA, and other data protection standards.</p>
+</li>
+</ul>
+<hr>
+<h3 id="slide-10-zk-snarks-–-zero-knowledge-succinct-non-interactive-argument-of-knowledge"><strong>Slide 10: zk-SNARKs – Zero-Knowledge Succinct Non-Interactive Argument of Knowledge</strong></h3>
+<ul>
+<li><strong>Overview</strong>: zk-SNARKs (Zero-Knowledge Succinct Non-Interactive Argument of Knowledge) are a specialized form of ZKP that is particularly efficient and doesn’t require back-and-forth communication between the prover and verifier. This makes them ideal for blockchain applications where efficiency and scalability are essential.</li>
+<li><strong>Key Benefits</strong>:
+<ul>
+<li><strong>Non-Interactive</strong>: The proof is sent once without requiring repeated interactions, reducing complexity.</li>
+<li><strong>Succinctness</strong>: zk-SNARKs produce compact proofs, allowing fast verification even for complex statements.</li>
+<li><strong>Scalability</strong>: zk-SNARKs are particularly suitable for blockchain as they allow high volumes of transactions to be proven with minimal data.</li>
+</ul>
+</li>
+<li><strong>Applications</strong>: zk-SNARKs are fundamental to privacy-focused blockchains such as Zcash, which uses them to enable shielded, private transactions by obscuring sender, receiver, and transaction amount.</li>
+</ul>
+<p><strong>Diagram Explanation</strong>: This diagram highlights the efficiency of zk-SNARKs by showing the generation of a succinct proof that allows the verifier to check the proof without needing additional information.</p>
+<pre class=" language-mermaid"><svg id="mermaid-svg-uSo9AWiAxWlI0MNF" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="309.58331298828125" style="max-width: 416.0333251953125px;" viewBox="0 0 416.0333251953125 309.58331298828125"><style>#mermaid-svg-uSo9AWiAxWlI0MNF{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-uSo9AWiAxWlI0MNF .error-icon{fill:#552222;}#mermaid-svg-uSo9AWiAxWlI0MNF .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-uSo9AWiAxWlI0MNF .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-uSo9AWiAxWlI0MNF .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-uSo9AWiAxWlI0MNF .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-uSo9AWiAxWlI0MNF .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-uSo9AWiAxWlI0MNF .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-uSo9AWiAxWlI0MNF .marker{fill:#666;stroke:#666;}#mermaid-svg-uSo9AWiAxWlI0MNF .marker.cross{stroke:#666;}#mermaid-svg-uSo9AWiAxWlI0MNF svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-uSo9AWiAxWlI0MNF .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#000000;}#mermaid-svg-uSo9AWiAxWlI0MNF .cluster-label text{fill:#333;}#mermaid-svg-uSo9AWiAxWlI0MNF .cluster-label span{color:#333;}#mermaid-svg-uSo9AWiAxWlI0MNF .label text,#mermaid-svg-uSo9AWiAxWlI0MNF span{fill:#000000;color:#000000;}#mermaid-svg-uSo9AWiAxWlI0MNF .node rect,#mermaid-svg-uSo9AWiAxWlI0MNF .node circle,#mermaid-svg-uSo9AWiAxWlI0MNF .node ellipse,#mermaid-svg-uSo9AWiAxWlI0MNF .node polygon,#mermaid-svg-uSo9AWiAxWlI0MNF .node path{fill:#eee;stroke:#999;stroke-width:1px;}#mermaid-svg-uSo9AWiAxWlI0MNF .node .label{text-align:center;}#mermaid-svg-uSo9AWiAxWlI0MNF .node.clickable{cursor:pointer;}#mermaid-svg-uSo9AWiAxWlI0MNF .arrowheadPath{fill:#333333;}#mermaid-svg-uSo9AWiAxWlI0MNF .edgePath .path{stroke:#666;stroke-width:1.5px;}#mermaid-svg-uSo9AWiAxWlI0MNF .flowchart-link{stroke:#666;fill:none;}#mermaid-svg-uSo9AWiAxWlI0MNF .edgeLabel{background-color:white;text-align:center;}#mermaid-svg-uSo9AWiAxWlI0MNF .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-svg-uSo9AWiAxWlI0MNF .cluster rect{fill:hsl(210,66.6666666667%,95%);stroke:#26a;stroke-width:1px;}#mermaid-svg-uSo9AWiAxWlI0MNF .cluster text{fill:#333;}#mermaid-svg-uSo9AWiAxWlI0MNF .cluster span{color:#333;}#mermaid-svg-uSo9AWiAxWlI0MNF div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(-160,0%,93.3333333333%);border:1px solid #26a;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg-uSo9AWiAxWlI0MNF:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-uSo9AWiAxWlI0MNF flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-Prover LE-zkSNARK" style="opacity: 1;" id="L-Prover-zkSNARK"><path class="path" d="M161.46250534057617,52.39161780043347L97.85833740234375,93.07498931884766L97.85833740234375,131.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead10)" style="fill:none"></path><defs><marker id="arrowhead10" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-zkSNARK LE-Verifier" style="opacity: 1;" id="L-zkSNARK-Verifier"><path class="path" d="M97.85833740234375,178.1499786376953L97.85833740234375,216.50830841064453L157.8275473682503,254.86663818359375" marker-end="url(https://stackedit.io/app#arrowhead11)" style="fill:none"></path><defs><marker id="arrowhead11" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-Verifier LE-Prover" style="opacity: 1;" id="L-Verifier-Prover"><path class="path" d="M230.8641259105583,254.86663818359375L290.83333587646484,216.50830841064453L290.83333587646484,154.7916488647461L290.83333587646484,93.07498931884766L227.22916793823242,52.39161780043347" marker-end="url(https://stackedit.io/app#arrowhead12)" style="fill:none"></path><defs><marker id="arrowhead12" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform="translate(97.85833740234375,93.07498931884766)"><g transform="translate(-89.85833740234375,-13.358329772949219)" class="label"><rect rx="0" ry="0" width="179.7166748046875" height="26.716659545898438"></rect><foreignObject width="179.7166748046875" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-Prover-zkSNARK" class="edgeLabel L-LS-Prover' L-LE-zkSNARK">Generates succinct proof</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(97.85833740234375,216.50830841064453)"><g transform="translate(-25.64166259765625,-13.358329772949219)" class="label"><rect rx="0" ry="0" width="51.2833251953125" height="26.716659545898438"></rect><foreignObject width="51.2833251953125" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-zkSNARK-Verifier" class="edgeLabel L-LS-zkSNARK' L-LE-Verifier">Sent to</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(290.83333587646484,154.7916488647461)"><g transform="translate(-117.19999694824219,-13.358329772949219)" class="label"><rect rx="0" ry="0" width="234.39999389648438" height="26.716659545898438"></rect><foreignObject width="234.39999389648438" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-Verifier-Prover" class="edgeLabel L-LS-Verifier' L-LE-Prover">Validates without additional info</span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" style="opacity: 1;" id="flowchart-Prover-126" transform="translate(194.3458366394043,31.35832977294922)"><rect rx="0" ry="0" x="-32.883331298828125" y="-23.35832977294922" width="65.76666259765625" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-22.883331298828125,-13.358329772949219)"><foreignObject width="45.76666259765625" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Prover</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-zkSNARK-127" transform="translate(97.85833740234375,154.7916488647461)"><rect rx="0" ry="0" x="-40.775001525878906" y="-23.35832977294922" width="81.55000305175781" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30.775001525878906,-13.358329772949219)"><foreignObject width="61.55000305175781" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">zkSNARK</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-Verifier-129" transform="translate(194.3458366394043,278.22496795654297)"><rect rx="0" ry="0" x="-36.65833282470703" y="-23.35832977294922" width="73.31666564941406" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-26.65833282470703,-13.358329772949219)"><foreignObject width="53.31666564941406" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Verifier</div></foreignObject></g></g></g></g></g></g></svg></pre>
+<hr>
+<h3 id="slide-10.1-components-of-zk-snarks">Slide 10.1: <strong>Components of zk-SNARKs</strong></h3>
+<ul>
+<li><strong>Encoding a Statement:</strong> zk-SNARKs work on statements that can be expressed as an arithmetic circuit or Boolean circuit.</li>
+<li><strong>Mathematical Foundation:</strong>
+<ul>
+<li>Based on cryptographic assumptions like elliptic curve cryptography and knowledge of certain cryptographic structures.</li>
+</ul>
+</li>
+<li><strong>Four Main Components:</strong>
+<ol>
+<li><strong>Circuit Representation:</strong> Translates a problem into an arithmetic circuit.</li>
+<li><strong>Quadratic Arithmetic Program (QAP):</strong> Converts the circuit into a system of polynomial equations.</li>
+<li><strong>Trusted Setup:</strong> A one-time setup phase to create public parameters and eliminate trust assumptions.</li>
+<li><strong>Proof and Verification:</strong> Producing a short proof to verify if the prover knows the solution.</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="slide-10.2-properties-of-zk-snarks">Slide 10.2: <strong>Properties of zk-SNARKs</strong></h3>
+<ul>
+<li><strong>Zero-Knowledge:</strong> Keeps the witness (solution) hidden from the verifier.</li>
+<li><strong>Succinctness:</strong> The proof size is constant, regardless of the complexity of the statement.</li>
+<li><strong>Non-Interactivity:</strong> The prover and verifier interact only once, enhancing scalability.</li>
+<li><strong>Soundness:</strong> The proof guarantees that the prover has the knowledge of the witness if the verifier accepts the proof.</li>
+</ul>
+<hr>
+<h3 id="slide-10.3-the-workflow-of-zk-snarks">Slide 10.3: <strong>The Workflow of zk-SNARKs</strong></h3>
+<ol>
+<li><strong>Setup Phase:</strong>
+<ul>
+<li>Involves a trusted setup to generate cryptographic parameters for the zk-SNARK.</li>
+<li>Includes creating a common reference string (CRS) that both prover and verifier will use.</li>
+</ul>
+</li>
+<li><strong>Prover Computation:</strong>
+<ul>
+<li>The prover encodes the knowledge they wish to prove using the cryptographic parameters.</li>
+<li>Generates a succinct proof of knowledge without revealing underlying details.</li>
+</ul>
+</li>
+<li><strong>Verification Phase:</strong>
+<ul>
+<li>The verifier uses the CRS and the succinct proof to confirm the validity of the statement.</li>
+<li>If the proof is valid, the verifier knows the prover possesses the knowledge without seeing it.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="slide-10.4-technical-deep-dive-quadratic-arithmetic-programs-qap">Slide 10.4: <strong>Technical Deep-Dive: Quadratic Arithmetic Programs (QAP)</strong></h3>
+<ul>
+<li><strong>Role of QAPs:</strong> QAPs convert arithmetic circuits into a format usable by zk-SNARKs.
+<ul>
+<li>Breaks down computations into polynomial equations.</li>
+</ul>
+</li>
+<li><strong>Process:</strong>
+<ul>
+<li>A circuit is constructed from the statement.</li>
+<li>Translates the circuit into polynomials (quadratic arithmetic programs).</li>
+<li>Allows the prover to create a proof without revealing the solution directly.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-10.5-applications-of-zk-snarks-in-the-real-world">Slide 10.5: <strong>Applications of zk-SNARKs in the Real World</strong></h3>
+<ul>
+<li><strong>Privacy-Preserving Cryptocurrencies:</strong>
+<ul>
+<li><em>Example:</em> Zcash uses zk-SNARKs to enable shielded transactions, keeping sender, receiver, and transaction details confidential.</li>
+</ul>
+</li>
+<li><strong>Scalability in Blockchain:</strong>
+<ul>
+<li>zk-SNARKs enable efficient proof verification, aiding blockchain scalability by reducing transaction data.</li>
+</ul>
+</li>
+<li><strong>Identity Verification:</strong>
+<ul>
+<li>zk-SNARKs allow users to verify identities or credentials without revealing sensitive information.</li>
+</ul>
+</li>
+<li><strong>Data Privacy and Compliance:</strong>
+<ul>
+<li>zk-SNARKs can help organizations comply with data privacy laws by allowing proof of compliance without revealing data.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-10.6-advantages-of-zk-snarks">Slide 10.6: <strong>Advantages of zk-SNARKs</strong></h3>
+<ul>
+<li><strong>Privacy and Confidentiality:</strong> Ensures data remains confidential during verification.</li>
+<li><strong>Efficiency and Scalability:</strong> Succinct proofs enable faster processing and lower data requirements.</li>
+<li><strong>Minimal Communication:</strong> Non-interactive proofs reduce the need for ongoing interaction between prover and verifier.</li>
+<li><strong>Versatility:</strong> Applicable to various fields, including finance, identity verification, and data privacy.</li>
+</ul>
+<hr>
+<h3 id="slide-10.7-limitations-and-challenges-of-zk-snarks">Slide 10.7: <strong>Limitations and Challenges of zk-SNARKs</strong></h3>
+<ul>
+<li><strong>Trusted Setup Requirement:</strong> Requires an initial trusted setup phase, which could introduce security risks if compromised.</li>
+<li><strong>Computation-Intensive Setup:</strong> Creating zk-SNARKs can be computationally intensive, especially in large-scale applications.</li>
+<li><strong>Security Concerns:</strong> If the mathematical assumptions are broken, zk-SNARKs could be compromised.</li>
+<li><strong>Implementation Complexity:</strong> zk-SNARKs require significant cryptographic expertise to implement and verify.</li>
+</ul>
+<hr>
+<h3 id="slide-10.8-conclusion-and-future-of-zk-snarks">Slide 10.8: <strong>Conclusion and Future of zk-SNARKs</strong></h3>
+<ul>
+<li><strong>Current Status:</strong> zk-SNARKs are a powerful tool for privacy and efficiency, with active use in cryptocurrency and blockchain.</li>
+<li><strong>Advancements:</strong> Ongoing research aims to develop more secure and efficient zk-SNARKs without a trusted setup.</li>
+<li><strong>Future Potential:</strong> Expanding applications in privacy, secure computation, and scalability make zk-SNARKs a promising technology for various sectors.</li>
+</ul>
+<hr>
+<p>Let’s go through a simple code example to illustrate a zk-SNARK, using a library like <a href="https://github.com/iden3/snarkjs">snarkjs</a> in JavaScript. <code>snarkjs</code> is a popular tool for creating zk-SNARK proofs in JavaScript, which allows for compiling circuits, generating proofs, and verifying them.</p>
+<p>We’ll walk through the process of creating a zk-SNARK proof for a very basic arithmetic circuit where the prover wants to prove they know two numbers, <code>a</code> and <code>b</code>, that multiply to a certain product <code>c</code> without revealing <code>a</code> or <code>b</code>.</p>
+<h3 id="code-example-using-snarkjs-javascript">Code Example using snarkjs (JavaScript)</h3>
+<ol>
+<li>
+<p><strong>Set Up the Environment</strong></p>
+<ul>
+<li>Install <code>snarkjs</code> via npm:<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">npm</span> <span class="token function">install</span> -g snarkjs
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Define the Circuit</strong> (in a <code>.circom</code> file)</p>
+<ul>
+<li>
+<p>We’ll use Circom, a specialized language for zk-SNARK circuits, to define a simple circuit. Save this as <code>multiplier.circom</code>:</p>
+<pre class=" language-plaintext"><code class="prism  language-plaintext">// multiplier.circom
+template Multiplier() {
+    signal input a;
+    signal input b;
+    signal output c;
+
+    c &lt;== a * b;
+}
+
+component main = Multiplier();
+</code></pre>
+</li>
+<li>
+<p>In this circuit, the prover will provide inputs <code>a</code> and <code>b</code>, and the output <code>c</code> will be <code>a * b</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Compile the Circuit</strong></p>
+<ul>
+<li>
+<p>Compile the circuit with snarkjs and generate a <code>.r1cs</code> file (the circuit definition), a <code>.wasm</code> file (the WASM code for the circuit), and a <code>.zkey</code> file (the proving and verification keys).</p>
+</li>
+<li>
+<p>Run these commands in the terminal:</p>
+<pre class=" language-bash"><code class="prism  language-bash">circom multiplier.circom --r1cs --wasm --sym
+snarkjs setup multiplier.r1cs multiplier.zkey
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Generate a Proof</strong></p>
+<ul>
+<li>We’ll create a witness (inputs for the circuit) and then generate the proof using <code>snarkjs</code>.</li>
+</ul>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> snarkjs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"snarkjs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">generateProof</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Inputs known to the prover</span>
+    <span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">"a"</span><span class="token punctuation">:</span> <span class="token string">"3"</span><span class="token punctuation">,</span>
+        <span class="token string">"b"</span><span class="token punctuation">:</span> <span class="token string">"11"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Expected output (hidden in the proof process)</span>
+    <span class="token keyword">const</span> expectedOutput <span class="token operator">=</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token number">11</span><span class="token punctuation">;</span> <span class="token comment">// should equal 33</span>
+
+    <span class="token comment">// Run the circuit in WebAssembly to generate witness</span>
+    <span class="token keyword">await</span> snarkjs<span class="token punctuation">.</span>wtns<span class="token punctuation">.</span><span class="token function">calculate</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> <span class="token string">"multiplier.wasm"</span><span class="token punctuation">,</span> <span class="token string">"multiplier.wtns"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Generate proof using the witness</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> proof<span class="token punctuation">,</span> publicSignals <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">await</span> snarkjs<span class="token punctuation">.</span>groth16<span class="token punctuation">.</span><span class="token function">prove</span><span class="token punctuation">(</span><span class="token string">"multiplier.zkey"</span><span class="token punctuation">,</span> <span class="token string">"multiplier.wtns"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Proof:"</span><span class="token punctuation">,</span> proof<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Public signals (c):"</span><span class="token punctuation">,</span> publicSignals<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">generateProof</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li>
+<p><strong>Verify the Proof</strong></p>
+<ul>
+<li>Now that we have the proof, we can verify it with the expected output (the public signal <code>c</code>).</li>
+</ul>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">verifyProof</span><span class="token punctuation">(</span>proof<span class="token punctuation">,</span> publicSignals<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Verify the proof with the given public signal (expected output `c`)</span>
+    <span class="token keyword">const</span> verificationKey <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">"multiplier.vkey.json"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> isValid <span class="token operator">=</span> <span class="token keyword">await</span> snarkjs<span class="token punctuation">.</span>groth16<span class="token punctuation">.</span><span class="token function">verify</span><span class="token punctuation">(</span>verificationKey<span class="token punctuation">,</span> publicSignals<span class="token punctuation">,</span> proof<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>isValid<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Proof is valid!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Proof is invalid."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">verifyProof</span><span class="token punctuation">(</span>proof<span class="token punctuation">,</span> publicSignals<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+</ol>
+<h3 id="explanation-of-the-code">Explanation of the Code</h3>
+<ul>
+<li><strong>Circuit Definition (Step 2):</strong> The circuit defines the logic, where <code>c = a * b</code>.</li>
+<li><strong>Generate Proof (Step 4):</strong> We calculate the witness with <code>snarkjs.wtns.calculate</code>, which involves the inputs <code>a</code> and <code>b</code>. Then, using <code>snarkjs.groth16.prove</code>, we generate the zk-SNARK proof.</li>
+<li><strong>Verification (Step 5):</strong> Finally, using <code>snarkjs.groth16.verify</code>, the verifier checks the proof against the verification key and public output signal <code>c</code>.</li>
+</ul>
+<h3 id="sample-output">Sample Output</h3>
+<pre class=" language-plaintext"><code class="prism  language-plaintext">Proof: {...} // zk-SNARK proof data
+Public signals (c): ["33"]
+Proof is valid!
+</code></pre>
+<p>In this example, the verifier can confirm that the prover knows values <code>a</code> and <code>b</code> such that <code>a * b = c</code> (where <code>c</code> is 33) without knowing the values of <code>a</code> and <code>b</code>.</p>
+<h3 id="slide-11-zk-rollups-–-scalable-privacy-solutions"><strong>Slide 11: zk-Rollups – Scalable Privacy Solutions</strong></h3>
+<ul>
+<li><strong>Definition</strong>: zk-Rollups are a layer-2 scaling solution that combines Zero-Knowledge Proofs with batch processing of transactions. zk-Rollups aggregate multiple transactions off-chain, generating a single proof that summarizes all the transactions and submitting it to the main blockchain for verification.</li>
+<li><strong>Mechanism</strong>:
+<ul>
+<li>Transactions occur off-chain, significantly reducing on-chain data requirements.</li>
+<li>A zk-SNARK proof is generated to summarize the batched transactions.</li>
+<li>This single proof is submitted and verified on-chain.</li>
+</ul>
+</li>
+<li><strong>Benefits</strong>:
+<ul>
+<li><strong>Scalability</strong>: Many transactions are aggregated into one, making it more scalable.</li>
+<li><strong>Enhanced Privacy</strong>: Individual transactions within a rollup are not exposed on the main blockchain.</li>
+<li><strong>Cost-Efficiency</strong>: Reduced on-chain interactions lead to lower transaction fees, benefiting users and scaling blockchain use cases.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-12-blockchain-governance-models-and-security-implications"><strong>Slide 12: Blockchain Governance Models and Security Implications</strong></h3>
+<ul>
+<li><strong>Overview</strong>: Blockchain governance is the method by which protocols update, secure, and evolve. Effective governance is essential to network stability and security. Governance models differ by blockchain, affecting security and decentralization.</li>
+<li><strong>Types of Governance Models</strong>:
+<ul>
+<li><strong>On-Chain Governance</strong>: In on-chain governance, decisions are made through automated voting mechanisms directly on the blockchain. Networks like Tezos use this model, where stakeholders can vote on updates, making the process transparent and reducing reliance on third-party intermediaries.</li>
+<li><strong>Off-Chain Governance</strong>: Off-chain governance involves informal decision-making and consensus within the community, as seen in networks like Bitcoin. This model allows flexibility but may create challenges in scalability and response time for updates.</li>
+</ul>
+</li>
+<li><strong>Security Implications</strong>:
+<ul>
+<li><strong>Centralization Risks</strong>: On-chain governance can risk concentration of power if a few entities control a majority of the votes.</li>
+<li><strong>Sybil Attacks</strong>: Bad actors may create multiple identities to manipulate voting processes, impacting network security.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Diagram Explanation</strong>: This flowchart shows a simplified on-chain governance process from proposal to decision.</p>
+<pre class=" language-mermaid"><svg id="mermaid-svg-USdy6vCQLKivQjZe" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="174.34999084472656" style="max-width: 792.9666748046875px;" viewBox="0 0 792.9666748046875 174.34999084472656"><style>#mermaid-svg-USdy6vCQLKivQjZe{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-USdy6vCQLKivQjZe .error-icon{fill:#552222;}#mermaid-svg-USdy6vCQLKivQjZe .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-USdy6vCQLKivQjZe .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-USdy6vCQLKivQjZe .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-USdy6vCQLKivQjZe .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-USdy6vCQLKivQjZe .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-USdy6vCQLKivQjZe .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-USdy6vCQLKivQjZe .marker{fill:#666;stroke:#666;}#mermaid-svg-USdy6vCQLKivQjZe .marker.cross{stroke:#666;}#mermaid-svg-USdy6vCQLKivQjZe svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-USdy6vCQLKivQjZe .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#000000;}#mermaid-svg-USdy6vCQLKivQjZe .cluster-label text{fill:#333;}#mermaid-svg-USdy6vCQLKivQjZe .cluster-label span{color:#333;}#mermaid-svg-USdy6vCQLKivQjZe .label text,#mermaid-svg-USdy6vCQLKivQjZe span{fill:#000000;color:#000000;}#mermaid-svg-USdy6vCQLKivQjZe .node rect,#mermaid-svg-USdy6vCQLKivQjZe .node circle,#mermaid-svg-USdy6vCQLKivQjZe .node ellipse,#mermaid-svg-USdy6vCQLKivQjZe .node polygon,#mermaid-svg-USdy6vCQLKivQjZe .node path{fill:#eee;stroke:#999;stroke-width:1px;}#mermaid-svg-USdy6vCQLKivQjZe .node .label{text-align:center;}#mermaid-svg-USdy6vCQLKivQjZe .node.clickable{cursor:pointer;}#mermaid-svg-USdy6vCQLKivQjZe .arrowheadPath{fill:#333333;}#mermaid-svg-USdy6vCQLKivQjZe .edgePath .path{stroke:#666;stroke-width:1.5px;}#mermaid-svg-USdy6vCQLKivQjZe .flowchart-link{stroke:#666;fill:none;}#mermaid-svg-USdy6vCQLKivQjZe .edgeLabel{background-color:white;text-align:center;}#mermaid-svg-USdy6vCQLKivQjZe .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-svg-USdy6vCQLKivQjZe .cluster rect{fill:hsl(210,66.6666666667%,95%);stroke:#26a;stroke-width:1px;}#mermaid-svg-USdy6vCQLKivQjZe .cluster text{fill:#333;}#mermaid-svg-USdy6vCQLKivQjZe .cluster span{color:#333;}#mermaid-svg-USdy6vCQLKivQjZe div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(-160,0%,93.3333333333%);border:1px solid #26a;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg-USdy6vCQLKivQjZe:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-USdy6vCQLKivQjZe flowchart-v2{fill:apa;}</style><g transform="translate(0, 0)"><marker id="flowchart-pointEnd" class="marker flowchart" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker><marker id="flowchart-pointStart" class="marker flowchart" viewBox="0 0 10 10" refX="0" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker><marker id="flowchart-circleEnd" class="marker flowchart" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></circle></marker><marker id="flowchart-circleStart" class="marker flowchart" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></circle></marker><marker id="flowchart-crossEnd" class="marker cross flowchart" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2px; stroke-dasharray: 1px, 0px;"></path></marker><marker id="flowchart-crossStart" class="marker cross flowchart" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2px; stroke-dasharray: 1px, 0px;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M104.01666259765625,74.33340180470157L117.57916259765625,70.70561244548698C131.14166259765625,67.0778230862724,158.26666259765625,59.82224436784323,185.39166259765625,56.194455008628644C212.51666259765625,52.56666564941406,239.64166259765625,52.56666564941406,253.20416259765625,52.56666564941406L266.76666259765625,52.56666564941406" id="L-Community-Voting" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-Community LE-Voting" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M395.0333251953125,52.56666564941406L399.1999918619792,52.56666564941406C403.3666585286458,52.56666564941406,411.6999918619792,52.56666564941406,423.407296828183,55.127415645368444C435.11460179438683,57.688165641322826,450.1958783934611,62.80966563323158,457.7365166929983,65.37041562918596L465.27715499253543,67.93116562514034" id="L-Voting-Decision" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-Voting LE-Decision" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M603.8833160400391,87.67499542236328L607.9666493733724,87.59166208902995C612.0499827067057,87.50832875569661,620.2166493733724,87.34166208902995,628.4666493733724,87.25832875569661C636.7166493733724,87.17499542236328,645.0499827067057,87.17499542236328,649.2166493733724,87.17499542236328L653.3833160400391,87.17499542236328" id="L-Decision-Update" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-Decision LE-Update" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M465.27715499253543,107.41882521958622L457.7365166929983,109.81290854887395C450.1958783934611,112.20699187816165,435.11460179438683,116.99515853673707,412.7184082783783,119.38924186602479C390.3222147623698,121.7833251953125,360.61110432942706,121.7833251953125,321.50416056315106,121.7833251953125C282.397216796875,121.7833251953125,233.89443969726562,121.7833251953125,196.08055114746094,118.15553583609791C158.26666259765625,114.52774647688334,131.14166259765625,107.27216775845416,117.57916259765625,103.64437839923959L104.01666259765625,100.016589040025" id="L-Decision-Community" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-Decision LE-Community" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(185.39166259765625, 52.56666564941406)"><g class="label" transform="translate(-56.375, -13.358329772949219)"><foreignObject width="112.75" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Propose Change</span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(330.8999938964844, 121.7833251953125)"><g class="label" transform="translate(-31.949996948242188, -13.358329772949219)"><foreignObject width="63.899993896484375" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Rejected</span></div></foreignObject></g></g></g><g class="nodes"><g class="node default default" id="flowchart-Community-140" transform="translate(56.008331298828125, 87.17499542236328)"><rect class="basic label-container" style="" rx="0" ry="0" x="-48.008331298828125" y="-20.85832977294922" width="96.01666259765625" height="41.71665954589844"></rect><g class="label" style="" transform="translate(-40.508331298828125, -13.358329772949219)"><foreignObject width="81.01666259765625" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Community</span></div></foreignObject></g></g><g class="node default default" id="flowchart-Voting-141" transform="translate(330.8999938964844, 52.56666564941406)"><rect class="basic label-container" style="" rx="0" ry="0" x="-64.13333129882812" y="-20.85832977294922" width="128.26666259765625" height="41.71665954589844"></rect><g class="label" style="" transform="translate(-56.633331298828125, -13.358329772949219)"><foreignObject width="113.26666259765625" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">On-chain Voting</span></div></foreignObject></g></g><g class="node default default" id="flowchart-Decision-143" transform="translate(524.2083206176758, 87.17499542236328)"><polygon points="79.17499542236328,0 158.34999084472656,-79.17499542236328 79.17499542236328,-158.34999084472656 0,-79.17499542236328" class="label-container" transform="translate(-79.17499542236328,79.17499542236328)" style=""></polygon><g class="label" style="" transform="translate(-50.81666564941406, -13.358329772949219)"><foreignObject width="101.63333129882812" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Decision Made</span></div></foreignObject></g></g><g class="node default default" id="flowchart-Update-145" transform="translate(719.1749801635742, 87.17499542236328)"><rect class="basic label-container" style="" rx="0" ry="0" x="-65.79166412353516" y="-20.85832977294922" width="131.5833282470703" height="41.71665954589844"></rect><g class="label" style="" transform="translate(-58.291664123535156, -13.358329772949219)"><foreignObject width="116.58332824707031" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Network Update</span></div></foreignObject></g></g></g></g></g></svg></pre>
+<hr>
+<h3 id="slide-13-quantum-computing-and-blockchain-security"><strong>Slide 13: Quantum Computing and Blockchain Security</strong></h3>
+<ul>
+<li><strong>Quantum Computing’s Potential</strong>: Quantum computers have the potential to solve complex calculations exponentially faster than classical computers. This capability poses a threat to cryptographic systems, which rely on the computational difficulty of problems like factorization.</li>
+<li><strong>Impact on Blockchain</strong>:
+<ul>
+<li><strong>Public-Key Cryptography Vulnerability</strong>: Quantum algorithms, such as Shor’s algorithm, could break the encryption methods that secure blockchain transactions and wallets.</li>
+<li><strong>Hash Functions</strong>: Some hash functions may remain secure, though stronger or more complex functions may be required to resist quantum attacks.</li>
+</ul>
+</li>
+<li><strong>Quantum-Resistant Solutions</strong>:
+<ul>
+<li><strong>Post-Quantum Cryptography</strong>: Cryptographers are developing quantum-resistant algorithms to replace vulnerable protocols, such as lattice-based cryptography.</li>
+<li><strong>Quantum-Secure Chains</strong>: Some blockchain networks are exploring quantum-resistant architectures to prepare for future threats.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-14-exploring-new-blockchain-platforms"><strong>Slide 14: Exploring New Blockchain Platforms</strong></h3>
+<ul>
+<li><strong>Polkadot</strong>:
+<ul>
+<li><strong>Relay Chain and Parachains</strong>: Polkadot enables multiple independent blockchains (parachains) to connect via a shared “relay chain.” This architecture promotes scalability and interoperability.</li>
+<li><strong>Security Implications</strong>: Parachains benefit from the security of the Relay Chain, reducing their need to secure themselves independently, allowing smaller networks to leverage shared security.</li>
+</ul>
+</li>
+<li><strong>Cosmos</strong>:
+<ul>
+<li><strong>Inter-Blockchain Communication (IBC)</strong>: Cosmos connects independent blockchains through its IBC protocol, allowing them to share data and assets seamlessly.</li>
+<li><strong>Security Model</strong>: Each blockchain in Cosmos operates independently, with the IBC maintaining modular security to protect against widespread attacks.</li>
+</ul>
+</li>
+<li><strong>Tezos</strong>:
+<ul>
+<li><strong>On-Chain Governance</strong>:</li>
+</ul>
+</li>
+</ul>
+<p>Tezos allows stakeholders to vote directly on protocol updates, avoiding hard forks and maintaining network stability.</p>
+<ul>
+<li><strong>Security Model</strong>: Tezos’ on-chain governance reduces hard forks, improving network continuity and security.</li>
+</ul>
+<p><strong>Diagram Explanation</strong>: This flowchart illustrates Polkadot’s Relay Chain, which connects independent parachains to facilitate interoperability.</p>
+<pre class=" language-mermaid"><svg id="mermaid-svg-OeFY9MVDwZM14CSS" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="149.43331909179688" style="max-width: 409.3500061035156px;" viewBox="0 0 409.3500061035156 149.43331909179688"><style>#mermaid-svg-OeFY9MVDwZM14CSS{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-OeFY9MVDwZM14CSS .error-icon{fill:#552222;}#mermaid-svg-OeFY9MVDwZM14CSS .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-OeFY9MVDwZM14CSS .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-OeFY9MVDwZM14CSS .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-OeFY9MVDwZM14CSS .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-OeFY9MVDwZM14CSS .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-OeFY9MVDwZM14CSS .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-OeFY9MVDwZM14CSS .marker{fill:#666;stroke:#666;}#mermaid-svg-OeFY9MVDwZM14CSS .marker.cross{stroke:#666;}#mermaid-svg-OeFY9MVDwZM14CSS svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-OeFY9MVDwZM14CSS .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#000000;}#mermaid-svg-OeFY9MVDwZM14CSS .cluster-label text{fill:#333;}#mermaid-svg-OeFY9MVDwZM14CSS .cluster-label span{color:#333;}#mermaid-svg-OeFY9MVDwZM14CSS .label text,#mermaid-svg-OeFY9MVDwZM14CSS span{fill:#000000;color:#000000;}#mermaid-svg-OeFY9MVDwZM14CSS .node rect,#mermaid-svg-OeFY9MVDwZM14CSS .node circle,#mermaid-svg-OeFY9MVDwZM14CSS .node ellipse,#mermaid-svg-OeFY9MVDwZM14CSS .node polygon,#mermaid-svg-OeFY9MVDwZM14CSS .node path{fill:#eee;stroke:#999;stroke-width:1px;}#mermaid-svg-OeFY9MVDwZM14CSS .node .label{text-align:center;}#mermaid-svg-OeFY9MVDwZM14CSS .node.clickable{cursor:pointer;}#mermaid-svg-OeFY9MVDwZM14CSS .arrowheadPath{fill:#333333;}#mermaid-svg-OeFY9MVDwZM14CSS .edgePath .path{stroke:#666;stroke-width:1.5px;}#mermaid-svg-OeFY9MVDwZM14CSS .flowchart-link{stroke:#666;fill:none;}#mermaid-svg-OeFY9MVDwZM14CSS .edgeLabel{background-color:white;text-align:center;}#mermaid-svg-OeFY9MVDwZM14CSS .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-svg-OeFY9MVDwZM14CSS .cluster rect{fill:hsl(210,66.6666666667%,95%);stroke:#26a;stroke-width:1px;}#mermaid-svg-OeFY9MVDwZM14CSS .cluster text{fill:#333;}#mermaid-svg-OeFY9MVDwZM14CSS .cluster span{color:#333;}#mermaid-svg-OeFY9MVDwZM14CSS div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(-160,0%,93.3333333333%);border:1px solid #26a;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg-OeFY9MVDwZM14CSS:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-OeFY9MVDwZM14CSS flowchart-v2{fill:apa;}</style><g transform="translate(0, 0)"><marker id="flowchart-pointEnd" class="marker flowchart" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker><marker id="flowchart-pointStart" class="marker flowchart" viewBox="0 0 10 10" refX="0" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker><marker id="flowchart-circleEnd" class="marker flowchart" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></circle></marker><marker id="flowchart-circleStart" class="marker flowchart" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></circle></marker><marker id="flowchart-crossEnd" class="marker cross flowchart" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2px; stroke-dasharray: 1px, 0px;"></path></marker><marker id="flowchart-crossStart" class="marker cross flowchart" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2px; stroke-dasharray: 1px, 0px;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M157.9666748046875,43.352292781139916L141.1208407084147,48.579687241932994C124.27500661214192,53.80708170272609,90.58333841959636,64.26187062431227,73.73750432332356,73.65593175177202C56.89167022705078,83.04999287923177,56.89167022705078,91.38332621256511,56.89167022705078,95.54999287923177L56.89167022705078,99.71665954589844" id="L-RelayChain-Parachain1" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-RelayChain LE-Parachain1" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M204.67501068115234,49.71665954589844L204.67501068115234,53.8833262125651C204.67501068115234,58.04999287923177,204.67501068115234,66.38332621256511,204.67501068115234,74.71665954589844C204.67501068115234,83.04999287923177,204.67501068115234,91.38332621256511,204.67501068115234,95.54999287923177L204.67501068115234,99.71665954589844" id="L-RelayChain-Parachain2" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-RelayChain LE-Parachain2" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M251.3833465576172,43.352292781139916L268.22918065388996,48.579687241932994C285.0750147501628,53.80708170272609,318.7666829427083,64.26187062431227,335.61251703898114,73.65593175177202C352.4583511352539,83.04999287923177,352.4583511352539,91.38332621256511,352.4583511352539,95.54999287923177L352.4583511352539,99.71665954589844" id="L-RelayChain-Parachain3" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-RelayChain LE-Parachain3" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default default" id="flowchart-RelayChain-154" transform="translate(204.67501068115234, 28.85832977294922)"><rect class="basic label-container" style="" rx="0" ry="0" x="-46.708335876464844" y="-20.85832977294922" width="93.41667175292969" height="41.71665954589844"></rect><g class="label" style="" transform="translate(-39.208335876464844, -13.358329772949219)"><foreignObject width="78.41667175292969" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">RelayChain</span></div></foreignObject></g></g><g class="node default default" id="flowchart-Parachain1-155" transform="translate(56.89167022705078, 120.57498931884766)"><rect class="basic label-container" style="" rx="0" ry="0" x="-48.89167022705078" y="-20.85832977294922" width="97.78334045410156" height="41.71665954589844"></rect><g class="label" style="" transform="translate(-41.39167022705078, -13.358329772949219)"><foreignObject width="82.78334045410156" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Parachain 1</span></div></foreignObject></g></g><g class="node default default" id="flowchart-Parachain2-157" transform="translate(204.67501068115234, 120.57498931884766)"><rect class="basic label-container" style="" rx="0" ry="0" x="-48.89167022705078" y="-20.85832977294922" width="97.78334045410156" height="41.71665954589844"></rect><g class="label" style="" transform="translate(-41.39167022705078, -13.358329772949219)"><foreignObject width="82.78334045410156" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Parachain 2</span></div></foreignObject></g></g><g class="node default default" id="flowchart-Parachain3-159" transform="translate(352.4583511352539, 120.57498931884766)"><rect class="basic label-container" style="" rx="0" ry="0" x="-48.89167022705078" y="-20.85832977294922" width="97.78334045410156" height="41.71665954589844"></rect><g class="label" style="" transform="translate(-41.39167022705078, -13.358329772949219)"><foreignObject width="82.78334045410156" height="26.716659545898438"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Parachain 3</span></div></foreignObject></g></g></g></g></g></svg></pre>
+<hr>
+<h3 id="slide-15-future-directions-in-blockchain-research-and-development"><strong>Slide 15: Future Directions in Blockchain Research and Development</strong></h3>
+<ul>
+<li><strong>Areas of Focus</strong>:
+<ul>
+<li><strong>Scalability</strong>: New consensus algorithms, such as Proof of Stake (PoS), and sidechains aim to improve transaction throughput.</li>
+<li><strong>Interoperability</strong>: Enhancements to cross-chain communication and projects like Cosmos and Polkadot emphasize seamless asset transfers between chains.</li>
+<li><strong>Privacy Enhancements</strong>: Privacy technologies like zk-SNARKs and zk-Rollups are expected to evolve, offering more robust confidentiality without compromising security.</li>
+<li><strong>Quantum Resistance</strong>: The focus is on incorporating quantum-resistant algorithms into blockchains as a safeguard against future quantum threats.</li>
+</ul>
+</li>
+<li><strong>Prominent Projects</strong>:
+<ul>
+<li><strong>Ethereum 2.0</strong>: Transitioning to PoS and sharding for scalability.</li>
+<li><strong>New Cryptographic Research</strong>: Innovations in cryptographic protocols will continue to strengthen blockchain privacy and security.</li>
+<li><strong>Eco-Friendly Consensus</strong>: Increasing adoption of PoS and related models to reduce energy consumption.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-16-future-of-eth-after-pos"><strong>Slide 16: Future of Eth After POS</strong></h3>
+<ul>
+<li><strong>The Merge</strong>: Transition of Ethereum from Proof of Work to Proof of Stake (PoS)</li>
+<li><strong>Stability</strong>: Running stably on PoS for 2 years</li>
+<li><strong>Goals for Improvement</strong>: Enhance security, decentralization, and efficiency</li>
+</ul>
+<hr>
+<h3 id="slide-17-key-goals-for-ethereum’s-pos-system"><strong>Slide 17: Key Goals for Ethereum’s PoS System</strong></h3>
+<ol>
+<li><strong>Single Slot Finality</strong>: Faster transaction confirmation</li>
+<li><strong>Staking Accessibility</strong>: Lowering ETH requirements for solo stakers</li>
+<li><strong>Enhanced Security</strong>: Better resistance to 51% attacks</li>
+</ol>
+<hr>
+<h3 id="slide-18-single-slot-finality--staking-democratization"><strong>Slide 18: Single Slot Finality &amp; Staking Democratization</strong></h3>
+<ul>
+<li><strong>Current Challenge</strong>: Finality takes 15 minutes; 32 ETH required to stake</li>
+<li><strong>Goals</strong>:
+<ul>
+<li><strong>Faster Finality</strong>: Reduce finalization time to 1 slot (~12 seconds)</li>
+<li><strong>Democratized Staking</strong>: Reduce staking minimum from 32 ETH to 1 ETH</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-19-proposed-solutions-for-single-slot-finality"><strong>Slide 19: Proposed Solutions for Single Slot Finality</strong></h3>
+<ol>
+<li><strong>Better Signature Aggregation</strong>: Use ZK-SNARKs for more efficient signature handling</li>
+<li><strong>Orbit Committees</strong>: Randomly selected committee for secure, efficient finality</li>
+<li><strong>Two-Tiered Staking</strong>: High deposit validators for finality, smaller deposits for general staking</li>
+</ol>
+<hr>
+<h3 id="slide-20-single-secret-leader-election-ssle"><strong>Slide 20: Single Secret Leader Election (SSLE)</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Current system exposes proposer identity, risking DoS attacks</li>
+<li><strong>SSLE Solution</strong>:
+<ul>
+<li>Conceals proposer identity until block production</li>
+<li>Uses cryptographic “blinding” for secure and anonymous block proposals</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-21-faster-transaction-confirmations"><strong>Slide 21: Faster Transaction Confirmations</strong></h3>
+<ul>
+<li><strong>Current Confirmation Time</strong>: 12 seconds</li>
+<li><strong>Goals</strong>:
+<ul>
+<li><strong>Reduce Slot Time</strong>: Aiming for 8 or even 4 seconds</li>
+<li><strong>Pre-Confirmation Mechanism</strong>: Immediate provisional confirmations from proposers</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-22-recovery-from-51-attacks"><strong>Slide 22: Recovery from 51% Attacks</strong></h3>
+<ul>
+<li><strong>Goal</strong>: Reduce reliance on social coordination for 51% attack recovery</li>
+<li><strong>Solution</strong>: Automated protocols to prevent attackers from achieving “clean victory” in the case of censorship or reversion</li>
+</ul>
+<hr>
+<h3 id="slide-23-increasing-the-quorum-threshold"><strong>Slide 23: Increasing the Quorum Threshold</strong></h3>
+<ul>
+<li><strong>Current Threshold</strong>: 67% validator support required for finality</li>
+<li><strong>Proposed Increase</strong>: 80% for enhanced security against contentious situations</li>
+<li><strong>Benefit</strong>: Solo stakers play a more significant role in blocking attacks</li>
+</ul>
+<hr>
+<h3 id="slide-24-quantum-resistance"><strong>Slide 24: Quantum Resistance</strong></h3>
+<ul>
+<li><strong>Future-Proofing</strong>: Explore quantum-resistant cryptographic techniques</li>
+<li><strong>Goal</strong>: Prepare Ethereum against quantum-computing threats</li>
+</ul>
+<hr>
+<h3 id="slide-25-summary-and-path-forward"><strong>Slide 25: Summary and Path Forward</strong></h3>
+<ul>
+<li><strong>Current Status</strong>: Stable but still improving PoS protocol</li>
+<li><strong>Future Focus Areas</strong>:
+<ul>
+<li>Enhancing validator inclusivity and accessibility</li>
+<li>Balancing efficiency with security</li>
+<li>Preparing for long-term threats, such as quantum computing</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="slide-26-additional-resources--links"><strong>Slide 26: Additional Resources &amp; Links</strong></h3>
+<ul>
+<li><a href="https://notes.ethereum.org/@vbuterin/single_slot_finality">Single Slot Finality Research</a></li>
+<li><a href="https://ethresear.ch/t/whisk-a-practical-shuffle-based-ssle-protocol-for-ethereum/11763">SSLE Proposal (Whisk)</a></li>
+<li><a href="https://ethresear.ch/t/orbit-ssf-solo-staking-friendly-validator-set-management-for-ssf/19928">Orbit SSF and Aggregation Research</a></li>
+</ul>
+<hr>
+</div>
+</body>
+
+</html>
